@@ -14,49 +14,23 @@ export const BackgroundParticlesCanvas: React.FC = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    // Track mouse position for interactive vector lines
-    let mouse = { x: -1000, y: -1000, radius: 180 };
+    // Track mouse position for interactive contour warp
+    let mouse = { x: -1000, y: -1000, active: false };
 
     const handleMouseMove = (e: MouseEvent) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+      mouse.active = true;
     };
 
     const handleMouseLeave = () => {
       mouse.x = -1000;
       mouse.y = -1000;
+      mouse.active = false;
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseleave', handleMouseLeave);
-
-    // Particle nodes
-    const particleCount = Math.floor(Math.min(width, 1600) / 14);
-    const particles: {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      radius: number;
-      alpha: number;
-      pulse: number;
-      pulseSpeed: number;
-      type: 'dot' | 'cross' | 'ring';
-    }[] = [];
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.45,
-        vy: (Math.random() - 0.5) * 0.45,
-        radius: Math.random() * 2.2 + 0.8,
-        alpha: Math.random() * 0.5 + 0.2,
-        pulse: Math.random() * Math.PI * 2,
-        pulseSpeed: 0.02 + Math.random() * 0.03,
-        type: i % 7 === 0 ? 'cross' : i % 11 === 0 ? 'ring' : 'dot',
-      });
-    }
 
     const resize = () => {
       width = canvas.width = window.innerWidth;
@@ -65,131 +39,90 @@ export const BackgroundParticlesCanvas: React.FC = () => {
 
     window.addEventListener('resize', resize);
 
-    let waveTime = 0;
+    let time = 0;
+
+    // Number of contour isolines across height
+    const contourCount = 28;
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
-      waveTime += 0.015;
+      time += 0.008;
 
-      // 1. Moving Blueprint Engineering Grid
-      const gridSize = 70;
-      const gridOffsetX = (waveTime * 8) % gridSize;
-      const gridOffsetY = (waveTime * 6) % gridSize;
-
-      ctx.strokeStyle = 'rgba(0, 87, 255, 0.03)';
+      // 1. Moving Subtle CAD Grid Layer
+      const gridSize = 80;
+      ctx.strokeStyle = 'rgba(0, 87, 255, 0.025)';
       ctx.lineWidth = 1;
 
-      for (let x = gridOffsetX; x < width; x += gridSize) {
+      for (let x = 0; x < width; x += gridSize) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x, height);
         ctx.stroke();
       }
-
-      for (let y = gridOffsetY; y < height; y += gridSize) {
+      for (let y = 0; y < height; y += gridSize) {
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(width, y);
         ctx.stroke();
       }
 
-      // 2. Continuous Fluid Wave Vector Lines (Simulation feel)
-      ctx.beginPath();
-      ctx.strokeStyle = 'rgba(45, 140, 255, 0.04)';
-      ctx.lineWidth = 1.5;
+      // 2. Render Topographic / FEA Elevation Contour Lines
+      const lineSpacing = height / contourCount;
 
-      for (let x = 0; x < width; x += 10) {
-        const y1 = height * 0.3 + Math.sin(x * 0.004 + waveTime) * 45 + Math.cos(x * 0.002 + waveTime * 0.5) * 35;
-        if (x === 0) ctx.moveTo(x, y1);
-        else ctx.lineTo(x, y1);
-      }
-      ctx.stroke();
+      for (let i = 0; i < contourCount + 4; i++) {
+        const baseY = (i - 2) * lineSpacing;
+        const isMajorContour = i % 5 === 0;
 
-      ctx.beginPath();
-      ctx.strokeStyle = 'rgba(0, 87, 255, 0.035)';
-      ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.lineWidth = isMajorContour ? 1.5 : 0.8;
+        ctx.strokeStyle = isMajorContour
+          ? 'rgba(0, 87, 255, 0.12)'
+          : 'rgba(45, 140, 255, 0.04)';
 
-      for (let x = 0; x < width; x += 10) {
-        const y2 = height * 0.7 + Math.cos(x * 0.005 - waveTime * 1.2) * 50 + Math.sin(x * 0.003 + waveTime) * 30;
-        if (x === 0) ctx.moveTo(x, y2);
-        else ctx.lineTo(x, y2);
-      }
-      ctx.stroke();
+        let firstPoint = true;
 
-      // 3. Update & Draw Interactive Particles
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
+        // Draw smooth contour curve across horizontal width
+        for (let x = 0; x <= width + 40; x += 25) {
+          // Multi-frequency wave calculation for natural topography
+          const wave1 = Math.sin(x * 0.003 + time + i * 0.35) * 35;
+          const wave2 = Math.cos(x * 0.0015 - time * 0.8 + i * 0.2) * 45;
+          const wave3 = Math.sin(x * 0.005 + time * 1.2) * 15;
 
-        p.pulse += p.pulseSpeed;
-        const currentAlpha = p.alpha + Math.sin(p.pulse) * 0.15;
+          let y = baseY + wave1 + wave2 + wave3;
 
-        // Wrap around edges
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
+          // Interactive Mouse Displacement (Cursor pushes/curves contour lines)
+          if (mouse.active) {
+            const dx = x - mouse.x;
+            const dy = y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const radius = 220;
 
-        // Mouse Interactivity: Push particles gently away from cursor
-        const dxMouse = mouse.x - p.x;
-        const dyMouse = mouse.y - p.y;
-        const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-
-        if (distMouse < mouse.radius) {
-          const force = (1 - distMouse / mouse.radius) * 1.5;
-          p.x -= (dxMouse / distMouse) * force;
-          p.y -= (dyMouse / distMouse) * force;
-
-          // Draw laser line to mouse
-          ctx.strokeStyle = `rgba(0, 87, 255, ${(1 - distMouse / mouse.radius) * 0.25})`;
-          ctx.lineWidth = 0.8;
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(mouse.x, mouse.y);
-          ctx.stroke();
-        }
-
-        // Draw particle based on type
-        if (p.type === 'cross') {
-          ctx.strokeStyle = `rgba(0, 87, 255, ${Math.max(0.1, currentAlpha)})`;
-          ctx.lineWidth = 1;
-          const size = 4;
-          ctx.beginPath();
-          ctx.moveTo(p.x - size, p.y);
-          ctx.lineTo(p.x + size, p.y);
-          ctx.moveTo(p.x, p.y - size);
-          ctx.lineTo(p.x, p.y + size);
-          ctx.stroke();
-        } else if (p.type === 'ring') {
-          ctx.strokeStyle = `rgba(45, 140, 255, ${Math.max(0.1, currentAlpha)})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius * 2.2, 0, Math.PI * 2);
-          ctx.stroke();
-        } else {
-          ctx.fillStyle = `rgba(0, 87, 255, ${Math.max(0.1, currentAlpha)})`;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        // Connect close particles with blueprint lines
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 140) {
-            const lineAlpha = (1 - dist / 140) * 0.15;
-            ctx.strokeStyle = `rgba(45, 140, 255, ${lineAlpha})`;
-            ctx.lineWidth = 0.8;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
+            if (dist < radius) {
+              const push = (1 - dist / radius) * 45;
+              // Repel y away from cursor
+              y += (dy > 0 ? 1 : -1) * push;
+            }
           }
+
+          if (firstPoint) {
+            ctx.moveTo(x, y);
+            firstPoint = false;
+          } else {
+            ctx.lineTo(x, y);
+          }
+        }
+
+        ctx.stroke();
+
+        // 3. Render Elevation Metrology Labels on Major Contours
+        if (isMajorContour && i > 2 && i < contourCount - 2) {
+          const labelX = (width * 0.15 + i * 110 + time * 20) % (width * 0.8);
+          const labelWave = Math.sin(labelX * 0.003 + time + i * 0.35) * 35 + Math.cos(labelX * 0.0015 - time * 0.8 + i * 0.2) * 45;
+          const labelY = baseY + labelWave;
+
+          ctx.font = '9px monospace';
+          ctx.fillStyle = 'rgba(0, 87, 255, 0.35)';
+          ctx.fillText(`ISO +${i * 50}M`, labelX, labelY - 4);
         }
       }
 
@@ -209,11 +142,10 @@ export const BackgroundParticlesCanvas: React.FC = () => {
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       {/* Dynamic Animated Ambient Orbs in Background */}
-      <div className="absolute top-1/4 -left-20 w-[600px] h-[600px] bg-[#0057FF]/10 rounded-full blur-[140px] animate-orb-float-1" />
-      <div className="absolute top-2/3 -right-20 w-[700px] h-[700px] bg-[#2D8CFF]/12 rounded-full blur-[160px] animate-orb-float-2" />
-      <div className="absolute bottom-10 left-1/3 w-[500px] h-[500px] bg-[#0057FF]/08 rounded-full blur-[130px] animate-orb-float-1" />
+      <div className="absolute top-1/4 -left-20 w-[600px] h-[600px] bg-[#0057FF]/08 rounded-full blur-[140px] animate-orb-float-1" />
+      <div className="absolute top-2/3 -right-20 w-[700px] h-[700px] bg-[#2D8CFF]/10 rounded-full blur-[160px] animate-orb-float-2" />
 
-      {/* Interactive Canvas */}
+      {/* Topographic Contour Canvas */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 opacity-90"
