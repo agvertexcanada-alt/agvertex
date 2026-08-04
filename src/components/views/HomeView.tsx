@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { HeroCADCanvas } from '../three/HeroCADCanvas';
-import { SERVICES_DATA, INDUSTRIES_DATA, PROCESS_STEPS, FEATURED_CASE_STUDIES, SOFTWARE_TOOLS } from '../../data/websiteData';
-import { ArrowRight, Play, ChevronRight, Box, Compass, Layers, Activity, Scan, Cpu, Printer, CheckCircle2, Search, Send, FileText, Globe, Zap, ShieldCheck } from 'lucide-react';
+import { SERVICES_DATA, PROCESS_STEPS, FEATURED_CASE_STUDIES, SOFTWARE_TOOLS } from '../../data/websiteData';
+import { ArrowRight, Play, Box, Compass, Layers, Activity, Scan, Cpu, Printer, CheckCircle2, Search, Send, Zap } from 'lucide-react';
 
 interface HomeViewProps {
   setActiveTab: (tab: string) => void;
@@ -10,15 +10,6 @@ interface HomeViewProps {
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteModal, onOpenProjectModal }) => {
-  // Active filter for Industries section
-  const [selectedIndustryFilter, setSelectedIndustryFilter] = useState<string>('All');
-
-  const filteredIndustries = INDUSTRIES_DATA.filter(ind => {
-    if (selectedIndustryFilter === 'All') return true;
-    return ind.title.toLowerCase().includes(selectedIndustryFilter.toLowerCase()) ||
-           ind.id.toLowerCase().includes(selectedIndustryFilter.toLowerCase());
-  });
-
   const getCapabilityIcon = (id: string) => {
     switch (id) {
       case 'product-design': return <Compass className="w-5 h-5" />;
@@ -106,7 +97,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
         </div>
       </section>
 
-      {/* 2. ENGINEERING CAPABILITIES: EFFORTLESS & HIGHLY INTUITIVE CARD GRID */}
+      {/* 2. ENGINEERING CAPABILITIES: INTUITIVE CARD GRID */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-8">
         
         {/* Section Header */}
@@ -126,7 +117,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
           </button>
         </div>
 
-        {/* Intuitive 4-Column Grid (1 column on mobile, 2 on tablet, 4 on desktop) */}
+        {/* Intuitive 4-Column Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {SERVICES_DATA.map((srv, idx) => (
             <div
@@ -194,106 +185,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
 
       </section>
 
-      {/* 3. ULTRA-CLEAN MODERN HIGH-TECH INDUSTRIES GRID SHOWCASE */}
-      <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-8">
-        
-        {/* Top Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-2 text-[11px] font-mono font-bold text-[#0057FF] uppercase tracking-widest">
-              <Globe className="w-3.5 h-3.5" /> WHO WE SERVE • SECTOR DIRECTORY
-            </div>
-            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-[#0F172A]">Industries We Serve</h2>
-          </div>
-
-          <button
-            onClick={() => setActiveTab('industries')}
-            className="text-xs font-semibold text-[#0057FF] hover:underline flex items-center gap-1 cursor-pointer"
-          >
-            View All Industries <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-
-        {/* Category Filter Pills Row */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-          {['All', 'Automotive', 'Aerospace', 'Medical', 'Industrial', 'Oil & Gas', 'Defense', 'Electronics'].map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedIndustryFilter(cat)}
-              className={`px-4.5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
-                selectedIndustryFilter === cat
-                  ? 'bg-[#0057FF] text-white shadow-md shadow-blue-500/20'
-                  : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Premium Industry Showcase Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredIndustries.map((ind, idx) => (
-            <div
-              key={ind.id}
-              onClick={() => setActiveTab('industries')}
-              className="glass-card overflow-hidden bg-white border border-slate-200/90 rounded-3xl cursor-pointer group hover:border-blue-400 flex flex-col justify-between shadow-md"
-            >
-              <div>
-                <div className="h-52 overflow-hidden relative">
-                  <img
-                    src={ind.image}
-                    alt={ind.title}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-                  
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-mono font-bold border border-slate-700">
-                      SECTOR 0{idx + 1}
-                    </span>
-                  </div>
-
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-xl font-heading font-bold text-white group-hover:text-blue-300 transition-colors">
-                      {ind.title}
-                    </h3>
-                  </div>
-                </div>
-
-                <div className="p-6 space-y-4">
-                  <p className="text-xs text-blue-600 font-mono font-medium line-clamp-1">
-                    "{ind.tagline}"
-                  </p>
-                  
-                  <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
-                    {ind.description}
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
-                    {ind.stats.map((st, i) => (
-                      <div key={i} className="p-2 rounded-xl bg-slate-50 border border-slate-100">
-                        <span className="text-xs font-heading font-bold text-[#0057FF] block">{st.value}</span>
-                        <span className="text-[9px] text-slate-400 font-mono block truncate">{st.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="px-6 pb-6 pt-2 flex items-center justify-between text-xs font-semibold text-[#0057FF]">
-                <span>Explore Sector Specs</span>
-                <div className="w-[#2D8CFF] w-7 h-7 rounded-full bg-blue-50 group-hover:bg-[#0057FF] group-hover:text-white flex items-center justify-center transition-colors">
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-      </section>
-
-      {/* 4. ENGINEERING PROCESS */}
+      {/* 3. ENGINEERING PROCESS */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-10">
         <div className="space-y-1.5">
           <span className="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">OUR PROCESS</span>
@@ -331,7 +223,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
         </div>
       </section>
 
-      {/* 5. FEATURED CASE STUDIES */}
+      {/* 4. FEATURED CASE STUDIES */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-1.5">
@@ -456,7 +348,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
         </div>
       </section>
 
-      {/* 6. SOFTWARE EXPERTISE TICKER */}
+      {/* 5. SOFTWARE EXPERTISE TICKER */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-1.5">
@@ -486,7 +378,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
         </div>
       </section>
 
-      {/* 7. CALL TO ACTION BANNER MATCHING IMAGE */}
+      {/* 6. CALL TO ACTION BANNER MATCHING IMAGE */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="rounded-3xl bg-gradient-to-r from-blue-50/90 via-blue-100/50 to-blue-50/90 p-8 lg:p-14 border border-blue-200/70 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8 shadow-xl">
           
