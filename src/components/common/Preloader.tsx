@@ -10,9 +10,9 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    // Total duration = 3000 ms (3 seconds)
-    const totalTime = 3000;
-    const intervalTime = 30; // Update every 30ms
+    // Total duration = 2.5 seconds max for snappy loading
+    const totalTime = 2500;
+    const intervalTime = 30;
     const totalSteps = totalTime / intervalTime;
     const stepIncrement = 100 / totalSteps;
 
@@ -42,30 +42,41 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       });
     }, intervalTime);
 
-    return () => clearInterval(interval);
+    // Fail-safe safety timeout: force unmount preloader after 3.2 seconds max
+    const safetyTimeout = setTimeout(() => {
+      setProgress(100);
+      setIsDone(true);
+      if (onComplete) onComplete();
+    }, 3200);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(safetyTimeout);
+    };
   }, [onComplete]);
 
+  // Completely unmount from DOM when done so it NEVER blocks interactions or visibility
   if (isDone) return null;
 
   return (
-    <div className={`fixed inset-0 z-[100] bg-[#F8FAFC] flex flex-col items-center justify-center p-6 transition-all duration-700 ease-in-out ${
-      progress >= 100 ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100 scale-100'
+    <div className={`fixed inset-0 z-[100] bg-[#F8FAFC] flex flex-col items-center justify-center p-6 transition-opacity duration-500 ease-out ${
+      progress >= 100 ? 'opacity-0 pointer-events-none' : 'opacity-100'
     }`}>
       
       {/* Background Blueprint Grid Pattern */}
       <div className="absolute inset-0 bg-blueprint opacity-60 pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#0057FF]/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#0057FF]/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
 
       <div className="relative z-10 flex flex-col items-center max-w-sm w-full space-y-8 text-center">
         
         {/* Brand Logo with Glow Ring */}
         <div className="relative group">
           <div className="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-[#0057FF] to-[#2D8CFF] opacity-20 blur-xl animate-pulse" />
-          <div className="relative p-4 rounded-2xl bg-white/80 backdrop-blur-md border border-slate-200 shadow-xl">
+          <div className="relative p-4 rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200 shadow-xl">
             <img
               src="/ag_vertex_logo.png"
               alt="AG VERTEX Logo"
-              className="h-12 md:h-14 w-auto object-contain"
+              className="h-10 md:h-12 w-auto object-contain"
             />
           </div>
         </div>
