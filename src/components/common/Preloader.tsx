@@ -10,9 +10,16 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
+    // Total duration = 3000 ms (3 seconds)
+    const totalTime = 3000;
+    const intervalTime = 30; // Update every 30ms
+    const totalSteps = totalTime / intervalTime;
+    const stepIncrement = 100 / totalSteps;
+
     const interval = setInterval(() => {
       setProgress((prev) => {
-        if (prev >= 100) {
+        const next = prev + stepIncrement;
+        if (next >= 100) {
           clearInterval(interval);
           setTimeout(() => {
             setIsDone(true);
@@ -21,22 +28,19 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
           return 100;
         }
 
-        const next = prev + Math.floor(Math.random() * 8) + 4;
-        const current = next > 100 ? 100 : next;
-
-        if (current < 30) {
+        if (next < 30) {
           setStatusText('INITIALIZING CAD ENGINE...');
-        } else if (current < 65) {
+        } else if (next < 65) {
           setStatusText('CALIBRATING METROLOGY & SIMULATION MESH...');
-        } else if (current < 90) {
+        } else if (next < 90) {
           setStatusText('OPTIMIZING GRAPHICS & TOPOGRAPHY FIELD...');
         } else {
           setStatusText('SYSTEM READY. WELCOME TO AG VERTEX.');
         }
 
-        return current;
+        return Math.floor(next);
       });
-    }, 40);
+    }, intervalTime);
 
     return () => clearInterval(interval);
   }, [onComplete]);
@@ -45,7 +49,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
 
   return (
     <div className={`fixed inset-0 z-[100] bg-[#F8FAFC] flex flex-col items-center justify-center p-6 transition-all duration-700 ease-in-out ${
-      progress === 100 ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100 scale-100'
+      progress >= 100 ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100 scale-100'
     }`}>
       
       {/* Background Blueprint Grid Pattern */}
@@ -81,7 +85,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         {/* High-Precision Progress Bar */}
         <div className="w-full h-2 rounded-full bg-slate-200/80 overflow-hidden relative border border-slate-300/50 shadow-inner">
           <div
-            className="h-full bg-gradient-to-r from-[#0057FF] to-[#2D8CFF] rounded-full transition-all duration-150 ease-out shadow-[0_0_12px_rgba(0,87,255,0.6)]"
+            className="h-full bg-gradient-to-r from-[#0057FF] to-[#2D8CFF] rounded-full transition-all duration-75 ease-out shadow-[0_0_12px_rgba(0,87,255,0.6)]"
             style={{ width: `${progress}%` }}
           />
         </div>
