@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HeroCADCanvas } from '../three/HeroCADCanvas';
-import { SERVICES_DATA, PROCESS_STEPS, FEATURED_CASE_STUDIES, SOFTWARE_TOOLS } from '../../data/websiteData';
+import { SERVICES_DATA, PROCESS_STEPS, SOFTWARE_TOOLS } from '../../data/websiteData';
 import { ArrowRight, Play, Box, Compass, Layers, Activity, Scan, Cpu, Printer, CheckCircle2, Search, Send, Zap } from 'lucide-react';
 
 interface HomeViewProps {
@@ -9,7 +9,10 @@ interface HomeViewProps {
   onOpenProjectModal: (projectId: string) => void;
 }
 
-export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteModal, onOpenProjectModal }) => {
+export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteModal }) => {
+  // Case Studies Category Filter
+  const [selectedCaseFilter, setSelectedCaseFilter] = useState<string>('All');
+
   const getCapabilityIcon = (id: string) => {
     switch (id) {
       case 'product-design': return <Compass className="w-5 h-5" />;
@@ -23,6 +26,38 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
       default: return <Compass className="w-5 h-5" />;
     }
   };
+
+  const selectedWorks = [
+    {
+      id: 'work-1',
+      tag: 'AUTOMOTIVE TOOLING',
+      category: 'Automotive',
+      title: 'High-Pressure Die-Casting Die',
+      description: 'Full tool layout for complex aluminum gearbox housing.',
+      image: 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      id: 'work-2',
+      tag: 'PRODUCT DEVELOPMENT',
+      category: 'Tooling',
+      title: 'Precision Tooling Assembly',
+      description: 'Multi-cavity injection mold for consumer electronics.',
+      image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      id: 'work-3',
+      tag: 'MECHANICAL DESIGN',
+      category: 'Drawings',
+      title: 'Chassis Component Review',
+      description: 'Comprehensive verification of 50+ supplier prints.',
+      image: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80',
+    },
+  ];
+
+  const filteredWorks = selectedWorks.filter(w => {
+    if (selectedCaseFilter === 'All') return true;
+    return w.category === selectedCaseFilter;
+  });
 
   return (
     <div className="space-y-20 lg:space-y-28 pb-20 overflow-x-hidden">
@@ -223,129 +258,81 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
         </div>
       </section>
 
-      {/* 4. FEATURED CASE STUDIES */}
+      {/* 4. SELECTED ENGINEERING WORKS / CASE STUDIES MATCHING GOOGLE STITCH MOCKUP */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-8">
+        
+        {/* Header Bar with Category Filter Pills */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-1.5">
-            <span className="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">FEATURED WORK</span>
-            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-[#0F172A]">Featured Case Studies</h2>
+            <span className="text-xs font-mono font-bold text-[#0057FF] uppercase tracking-widest block">
+              CASE STUDIES
+            </span>
+            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-[#0F172A]">
+              Selected Engineering Works
+            </h2>
           </div>
-          <button
-            onClick={() => setActiveTab('portfolio')}
-            className="text-xs font-semibold text-[#0057FF] hover:underline flex items-center gap-1 cursor-pointer"
-          >
-            View All Projects <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+
+          {/* Filter Pills Row */}
+          <div className="flex items-center gap-2 p-1 rounded-2xl bg-slate-100 border border-slate-200/80 self-start sm:self-auto">
+            {['All', 'Automotive', 'Tooling', 'Drawings'].map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCaseFilter(cat)}
+                className={`px-4 py-1.5 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
+                  selectedCaseFilter === cat
+                    ? 'bg-[#0057FF] text-white shadow-md'
+                    : 'text-slate-600 hover:text-[#0F172A]'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* 3 Case Study Cards matching image layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          
-          {/* Card 1: Main Dark Card */}
-          <div
-            onClick={() => setActiveTab('case-study')}
-            className="lg:col-span-6 rounded-3xl bg-[#0F172A] text-white p-8 lg:p-10 flex flex-col justify-between space-y-8 cursor-pointer group hover:shadow-2xl relative overflow-hidden"
-          >
-            <div className="space-y-4 z-10">
-              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest block">
-                {FEATURED_CASE_STUDIES[0].tag}
-              </span>
+        {/* 3 High-Impact Cards Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {filteredWorks.map((work) => (
+            <div
+              key={work.id}
+              onClick={() => setActiveTab('portfolio')}
+              className="group relative rounded-3xl overflow-hidden h-[420px] cursor-pointer shadow-xl border border-slate-200/80 transition-all duration-500 hover:border-blue-400 hover:shadow-2xl flex flex-col justify-end"
+            >
+              {/* Background Render/Blueprint Image */}
+              <img
+                src={work.image}
+                alt={work.title}
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
+              />
 
-              <h3 className="text-2xl lg:text-3xl font-heading font-bold text-white group-hover:text-blue-400 transition-colors">
-                {FEATURED_CASE_STUDIES[0].title}
-              </h3>
+              {/* Dark Ambient Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent" />
 
-              <p className="text-xs text-slate-400 leading-relaxed max-w-md">
-                {FEATURED_CASE_STUDIES[0].summary}
-              </p>
+              {/* Bottom Card Info Overlay */}
+              <div className="relative z-10 p-6 space-y-2.5 text-white">
+                <span className="inline-block px-3 py-1 rounded-md bg-[#0057FF]/90 text-white text-[10px] font-mono font-bold uppercase tracking-wider backdrop-blur-md">
+                  {work.tag}
+                </span>
 
-              <div className="flex items-center gap-2 pt-2">
-                {FEATURED_CASE_STUDIES[0].tools.map((t, idx) => (
-                  <span key={idx} className="px-3 py-1 rounded-full bg-slate-800 text-[10px] font-mono text-slate-300">
-                    {t}
-                  </span>
-                ))}
+                <h3 className="text-xl font-heading font-bold text-white group-hover:text-blue-300 transition-colors">
+                  {work.title}
+                </h3>
+
+                <p className="text-xs text-slate-300 leading-relaxed line-clamp-2 font-normal">
+                  {work.description}
+                </p>
               </div>
             </div>
-
-            <div className="z-10 pt-4">
-              <button className="btn-secondary px-5 py-2.5 text-xs font-semibold flex items-center gap-2 text-[#0F172A]">
-                View Case Study <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-
-            {/* Background 3D Render Image */}
-            <div className="absolute right-0 bottom-0 top-0 w-3/5 pointer-events-none opacity-80 group-hover:scale-105 transition-transform duration-700">
-              <img
-                src={FEATURED_CASE_STUDIES[0].image}
-                alt={FEATURED_CASE_STUDIES[0].title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/70 to-transparent" />
-            </div>
-          </div>
-
-          {/* Card 2: Light Card */}
-          <div
-            onClick={() => setActiveTab('portfolio')}
-            className="lg:col-span-3 rounded-3xl bg-slate-50 border border-slate-200/80 p-6 flex flex-col justify-between space-y-6 cursor-pointer group hover:border-blue-300 hover:shadow-lg transition-all"
-          >
-            <div className="rounded-2xl overflow-hidden h-40">
-              <img
-                src={FEATURED_CASE_STUDIES[1].image}
-                alt={FEATURED_CASE_STUDIES[1].title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <span className="px-2.5 py-1 rounded-full bg-blue-50 text-[#0057FF] text-[9px] font-mono font-bold">
-                {FEATURED_CASE_STUDIES[1].tag}
-              </span>
-              <h4 className="text-lg font-heading font-bold text-[#0F172A] group-hover:text-[#0057FF] transition-colors">
-                {FEATURED_CASE_STUDIES[1].title}
-              </h4>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                {FEATURED_CASE_STUDIES[1].summary}
-              </p>
-            </div>
-
-            <div className="text-xs font-semibold text-[#0057FF] flex items-center gap-1">
-              View Case Study <ArrowRight className="w-3.5 h-3.5" />
-            </div>
-          </div>
-
-          {/* Card 3: Light Card */}
-          <div
-            onClick={() => setActiveTab('portfolio')}
-            className="lg:col-span-3 rounded-3xl bg-slate-50 border border-slate-200/80 p-6 flex flex-col justify-between space-y-6 cursor-pointer group hover:border-blue-300 hover:shadow-lg transition-all"
-          >
-            <div className="rounded-2xl overflow-hidden h-40">
-              <img
-                src={FEATURED_CASE_STUDIES[2].image}
-                alt={FEATURED_CASE_STUDIES[2].title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <span className="px-2.5 py-1 rounded-full bg-blue-50 text-[#0057FF] text-[9px] font-mono font-bold">
-                {FEATURED_CASE_STUDIES[2].tag}
-              </span>
-              <h4 className="text-lg font-heading font-bold text-[#0F172A] group-hover:text-[#0057FF] transition-colors">
-                {FEATURED_CASE_STUDIES[2].title}
-              </h4>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                {FEATURED_CASE_STUDIES[2].summary}
-              </p>
-            </div>
-
-            <div className="text-xs font-semibold text-[#0057FF] flex items-center gap-1">
-              View Case Study <ArrowRight className="w-3.5 h-3.5" />
-            </div>
-          </div>
-
+          ))}
         </div>
+
+        {/* Bottom Representative Disclaimer Pill Bar */}
+        <div className="p-4 rounded-2xl bg-slate-100/90 border border-slate-200/80 text-center">
+          <p className="text-[11px] font-mono text-slate-500">
+            Representative engineering example—no confidential client information shown. All models displayed are for capability demonstration only.
+          </p>
+        </div>
+
       </section>
 
       {/* 5. SOFTWARE EXPERTISE TICKER */}
