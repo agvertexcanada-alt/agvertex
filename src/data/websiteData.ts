@@ -63,6 +63,7 @@ export interface ArticleItem {
   snippet?: string;
   image: string;
   author: string;
+  content?: string;
 }
 
 export interface CareerItem {
@@ -310,127 +311,54 @@ export const PORTFOLIO_PROJECTS: ProjectItem[] = [
   },
 ];
 
-export const INDUSTRIES_DATA: IndustryItem[] = [
-  {
-    id: 'automotive',
-    title: 'Automotive & EV',
-    tagline: 'Lightweight chassis, battery enclosures & EV powertrain design.',
-    description: 'Empowering automotive startups and Tier-1 suppliers with high-efficiency component design, die casting layout, and drawing validation.',
-    image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=800&q=80',
-    applications: ['Gearbox & Transmission Housings', 'Structural Chassis Components', 'Battery Enclosures', 'Bracket & Suspension Systems'],
-    challenges: ['Minimizing curb weight without compromising crash safety', 'Managing heat dissipation in high-density EV battery modules'],
-    solutions: ['Die casting optimization & composite material replacement', 'DFM and GD&T tolerance balancing'],
-    stats: [
-      { label: 'Experience', value: '15+ Yrs' },
-      { label: 'Accuracy', value: '100%' },
-    ],
-  },
-  {
-    id: 'injection-molding',
-    title: 'Plastic Injection Molding',
-    tagline: 'Precision tooling, parting strategies & mold documentation.',
-    description: 'High-precision mold tooling design for consumer electronics, industrial enclosures, and medical components.',
-    image: 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=800&q=80',
-    applications: ['Multi-Cavity Molds', 'Hot Runner Systems', 'Slider & Lifter Actions', 'Electrodes & Inserts'],
-    challenges: ['Minimizing cycle time and thermal warpage', 'Complex parting lines'],
-    solutions: ['Advanced cooling layout & conformal cooling', 'Precision core/cavity splits'],
-    stats: [
-      { label: 'Mold Life', value: '1M+ Cycles' },
-      { label: 'Quality', value: 'Zero Defect' },
-    ],
-  },
-  {
-    id: 'die-casting',
-    title: 'Die-Casting Tooling',
-    tagline: 'High-pressure die casting dies for aluminum and magnesium alloys.',
-    description: 'Engineered for high thermal durability, reliable gating, and prolonged tool life in aggressive production environments.',
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
-    applications: ['Aluminum Die Casting Dies', 'Magnesium Structural Molds', 'Trim Dies & Fixtures', 'Thermal Flow Balancing'],
-    challenges: ['Thermal fatigue & porosity defects', 'Ejection friction'],
-    solutions: ['Optimized gating & venting channels', 'Hydraulic core pulling integration'],
-    stats: [
-      { label: 'Pressure Rating', value: '15,000 PSI' },
-      { label: 'Tool Life', value: 'Extended' },
-    ],
-  },
-];
-
-export const FEATURED_CASE_STUDIES: CaseStudyItem[] = [
-  {
-    id: 'hp-die-casting',
-    title: 'High-Pressure Die-Casting Die',
-    category: 'Automotive',
-    clientIndustry: 'Tier-1 Automotive',
-    summary: 'Full tool layout for complex aluminum gearbox housing.',
-    challenge: 'Designing a robust high-integrity die casting tool for complex thin-wall transmission housings with zero porosity.',
-    solution: 'Designed complete multi-slide die casting die with optimized cooling channels and vacuum venting.',
-    results: [
-      'Zero Porosity on Critical Sealing Surfaces',
-      'Over 200,000 Shot Tool Life',
-      '100% On-Time Production Sign-Off',
-    ],
-    image: 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=800&q=80',
-    tag: 'AUTOMOTIVE TOOLING',
-    tools: ['Creo', 'Siemens NX', 'AutoCAD'],
-  },
-  {
-    id: 'precision-tooling',
-    title: 'Precision Tooling Assembly',
-    category: 'Tooling',
-    clientIndustry: 'Consumer Electronics',
-    summary: 'Multi-cavity injection mold for consumer electronics.',
-    challenge: 'Achieving sub-micron parting line alignment and seamless texture finish on cosmetic plastic enclosures.',
-    solution: 'Engineered hardened tool steel inserts, balanced hot-runner manifold, and guided ejection.',
-    results: [
-      'Parting Line Flash < 0.01mm',
-      '18-Second Cycle Time Achieved',
-      'Approved for Global Mass Production',
-    ],
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
-    tag: 'PRODUCT DEVELOPMENT',
-    tools: ['Siemens NX', 'SolidWorks', 'Moldflow'],
-  },
-  {
-    id: 'chassis-review',
-    title: 'Chassis Component Review',
-    category: 'Drawings',
-    clientIndustry: 'Automotive OEM',
-    summary: 'Comprehensive verification of 50+ supplier prints.',
-    challenge: 'Reviewing 50+ supplier 2D blueprints for datum alignment, GD&T feasibility, and OEM specification compliance.',
-    solution: 'Conducted rigorous tolerance stack-up and drawing validation audits with structured redline reports.',
-    results: [
-      'Identified 24 Critical GD&T Discrepancies Prior to Tooling',
-      'Saved Estimated $350K in Rework Costs',
-      '100% Drawing Compliance Approved',
-    ],
-    image: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80',
-    tag: 'MECHANICAL DESIGN',
-    tools: ['SolidWorks', 'AutoCAD', 'Windchill'],
-  },
-];
-
 export const ARTICLES_DATA: ArticleItem[] = [
   {
+    id: 'featured-guide',
+    title: 'AUTOMOTIVE DRAWING REVIEW: A PRACTICAL CHECKLIST',
+    category: 'Drawing Validation',
+    date: 'August 2026',
+    readTime: '6 min read',
+    summary: 'Key checks for dimensions, GD&T, materials, revisions, manufacturability and supplier clarification.',
+    snippet: 'Key checks for dimensions, GD&T, materials, revisions, manufacturability and supplier clarification.',
+    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
+    author: 'Principal Metrology Specialist',
+    content: 'Reviewing automotive supplier prints requires structured datum verification, ASME Y14.5 feature control frame checks, and clear material notes before tooling kick-off.',
+  },
+  {
     id: 'article-1',
-    title: 'Best Practices for Injection Mold Parting Line Strategy & Tooling DFM',
-    category: 'Tooling Design',
+    title: 'DESIGNING PLASTIC PARTS FOR INJECTION MOLDING',
+    category: 'Product Design',
     date: 'August 2026',
     readTime: '5 min read',
-    summary: 'How to avoid flash, parting line mismatches, and complex tooling costs.',
-    snippet: 'How to avoid flash, parting line mismatches, and complex tooling costs.',
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+    summary: 'Practical DFM checks for wall thickness, draft, ribs, bosses and parting-line strategy.',
+    snippet: 'Practical DFM checks for wall thickness, draft, ribs, bosses and parting-line strategy.',
+    image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=800&q=80',
     author: 'Lead Tooling Engineer',
+    content: 'Ensuring uniform wall thickness, adding minimum 1-2 degree draft angles, and placing parting lines strategically eliminates sink marks and tooling flash.',
   },
   {
     id: 'article-2',
-    title: 'ASME Y14.5 GD&T Rules for Automotive Supplier Drawing Audits',
-    category: 'GD&T Standards',
+    title: 'GD&T DRAWING REVIEW: COMMON ISSUES TO CHECK',
+    category: 'Mold Design',
     date: 'July 2026',
-    readTime: '6 min read',
-    summary: 'Key datum reference frames, position tolerancing, and common supplier drafting mistakes.',
-    snippet: 'Key datum reference frames, position tolerancing, and common supplier drafting mistakes.',
-    image: 'https://images.unsplash.com/photo-1581092162384-8987c1d64718?auto=format&fit=crop&w=800&q=80',
-    author: 'Senior Mechanical Consultant',
+    readTime: '4 min read',
+    summary: 'A focused review of datums, tolerances, feature control frames and drawing clarity.',
+    snippet: 'A focused review of datums, tolerances, feature control frames and drawing clarity.',
+    image: 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=800&q=80',
+    author: 'Senior GD&T Specialist',
+    content: 'Common GD&T errors include improper datum reference frame hierarchy, conflicting basic dimensions, and insufficient MMC/LMC modifier application.',
+  },
+  {
+    id: 'article-3',
+    title: 'FROM 3D CAD MODEL TO PRODUCTION DRAWING',
+    category: 'CAD & Drawings',
+    date: 'July 2026',
+    readTime: '5 min read',
+    summary: 'How modelling decisions, tolerances, BOMs and revision control support manufacturing.',
+    snippet: 'How modelling decisions, tolerances, BOMs and revision control support manufacturing.',
+    image: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80',
+    author: 'Lead CAD Architect',
+    content: 'Seamless transition from 3D parametric CAD to production drawings requires structured model-based definitions (MBD) and synchronized BOM tables.',
   },
 ];
 
