@@ -40,13 +40,15 @@ export interface ProjectItem {
   id: string;
   title: string;
   category: string;
-  client: string;
+  tag: string;
+  client?: string;
   clientIndustry?: string;
-  year: string;
+  year?: string;
   timeline?: string;
   summary: string;
+  description?: string;
   image: string;
-  tags: string[];
+  tags?: string[];
   tools?: string[];
   highlights?: string[];
 }
@@ -221,6 +223,93 @@ export const CAD_PLM_TOOLS = [
   { name: 'Teamcenter', category: 'Enterprise PLM', color: '#006699' },
 ];
 
+export const PORTFOLIO_PROJECTS: ProjectItem[] = [
+  {
+    id: 'proj-1',
+    title: 'AUTOMOTIVE COMPONENT DEVELOPMENT',
+    category: 'Product Design',
+    tag: 'PRODUCT DESIGN',
+    client: 'Tier-1 Automotive OEM',
+    clientIndustry: 'Automotive',
+    summary: 'Concept development, detailed CAD, DFM and production documentation.',
+    description: 'Precision mechanical development of high-load wheel hub assembly and steering knuckle with complete DFM optimization and production-ready drawing release.',
+    image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=800&q=80',
+    tags: ['Product Design', 'Automotive', 'DFM', 'CAD'],
+    tools: ['SolidWorks', 'Creo', 'ASME Y14.5'],
+    highlights: ['Production-ready 3D CAD models', 'Full ASME GD&T drawings', 'DFM & DFA validated'],
+  },
+  {
+    id: 'proj-2',
+    title: 'INJECTION MOLD TOOLING',
+    category: 'Mold & Die Design',
+    tag: 'MOLD & DIE DESIGN',
+    client: 'Consumer Tech OEM',
+    clientIndustry: 'Tooling & Injection Molding',
+    summary: 'Manufacturing-focused mold design, component detailing and design review.',
+    description: 'Engineered high-precision multi-cavity injection mold tooling with optimized parting lines, hot runner balance, slide mechanisms, and conformal cooling circuits.',
+    image: 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=800&q=80',
+    tags: ['Mold Design', 'Injection Molding', 'Tooling'],
+    tools: ['Siemens NX Mold Wizard', 'SolidWorks', 'Moldflow'],
+    highlights: ['Multi-cavity mold layout', 'Sub-micron parting alignment', 'Toolmaker ready fabrication prints'],
+  },
+  {
+    id: 'proj-3',
+    title: 'AUTOMOTIVE DRAWING REVIEW',
+    category: 'Drawing Validation',
+    tag: 'DRAWING VALIDATION',
+    client: 'Automotive Tier-1 Supplier',
+    clientIndustry: 'Automotive & Chassis',
+    summary: 'Drawing verification, discrepancy resolution and supplier coordination.',
+    description: 'Comprehensive audit of automotive suspension control arm and chassis drawings against strict OEM specifications, GD&T datum reference frames, and dimensional tolerances.',
+    image: 'https://images.unsplash.com/photo-1581092162384-8987c1d64718?auto=format&fit=crop&w=800&q=80',
+    tags: ['Drawing Validation', 'ASME Y14.5', 'Supplier Audit'],
+    tools: ['AutoCAD', 'Windchill', 'GD&T'],
+    highlights: ['Identified 24+ critical drawing discrepancies', 'Saved $350K+ in potential tooling rework', '100% OEM compliance verified'],
+  },
+  {
+    id: 'proj-4',
+    title: 'PARAMETRIC CAD & ASSEMBLY DESIGN',
+    category: '3D CAD',
+    tag: '3D CAD MODELLING',
+    client: 'Machinery Manufacturer',
+    clientIndustry: 'Industrial Machinery',
+    summary: 'Detailed parts and assemblies, CAD conversion, design modifications and parametric modelling.',
+    description: 'High-integrity parametric 3D CAD modeling of heavy-duty industrial transmissions, precision gear trains, and modular structural enclosures.',
+    image: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80',
+    tags: ['3D CAD', 'Parametric Modeling', 'Assembly'],
+    tools: ['Creo', 'SolidWorks', 'Siemens NX'],
+    highlights: ['Parametric feature-tree architecture', 'Full exploded assembly BOMs', 'STEP / Parasolid neutral exports'],
+  },
+  {
+    id: 'proj-5',
+    title: 'PRESSURE DIE-CASTING DIE TOOLING',
+    category: 'Mold & Die Design',
+    tag: 'MOLD & DIE DESIGN',
+    client: 'Automotive Powertrain OEM',
+    clientIndustry: 'Die Casting & Tooling',
+    summary: 'High-pressure die casting tooling concepts, parting lines, and slide mechanisms.',
+    description: 'Complete high-integrity die casting tooling layout for thin-wall aluminum transmission housings with optimized thermal balancing and vacuum venting.',
+    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+    tags: ['Die Casting', 'Tooling', 'Aluminum'],
+    tools: ['Creo', 'AutoCAD', 'SolidWorks'],
+    highlights: ['Over 200,000 shot tool life', 'Zero-porosity sealing surfaces', 'Full insert & core fabrication prints'],
+  },
+  {
+    id: 'proj-6',
+    title: 'ASME Y14.5 GD&T & BOM DRAFTING',
+    category: 'Drawing Validation',
+    tag: 'DRAWING VALIDATION',
+    client: 'Precision Equipment Manufacturer',
+    clientIndustry: 'Industrial & Metrology',
+    summary: 'Production-ready 2D technical drawings, datum frameworks, and structured bills of materials.',
+    description: 'Preparation and auditing of ASME Y14.5 compliant 2D technical drawings, 1D/3D tolerance stack-up analysis, datum matrices, and structured multi-level BOMs.',
+    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80',
+    tags: ['GD&T', 'ASME Y14.5', 'BOM Drafting'],
+    tools: ['AutoCAD', 'SolidWorks', 'Windchill'],
+    highlights: ['ASME Y14.5 compliant datum schemes', '1D/3D tolerance stack calculations', 'ERP/PLM ready structured BOMs'],
+  },
+];
+
 export const INDUSTRIES_DATA: IndustryItem[] = [
   {
     id: 'automotive',
@@ -317,51 +406,6 @@ export const FEATURED_CASE_STUDIES: CaseStudyItem[] = [
     image: 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80',
     tag: 'MECHANICAL DESIGN',
     tools: ['SolidWorks', 'AutoCAD', 'Windchill'],
-  },
-];
-
-export const PORTFOLIO_PROJECTS: ProjectItem[] = [
-  {
-    id: 'proj-1',
-    title: 'Aluminum Gearbox Die Casting Die',
-    category: 'Die Casting',
-    client: 'Tier-1 Supplier',
-    clientIndustry: 'Automotive',
-    year: '2026',
-    timeline: '3 Weeks',
-    summary: 'Complete high-pressure die casting tooling layout with thermal balancing.',
-    image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=800&q=80',
-    tags: ['Tooling', 'Die Casting', 'Creo'],
-    tools: ['Creo', 'AutoCAD'],
-    highlights: ['Multi-slide die design', 'Optimized gating & venting'],
-  },
-  {
-    id: 'proj-2',
-    title: 'Multi-Cavity Plastic Injection Mold',
-    category: 'Injection Molding',
-    client: 'Electronics OEM',
-    clientIndustry: 'Consumer Tech',
-    year: '2025',
-    timeline: '4 Weeks',
-    summary: 'High-precision multi-cavity tooling with hot runner manifold system.',
-    image: 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=800&q=80',
-    tags: ['Mold Design', 'Hot Runner', 'NX'],
-    tools: ['Siemens NX', 'SolidWorks'],
-    highlights: ['Sub-micron parting alignment', '18s cycle time'],
-  },
-  {
-    id: 'proj-3',
-    title: 'Automotive Supplier GD&T Validation',
-    category: 'Drawing Validation',
-    client: 'Automotive OEM',
-    clientIndustry: 'Automotive',
-    year: '2025',
-    timeline: '2 Weeks',
-    summary: 'Comprehensive audit of 50+ supplier prints against ASME Y14.5.',
-    image: 'https://images.unsplash.com/photo-1581092162384-8987c1d64718?auto=format&fit=crop&w=800&q=80',
-    tags: ['GD&T', 'ASME Y14.5', 'Windchill'],
-    tools: ['AutoCAD', 'Windchill'],
-    highlights: ['24 discrepancies resolved', 'Zero tooling rework'],
   },
 ];
 
