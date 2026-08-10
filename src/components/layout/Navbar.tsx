@@ -31,14 +31,14 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenQ
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4 transition-all duration-300 pointer-events-none">
-      <div className={`max-w-[1440px] mx-auto pointer-events-auto transition-all duration-300 rounded-full px-6 sm:px-8 py-3.5 md:py-4 flex items-center justify-between ${
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-3.5 transition-all duration-300 pointer-events-none">
+      <div className={`max-w-[1440px] mx-auto pointer-events-auto transition-all duration-300 rounded-full px-6 sm:px-8 py-2.5 sm:py-3 flex items-center justify-between ${
         scrolled 
           ? 'bg-white/95 backdrop-blur-xl shadow-[0_10px_35px_rgba(15,23,42,0.1)] border border-slate-200/90' 
           : 'bg-white/90 backdrop-blur-md border border-slate-200/70 shadow-sm'
       }`}>
         
-        {/* AG VERTEX Custom Logo Image (Enlarged & Prominent) */}
+        {/* AG VERTEX Custom Logo Image (Further Enlarged) */}
         <button 
           onClick={() => { setActiveTab('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           className="flex items-center gap-2 group cursor-pointer focus:outline-none shrink-0"
@@ -46,7 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenQ
           <img
             src="/ag_vertex_logo.png"
             alt="AG VERTEX Logo"
-            className="h-11 sm:h-12 md:h-14 lg:h-15 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            className="h-13 sm:h-14 md:h-16 lg:h-18 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
           />
         </button>
 
