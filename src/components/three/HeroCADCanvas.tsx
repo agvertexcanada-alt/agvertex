@@ -57,6 +57,7 @@ export const HeroCADCanvas: React.FC = () => {
           preload="auto"
           className="w-full h-full object-cover mix-blend-multiply rounded-3xl"
         >
+          <source src="/new_final.mp4" type="video/mp4" />
           <source src="/hero_video.mp4" type="video/mp4" />
           <source src="/hero_gearbox_assembly.mp4" type="video/mp4" />
           Your browser does not support the video tag.
