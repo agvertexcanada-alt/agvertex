@@ -38,19 +38,19 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenQ
           : 'bg-white/90 backdrop-blur-md border border-slate-200/70 shadow-xs'
       }`}>
         
-        {/* AG VERTEX Custom Logo Image */}
+        {/* AG VERTEX Custom Logo Image (Bigger Logo without increasing navbar height) */}
         <button 
           onClick={() => { setActiveTab('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-          className="flex items-center gap-2 group cursor-pointer focus:outline-none shrink-0"
+          className="flex items-center group cursor-pointer focus:outline-none shrink-0 relative py-0"
         >
           <img
             src="/ag_vertex_logo.png"
             alt="AG VERTEX Logo"
-            className="h-10 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            className="h-14 sm:h-16 md:h-18 lg:h-20 w-auto object-contain -my-3 sm:-my-4 md:-my-5 transition-transform duration-300 group-hover:scale-105 filter drop-shadow-xs"
           />
         </button>
 
-        {/* Desktop Navigation Links (Compact & Crisp) */}
+        {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
           {navLinks.map((link) => {
             const isActive = activeTab === link.id;
@@ -73,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenQ
           })}
         </nav>
 
-        {/* Right CTA Button (Sleek pill) */}
+        {/* Right CTA Button */}
         <div className="hidden sm:flex items-center gap-3">
           <button
             onClick={onOpenQuoteModal}
