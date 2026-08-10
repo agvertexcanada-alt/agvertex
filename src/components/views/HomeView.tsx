@@ -187,53 +187,53 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
           </button>
         </div>
 
-        {/* 6 Capabilities Cards Grid (2 rows of 3 on desktop) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* 6 Capabilities Cards Grid (2 rows of 3 on desktop, enlarged for high readability) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {SERVICES_DATA.map((srv, idx) => (
             <div
               key={srv.id}
               onClick={() => setActiveTab('services')}
-              className="glass-card overflow-hidden bg-white border border-slate-200/90 rounded-3xl cursor-pointer group hover:border-blue-400 flex flex-col justify-between shadow-md transition-all duration-300"
+              className="glass-card overflow-hidden bg-white border border-slate-200/90 rounded-3xl cursor-pointer group hover:border-blue-400 flex flex-col justify-between shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <div>
-                {/* Image Header with Badge */}
-                <div className="h-44 overflow-hidden relative">
+                {/* Enlarged Image Header with Badge */}
+                <div className="h-60 sm:h-72 overflow-hidden relative">
                   <img
                     src={srv.image}
                     alt={srv.title}
                     className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
                   
                   {/* Top Badge */}
-                  <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-mono font-bold border border-slate-700">
+                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                    <span className="px-3.5 py-1.5 rounded-full bg-slate-900/85 backdrop-blur-md text-white text-xs font-mono font-bold border border-slate-700/80 shadow-sm">
                       0{idx + 1}
                     </span>
 
-                    <div className="w-8 h-8 rounded-xl bg-white/90 backdrop-blur-md text-[#0057FF] flex items-center justify-center shadow-sm">
+                    <div className="w-10 h-10 rounded-2xl bg-white/95 backdrop-blur-md text-[#0057FF] flex items-center justify-center shadow-md">
                       {getServiceIcon(idx)}
                     </div>
                   </div>
 
-                  {/* Bottom Image Title */}
-                  <div className="absolute bottom-3.5 left-4 right-4">
-                    <h3 className="text-lg font-heading font-bold text-white group-hover:text-blue-300 transition-colors">
+                  {/* Bottom Image Title - Larger & Clearer */}
+                  <div className="absolute bottom-5 left-5 right-5">
+                    <h3 className="text-xl sm:text-2xl font-heading font-bold text-white group-hover:text-blue-300 transition-colors leading-snug drop-shadow-md">
                       {srv.title}
                     </h3>
                   </div>
                 </div>
 
-                {/* Card Content Body */}
-                <div className="p-5 space-y-3">
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                {/* Card Content Body - Spacious & Highly Readable */}
+                <div className="p-7 sm:p-8 space-y-4">
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
                     {srv.shortDesc}
                   </p>
 
-                  {/* Feature Tags */}
-                  <div className="flex flex-wrap gap-1.5 pt-1 border-t border-slate-100">
+                  {/* Feature Tags - Larger Badges */}
+                  <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
                     {srv.capabilities.slice(0, 2).map((cap, i) => (
-                      <span key={i} className="px-2.5 py-1 rounded-lg bg-blue-50/80 text-[10px] font-semibold text-[#0057FF] border border-blue-100">
+                      <span key={i} className="px-3.5 py-1.5 rounded-xl bg-blue-50/90 text-xs font-semibold text-[#0057FF] border border-blue-100/90">
                         {cap}
                       </span>
                     ))}
@@ -242,10 +242,10 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
               </div>
 
               {/* Bottom Action Footer */}
-              <div className="px-5 pb-5 pt-1 flex items-center justify-between text-xs font-semibold text-[#0057FF]">
+              <div className="px-7 sm:px-8 pb-7 sm:pb-8 pt-2 flex items-center justify-between text-sm font-semibold text-[#0057FF] border-t border-slate-100/60">
                 <span>Explore Capability</span>
-                <div className="w-7 h-7 rounded-full bg-blue-50 group-hover:bg-[#0057FF] group-hover:text-white flex items-center justify-center transition-colors">
-                  <ArrowRight className="w-3.5 h-3.5" />
+                <div className="w-9 h-9 rounded-full bg-blue-50 group-hover:bg-[#0057FF] group-hover:text-white flex items-center justify-center transition-colors shadow-xs">
+                  <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
 
