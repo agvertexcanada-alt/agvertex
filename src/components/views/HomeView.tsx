@@ -34,7 +34,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
   const PROCESS_STEPS_ENHANCED = [
     {
       step: '01',
-      title: '01 Understand',
+      title: 'Understand',
       desc: 'Clarify requirements and constraints.',
       tag: 'DISCOVERY & SPECS',
       deliverable: 'Engineering brief, material specs, CAD format requirements, and target tolerances.',
@@ -42,7 +42,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
     },
     {
       step: '02',
-      title: '02 Develop',
+      title: 'Develop',
       desc: 'Explore concepts and design direction.',
       tag: 'CONCEPT CAD & DFM',
       deliverable: 'Preliminary 3D solid concepts, parting line feasibility, and initial ergonomics review.',
@@ -50,7 +50,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
     },
     {
       step: '03',
-      title: '03 Detail',
+      title: 'Detail',
       desc: 'Create detailed 3D models and drawings.',
       tag: 'PARAMETRIC 3D & 2D',
       deliverable: 'Complete parametric assemblies, ASME Y14.5 manufacturing drawings, and multi-level BOMs.',
@@ -58,7 +58,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
     },
     {
       step: '04',
-      title: '04 Review',
+      title: 'Review',
       desc: 'Validate drawings and manufacturability.',
       tag: 'GD&T & DFM AUDIT',
       deliverable: '1D/3D tolerance stack-up analysis, redline drawing verification, and supplier compliance sign-off.',
@@ -66,7 +66,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
     },
     {
       step: '05',
-      title: '05 Support',
+      title: 'Support',
       desc: 'Support production and answer supplier questions.',
       tag: 'TOOLMAKER LIAISON',
       deliverable: 'Direct toolmaker technical coordination, RFI discrepancy resolution, and prototype trial support.',

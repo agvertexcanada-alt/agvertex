@@ -187,11 +187,11 @@ export const SERVICES_DATA: ServiceItem[] = [
 ];
 
 export const PROCESS_STEPS = [
-  { step: '01', title: '01 Understand', desc: 'Clarify requirements and constraints.' },
-  { step: '02', title: '02 Develop', desc: 'Explore concepts and design direction.' },
-  { step: '03', title: '03 Detail', desc: 'Create detailed 3D models and drawings.' },
-  { step: '04', title: '04 Review', desc: 'Validate drawings and manufacturability.' },
-  { step: '05', title: '05 Support', desc: 'Support production and answer supplier questions.' },
+  { step: '01', title: 'Understand', desc: 'Clarify requirements and constraints.' },
+  { step: '02', title: 'Develop', desc: 'Explore concepts and design direction.' },
+  { step: '03', title: 'Detail', desc: 'Create detailed 3D models and drawings.' },
+  { step: '04', title: 'Review', desc: 'Validate drawings and manufacturability.' },
+  { step: '05', title: 'Support', desc: 'Support production and answer supplier questions.' },
 ];
 
 export const SHOWCASE_CARDS = [
