@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HeroCADCanvas } from '../three/HeroCADCanvas';
-import { SERVICES_DATA, PROCESS_STEPS, SHOWCASE_CARDS, CAD_PLM_TOOLS } from '../../data/websiteData';
+import { SERVICES_DATA, SHOWCASE_CARDS, CAD_PLM_TOOLS } from '../../data/websiteData';
 import { 
   ArrowRight, 
   MapPin, 
@@ -15,7 +15,11 @@ import {
   FileText, 
   CheckCircle, 
   Headphones,
-  Compass
+  Compass,
+  ChevronRight,
+  ShieldCheck,
+  Zap,
+  Workflow
 } from 'lucide-react';
 
 interface HomeViewProps {
@@ -25,16 +29,50 @@ interface HomeViewProps {
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteModal }) => {
-  const getProcessIcon = (idx: number) => {
-    switch (idx) {
-      case 0: return <Search className="w-5 h-5" />;
-      case 1: return <Compass className="w-5 h-5" />;
-      case 2: return <PenTool className="w-5 h-5" />;
-      case 3: return <CheckCircle className="w-5 h-5" />;
-      case 4: return <Headphones className="w-5 h-5" />;
-      default: return <Search className="w-5 h-5" />;
-    }
-  };
+  const [activeStep, setActiveStep] = useState<number>(0);
+
+  const PROCESS_STEPS_ENHANCED = [
+    {
+      step: '01',
+      title: '01 Understand',
+      desc: 'Clarify requirements and constraints.',
+      tag: 'DISCOVERY & SPECS',
+      deliverable: 'Engineering brief, material specs, CAD format requirements, and target tolerances.',
+      icon: Search,
+    },
+    {
+      step: '02',
+      title: '02 Develop',
+      desc: 'Explore concepts and design direction.',
+      tag: 'CONCEPT CAD & DFM',
+      deliverable: 'Preliminary 3D solid concepts, parting line feasibility, and initial ergonomics review.',
+      icon: Compass,
+    },
+    {
+      step: '03',
+      title: '03 Detail',
+      desc: 'Create detailed 3D models and drawings.',
+      tag: 'PARAMETRIC 3D & 2D',
+      deliverable: 'Complete parametric assemblies, ASME Y14.5 manufacturing drawings, and multi-level BOMs.',
+      icon: PenTool,
+    },
+    {
+      step: '04',
+      title: '04 Review',
+      desc: 'Validate drawings and manufacturability.',
+      tag: 'GD&T & DFM AUDIT',
+      deliverable: '1D/3D tolerance stack-up analysis, redline drawing verification, and supplier compliance sign-off.',
+      icon: CheckCircle,
+    },
+    {
+      step: '05',
+      title: '05 Support',
+      desc: 'Support production and answer supplier questions.',
+      tag: 'TOOLMAKER LIAISON',
+      deliverable: 'Direct toolmaker technical coordination, RFI discrepancy resolution, and prototype trial support.',
+      icon: Headphones,
+    },
+  ];
 
   const getServiceIcon = (idx: number) => {
     switch (idx) {
@@ -217,40 +255,136 @@ export const HomeView: React.FC<HomeViewProps> = ({ setActiveTab, onOpenQuoteMod
 
       </section>
 
-      {/* 3. A PRACTICAL DESIGN PROCESS (5 Steps) */}
+      {/* 3. A PRACTICAL DESIGN PROCESS - ULTRA-CREATIVE INTERACTIVE PIPELINE */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-10">
-        <div className="text-center max-w-xl mx-auto space-y-2">
-          <span className="text-xs font-mono font-bold text-[#0057FF] uppercase tracking-widest">
-            OUR METHODOLOGY
+        
+        {/* Section Title Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div className="space-y-1.5">
+            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#0057FF] uppercase tracking-widest">
+              <Workflow className="w-3.5 h-3.5" />
+              OUR METHODOLOGY
+            </div>
+            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-[#0F172A]">
+              A PRACTICAL DESIGN PROCESS
+            </h2>
+          </div>
+
+          <span className="text-xs font-mono text-slate-500">
+            5-Stage Manufacturing-Ready Workflow
           </span>
-          <h2 className="text-3xl lg:text-4xl font-heading font-bold text-[#0F172A]">
-            A PRACTICAL DESIGN PROCESS
-          </h2>
         </div>
 
-        {/* 5 Connected Process Nodes */}
+        {/* Interactive Stepped Pipeline Cards */}
         <div className="relative">
-          <div className="absolute top-7 left-16 right-16 h-0.5 border-b-2 border-dashed border-slate-200 hidden md:block" />
+          
+          {/* Glowing Connecting Track Beam in Background */}
+          <div className="absolute top-1/2 -translate-y-1/2 left-8 right-8 h-1.5 bg-gradient-to-r from-blue-100 via-blue-200 to-blue-100 rounded-full hidden lg:block" />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 relative z-10">
-            {PROCESS_STEPS.map((ps, idx) => (
-              <div
-                key={idx}
-                onClick={() => setActiveTab('process')}
-                className="flex flex-col items-center text-center space-y-3 cursor-pointer group bg-white/60 p-5 rounded-3xl border border-slate-200/60 hover:border-blue-300 transition-all shadow-xs"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-white border-2 border-blue-500/20 text-[#0057FF] flex items-center justify-center group-hover:bg-[#0057FF] group-hover:text-white transition-all shadow-md">
-                  {getProcessIcon(idx)}
-                </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 relative z-10">
+            {PROCESS_STEPS_ENHANCED.map((ps, idx) => {
+              const IconComp = ps.icon;
+              const isActive = activeStep === idx;
+              
+              return (
+                <div
+                  key={idx}
+                  onClick={() => setActiveStep(idx)}
+                  onMouseEnter={() => setActiveStep(idx)}
+                  className={`glass-card p-6 rounded-3xl border transition-all duration-300 cursor-pointer flex flex-col justify-between relative group ${
+                    isActive
+                      ? 'bg-white border-[#0057FF] shadow-[0_15px_35px_rgba(0,87,255,0.18)] -translate-y-2'
+                      : 'bg-white/80 border-slate-200/80 hover:border-blue-300 hover:shadow-md'
+                  }`}
+                >
+                  {/* Top Step Number Badge & Status Indicator */}
+                  <div className="flex items-center justify-between pb-3">
+                    <span className={`px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-widest uppercase transition-colors ${
+                      isActive
+                        ? 'bg-[#0057FF] text-white shadow-sm'
+                        : 'bg-slate-100 text-slate-500 group-hover:bg-blue-50 group-hover:text-[#0057FF]'
+                    }`}>
+                      STEP {ps.step}
+                    </span>
 
-                <div className="space-y-1">
-                  <h3 className="text-sm font-heading font-bold text-[#0F172A]">{ps.title}</h3>
-                  <p className="text-xs text-slate-500 leading-relaxed max-w-[170px] mx-auto">{ps.desc}</p>
+                    <span className={`w-2.5 h-2.5 rounded-full transition-all ${
+                      isActive
+                        ? 'bg-[#0057FF] ring-4 ring-blue-100 animate-pulse'
+                        : 'bg-slate-300'
+                    }`} />
+                  </div>
+
+                  {/* Center Holographic Icon Halo Container */}
+                  <div className="py-3 flex justify-center">
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                      isActive
+                        ? 'bg-[#0057FF] text-white shadow-lg shadow-blue-500/30 scale-110'
+                        : 'bg-blue-50 text-[#0057FF] group-hover:bg-blue-100 group-hover:scale-105'
+                    }`}>
+                      <IconComp className="w-6 h-6" />
+                    </div>
+                  </div>
+
+                  {/* Step Title & Description */}
+                  <div className="space-y-1.5 text-center pt-2">
+                    <h3 className={`text-base font-heading font-bold transition-colors ${
+                      isActive ? 'text-[#0057FF]' : 'text-[#0F172A]'
+                    }`}>
+                      {ps.title}
+                    </h3>
+                    <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                      {ps.desc}
+                    </p>
+                  </div>
+
+                  {/* Bottom Technical Spec Pill */}
+                  <div className="pt-3 mt-2 border-t border-slate-100 text-center">
+                    <span className={`text-[10px] font-mono font-semibold transition-colors ${
+                      isActive ? 'text-[#0057FF]' : 'text-slate-400'
+                    }`}>
+                      [{ps.tag}]
+                    </span>
+                  </div>
+
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
+
+        {/* Dynamic Interactive Stage Deep-Dive Banner */}
+        <div className="rounded-3xl bg-gradient-to-r from-blue-50/90 via-white to-blue-50/90 p-6 sm:p-8 border border-blue-200/80 shadow-md flex flex-col md:flex-row items-center justify-between gap-6 transition-all duration-300">
+          
+          <div className="space-y-2 text-left w-full md:w-2/3">
+            <div className="flex items-center gap-2">
+              <span className="px-3 py-1 rounded-full bg-[#0057FF] text-white text-[10px] font-mono font-bold">
+                STAGE {PROCESS_STEPS_ENHANCED[activeStep].step} DELIVERABLE
+              </span>
+              <span className="text-xs font-mono font-semibold text-slate-500">
+                {PROCESS_STEPS_ENHANCED[activeStep].tag}
+              </span>
+            </div>
+
+            <h4 className="text-lg font-heading font-bold text-[#0F172A]">
+              {PROCESS_STEPS_ENHANCED[activeStep].title}: Key Engineering Output
+            </h4>
+
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              {PROCESS_STEPS_ENHANCED[activeStep].deliverable}
+            </p>
+          </div>
+
+          <div className="w-full md:w-auto flex justify-start md:justify-end">
+            <button
+              onClick={() => setActiveTab('process')}
+              className="btn-secondary px-6 py-3 text-xs font-semibold flex items-center gap-2 cursor-pointer whitespace-nowrap"
+            >
+              Explore Full 5-Step Process <ChevronRight className="w-3.5 h-3.5 text-[#0057FF]" />
+            </button>
+          </div>
+
+        </div>
+
       </section>
 
       {/* 4. EXPERIENCE BEHIND AG VERTEX */}
