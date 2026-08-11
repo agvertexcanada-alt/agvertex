@@ -1,31 +1,35 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Mail, MapPin, ArrowUp, Linkedin, Youtube, Instagram } from 'lucide-react';
 
 interface FooterProps {
-  setActiveTab: (tab: string) => void;
-  onOpenQuoteModal: () => void;
+  onOpenQuoteModal?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
+export const Footer: React.FC<FooterProps> = () => {
+  const navigate = useNavigate();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const servicesList = [
-    'Product Design & Development',
-    'Injection Mold Design',
-    'Pressure Die-Casting Die Design',
-    '3D CAD Modelling',
-    'Drawings, GD&T & BOMs',
-    'Automotive Drawing Validation',
+    { label: 'Product Design & Development', path: '/services' },
+    { label: 'Injection Mold Design', path: '/services' },
+    { label: 'Pressure Die-Casting Die Design', path: '/services' },
+    { label: '3D CAD Modelling', path: '/services' },
+    { label: 'Drawings, GD&T & BOMs', path: '/services' },
+    { label: 'Automotive Drawing Validation', path: '/services' },
   ];
 
   const companyList = [
-    { label: 'About', tab: 'about' },
-    { label: 'Capability Showcase', tab: 'portfolio' },
-    { label: 'Industries', tab: 'industries' },
-    { label: 'Engineering Approach', tab: 'process' },
-    { label: 'Contact', tab: 'contact' },
+    { label: 'About', path: '/about' },
+    { label: 'Capability Showcase', path: '/portfolio' },
+    { label: 'Industries', path: '/industries' },
+    { label: 'Engineering Approach', path: '/process' },
+    { label: 'Resources & Insights', path: '/resources' },
+    { label: 'Careers', path: '/careers' },
+    { label: 'Contact', path: '/contact' },
   ];
 
   return (
@@ -37,8 +41,8 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
           
           {/* Col 1: Custom Logo & Tagline */}
           <div className="lg:col-span-4 space-y-4">
-            <button
-              onClick={() => { setActiveTab('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            <Link
+              to="/"
               className="flex items-center cursor-pointer focus:outline-none"
             >
               <img
@@ -46,7 +50,7 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
                 alt="AG VERTEX Logo"
                 className="h-12 md:h-14 w-auto object-contain"
               />
-            </button>
+            </Link>
 
             <p className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-sm">
               Mechanical design consultancy in Windsor, Ontario.
@@ -74,12 +78,12 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
             <ul className="space-y-2 text-xs text-slate-500">
               {servicesList.map((service, idx) => (
                 <li key={idx}>
-                  <button 
-                    onClick={() => { setActiveTab('services'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    className="hover:text-[#0057FF] transition-colors text-left"
+                  <Link 
+                    to={service.path}
+                    className="hover:text-[#0057FF] transition-colors text-left block"
                   >
-                    {service}
-                  </button>
+                    {service.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -93,12 +97,12 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
             <ul className="space-y-2 text-xs text-slate-500">
               {companyList.map((comp, idx) => (
                 <li key={idx}>
-                  <button 
-                    onClick={() => { setActiveTab(comp.tab); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    className="hover:text-[#0057FF] transition-colors text-left"
+                  <Link 
+                    to={comp.path}
+                    className="hover:text-[#0057FF] transition-colors text-left block"
                   >
                     {comp.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -118,16 +122,25 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
 
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#0057FF] shrink-0" />
-                <a href="mailto:contact@agvertex.com" className="hover:text-[#0057FF] transition-colors">
-                  contact@agvertex.com
+                <a href="mailto:info@agvertex.com" className="hover:text-[#0057FF] transition-colors">
+                  info@agvertex.com
                 </a>
+              </div>
+
+              <div className="pt-2">
+                <button
+                  onClick={() => navigate('/contact')}
+                  className="px-4 py-2 rounded-xl bg-blue-50 text-[#0057FF] font-semibold text-xs hover:bg-[#0057FF] hover:text-white transition-colors cursor-pointer"
+                >
+                  Request a Project Review →
+                </button>
               </div>
             </div>
           </div>
 
         </div>
 
-        {/* Bottom Legal Bar matching image */}
+        {/* Bottom Legal Bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-4">
           <p>© 2026 AG Vertex. All rights reserved.</p>
 

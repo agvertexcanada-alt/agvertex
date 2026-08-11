@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Preloader } from './components/common/Preloader';
+import { ScrollToTop } from './components/common/ScrollToTop';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { BackgroundParticlesCanvas } from './components/three/BackgroundParticlesCanvas';
@@ -18,7 +20,7 @@ import { FAQView } from './components/views/FAQView';
 import { X, Send, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<string>('home');
+  const navigate = useNavigate();
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState<boolean>(false);
   const [quoteSubmitted, setQuoteSubmitted] = useState<boolean>(false);
   const [quoteForm, setQuoteForm] = useState({
@@ -29,6 +31,15 @@ export default function App() {
     timeline: 'Standard (1-2 Weeks)',
     description: '',
   });
+
+  const handleNavigate = (tabOrPath: string) => {
+    const cleanPath = tabOrPath.startsWith('/')
+      ? tabOrPath
+      : tabOrPath === 'home'
+      ? '/'
+      : `/${tabOrPath}`;
+    navigate(cleanPath);
+  };
 
   const handleQuoteSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,41 +64,99 @@ export default function App() {
       {/* 0. INITIAL PRELOADER SCREEN */}
       <Preloader />
 
+      {/* 1. SCROLL RESET ON ROUTE CHANGE */}
+      <ScrollToTop />
+
       {/* GLOBAL DYNAMIC TOPOGRAPHIC CONTOUR BACKGROUND */}
       <BackgroundParticlesCanvas />
 
       {/* GLOBAL HEADER NAVBAR */}
       <Navbar
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
         onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
       />
 
-      {/* MAIN VIEW ROUTER */}
+      {/* MULTI-PAGE VIEW ROUTER */}
       <main className="relative z-10">
-        {activeTab === 'home' && (
-          <HomeView
-            setActiveTab={setActiveTab}
-            onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
-            onOpenProjectModal={() => setActiveTab('case-study')}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <HomeView
+                setActiveTab={handleNavigate}
+                onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+                onOpenProjectModal={() => handleNavigate('/case-study')}
+              />
+            }
           />
-        )}
-        {activeTab === 'about' && <AboutView setActiveTab={setActiveTab} onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
-        {activeTab === 'services' && <ServicesView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
-        {activeTab === 'industries' && <IndustriesView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
-        {activeTab === 'portfolio' && <PortfolioView setActiveTab={setActiveTab} onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
-        {activeTab === 'case-study' && <CaseStudyView setActiveTab={setActiveTab} onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
-        {activeTab === 'technologies' && <TechnologiesView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
-        {activeTab === 'process' && <ProcessView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
-        {activeTab === 'resources' && <ResourcesView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
-        {activeTab === 'careers' && <CareersView />}
-        {activeTab === 'contact' && <ContactView />}
-        {activeTab === 'faq' && <FAQView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
+          <Route
+            path="/about"
+            element={
+              <AboutView
+                setActiveTab={handleNavigate}
+                onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+              />
+            }
+          />
+          <Route
+            path="/services"
+            element={<ServicesView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
+          />
+          <Route
+            path="/industries"
+            element={<IndustriesView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
+          />
+          <Route
+            path="/portfolio"
+            element={
+              <PortfolioView
+                setActiveTab={handleNavigate}
+                onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+              />
+            }
+          />
+          <Route
+            path="/case-study"
+            element={
+              <CaseStudyView
+                setActiveTab={handleNavigate}
+                onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+              />
+            }
+          />
+          <Route
+            path="/technologies"
+            element={<TechnologiesView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
+          />
+          <Route
+            path="/process"
+            element={<ProcessView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
+          />
+          <Route
+            path="/resources"
+            element={<ResourcesView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
+          />
+          <Route path="/careers" element={<CareersView />} />
+          <Route path="/contact" element={<ContactView />} />
+          <Route
+            path="/faq"
+            element={<FAQView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
+          />
+          {/* Fallback route */}
+          <Route
+            path="*"
+            element={
+              <HomeView
+                setActiveTab={handleNavigate}
+                onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
+                onOpenProjectModal={() => handleNavigate('/case-study')}
+              />
+            }
+          />
+        </Routes>
       </main>
 
       {/* GLOBAL FOOTER */}
       <Footer
-        setActiveTab={setActiveTab}
         onOpenQuoteModal={() => setIsQuoteModalOpen(true)}
       />
 

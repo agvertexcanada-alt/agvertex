@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
 
 interface NavbarProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
   onOpenQuoteModal: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenQuoteModal }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,15 +21,22 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenQ
   }, []);
 
   const navLinks = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'services', label: 'Services' },
-    { id: 'industries', label: 'Industries' },
-    { id: 'portfolio', label: 'Portfolio' },
-    { id: 'resources', label: 'Resources' },
-    { id: 'careers', label: 'Careers' },
-    { id: 'contact', label: 'Contact' },
+    { path: '/', label: 'Home' },
+    { path: '/about', label: 'About' },
+    { path: '/services', label: 'Services' },
+    { path: '/industries', label: 'Industries' },
+    { path: '/portfolio', label: 'Portfolio' },
+    { path: '/resources', label: 'Resources' },
+    { path: '/careers', label: 'Careers' },
+    { path: '/contact', label: 'Contact' },
   ];
+
+  const isLinkActive = (path: string) => {
+    if (path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(path);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-2 sm:py-2.5 transition-all duration-300 pointer-events-none">
@@ -38,9 +46,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenQ
           : 'bg-white/90 backdrop-blur-md border border-slate-200/70 shadow-xs'
       }`}>
         
-        {/* AG VERTEX Custom Logo Image (Bigger Logo without increasing navbar height) */}
-        <button 
-          onClick={() => { setActiveTab('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+        {/* AG VERTEX Custom Logo Image */}
+        <Link 
+          to="/"
           className="flex items-center group cursor-pointer focus:outline-none shrink-0 relative py-0"
         >
           <img
@@ -48,27 +56,24 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenQ
             alt="AG VERTEX Logo"
             className="h-14 sm:h-16 md:h-18 lg:h-20 w-auto object-contain -my-3 sm:-my-4 md:-my-5 transition-transform duration-300 group-hover:scale-105 filter drop-shadow-xs"
           />
-        </button>
+        </Link>
 
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
           {navLinks.map((link) => {
-            const isActive = activeTab === link.id;
+            const active = isLinkActive(link.path);
             return (
-              <button
-                key={link.id}
-                onClick={() => {
-                  setActiveTab(link.id);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
+              <Link
+                key={link.path}
+                to={link.path}
                 className={`px-3.5 py-1.5 text-[13.5px] xl:text-sm font-semibold rounded-full transition-all duration-200 cursor-pointer ${
-                  isActive
+                  active
                     ? 'bg-slate-100 text-[#0057FF] font-bold shadow-xs'
                     : 'text-slate-700 hover:text-[#0057FF] hover:bg-slate-50'
                 }`}
               >
                 {link.label}
-              </button>
+              </Link>
             );
           })}
         </nav>
@@ -76,7 +81,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenQ
         {/* Right CTA Button */}
         <div className="hidden sm:flex items-center gap-3">
           <button
-            onClick={onOpenQuoteModal}
+            onClick={() => {
+              navigate('/contact');
+            }}
             className="btn-primary px-5 py-2 text-xs sm:text-[13px] font-semibold flex items-center gap-2 cursor-pointer shadow-md shadow-blue-500/20"
           >
             Start Your Project
@@ -98,27 +105,27 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenQ
       {mobileMenuOpen && (
         <div className="lg:hidden pointer-events-auto mt-2 max-w-[1360px] mx-auto bg-white/95 backdrop-blur-2xl rounded-3xl p-5 border border-slate-200 shadow-2xl animate-in slide-in-from-top duration-300">
           <div className="grid grid-cols-2 gap-2 mb-4">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => {
-                  setActiveTab(link.id);
-                  setMobileMenuOpen(false);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className={`px-3.5 py-2.5 text-left text-sm font-semibold rounded-xl transition-colors ${
-                  activeTab === link.id ? 'bg-blue-50 text-[#0057FF] font-bold' : 'text-slate-700 hover:bg-slate-50'
-                }`}
-              >
-                {link.label}
-              </button>
-            ))}
+            {navLinks.map((link) => {
+              const active = isLinkActive(link.path);
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`px-3.5 py-2.5 text-left text-sm font-semibold rounded-xl transition-colors ${
+                    active ? 'bg-blue-50 text-[#0057FF] font-bold' : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
 
           <button
             onClick={() => {
               setMobileMenuOpen(false);
-              onOpenQuoteModal();
+              navigate('/contact');
             }}
             className="w-full btn-primary py-3 text-sm font-semibold flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25"
           >
