@@ -96,7 +96,7 @@ export const IndustriesView: React.FC<IndustriesViewProps> = ({ onOpenQuoteModal
         { icon: Box, label: 'Sheet Metal' },
         { icon: Users, label: 'Assembly Fixtures' },
       ],
-      image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1000&q=80',
+      image: '/services/industrial_metrology.png',
       clientNeeds: [
         'Custom machinery & structural weldment design',
         'ASME compliant fabrication drawings & BOMs',

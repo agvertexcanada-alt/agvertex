@@ -34,7 +34,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ setActiveTab, onOpenQuoteM
     {
       title: 'Product Development',
       desc: 'From concept through detailed design, we create practical solutions that align with function, cost, and manufacturability.',
-      image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=800&q=80',
+      image: '/services/industrial_metrology.png',
     },
     {
       title: 'Tooling Experience',

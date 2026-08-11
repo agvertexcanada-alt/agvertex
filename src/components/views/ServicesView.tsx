@@ -51,7 +51,7 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ onOpenQuoteModal }) 
       alt: '3D CAD Engineering Workstation',
     },
     {
-      src: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=600&q=80',
+      src: '/services/industrial_metrology.png',
       alt: 'Precision Machined Aluminum Housing',
     },
     {
