@@ -3,10 +3,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
 
 interface NavbarProps {
-  onOpenQuoteModal: () => void;
+  onOpenQuoteModal?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
+export const Navbar: React.FC<NavbarProps> = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -25,7 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
     { path: '/about', label: 'About' },
     { path: '/services', label: 'Services' },
     { path: '/industries', label: 'Industries' },
-    { path: '/portfolio', label: 'Portfolio' },
+    { path: '/portfolio', label: 'Showcase' },
     { path: '/resources', label: 'Resources' },
     { path: '/careers', label: 'Careers' },
     { path: '/contact', label: 'Contact' },
@@ -46,7 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
           : 'bg-white/90 backdrop-blur-md border border-slate-200/70 shadow-xs'
       }`}>
         
-        {/* AG VERTEX Custom Logo Image */}
+        {/* AG VERTEX Logo */}
         <Link 
           to="/"
           className="flex items-center group cursor-pointer focus:outline-none shrink-0 relative py-0"
@@ -78,15 +78,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
           })}
         </nav>
 
-        {/* Right CTA Button */}
-        <div className="hidden sm:flex items-center gap-3">
+        {/* Right Buttons (Matching PDF Header) */}
+        <div className="hidden sm:flex items-center gap-2.5">
           <button
-            onClick={() => {
-              navigate('/contact');
-            }}
+            onClick={() => navigate('/contact')}
             className="btn-primary px-5 py-2 text-xs sm:text-[13px] font-semibold flex items-center gap-2 cursor-pointer shadow-md shadow-blue-500/20"
           >
-            Start Your Project
+            Request a Project Review
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -129,7 +127,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
             }}
             className="w-full btn-primary py-3 text-sm font-semibold flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25"
           >
-            Start Your Project <ArrowRight className="w-4 h-4" />
+            Request a Project Review <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       )}

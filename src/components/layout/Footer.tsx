@@ -26,8 +26,19 @@ export const Footer: React.FC<FooterProps> = () => {
     { label: 'About', path: '/about' },
     { label: 'Capability Showcase', path: '/portfolio' },
     { label: 'Industries', path: '/industries' },
-    { label: 'Engineering Approach', path: '/process' },
+    { label: 'Engineering Approach', path: '/services' },
     { label: 'Resources & Insights', path: '/resources' },
+    { label: 'Careers', path: '/careers' },
+    { label: 'Contact', path: '/contact' },
+  ];
+
+  const bottomNavLinks = [
+    { label: 'Home', path: '/' },
+    { label: 'About', path: '/about' },
+    { label: 'Services', path: '/services' },
+    { label: 'Industries', path: '/industries' },
+    { label: 'Showcase', path: '/portfolio' },
+    { label: 'Resources', path: '/resources' },
     { label: 'Careers', path: '/careers' },
     { label: 'Contact', path: '/contact' },
   ];
@@ -140,16 +151,21 @@ export const Footer: React.FC<FooterProps> = () => {
 
         </div>
 
-        {/* Bottom Legal Bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-4">
+        {/* Bottom Legal & Navigation Bar (Matching PDF Footer) */}
+        <div className="pt-2 flex flex-col md:flex-row items-center justify-between text-[11px] text-slate-400 gap-4">
           <p>© 2026 AG Vertex. All rights reserved.</p>
 
-          <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-slate-600 transition-colors">Privacy Policy</a>
-            <span>|</span>
-            <a href="#" className="hover:text-slate-600 transition-colors">Terms</a>
-            <span>|</span>
-            <a href="#" className="hover:text-slate-600 transition-colors">Engineering Disclaimer</a>
+          {/* Bottom Page Navigation Links */}
+          <div className="flex flex-wrap items-center gap-4 text-xs font-medium">
+            {bottomNavLinks.map((link, idx) => (
+              <Link
+                key={idx}
+                to={link.path}
+                className="text-slate-500 hover:text-[#0057FF] transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
           {/* Scroll to Top Button */}

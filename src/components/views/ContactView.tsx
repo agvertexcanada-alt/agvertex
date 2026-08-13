@@ -8,6 +8,8 @@ export const ContactView: React.FC = () => {
     phone: '',
     service: '',
     overview: '',
+    timeline: '',
+    agreed: true,
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -22,6 +24,8 @@ export const ContactView: React.FC = () => {
         phone: '',
         service: '',
         overview: '',
+        timeline: '',
+        agreed: true,
       });
     }, 3500);
   };
@@ -29,27 +33,27 @@ export const ContactView: React.FC = () => {
   return (
     <div className="space-y-16 lg:space-y-20 pt-24 lg:pt-28 pb-20 overflow-x-hidden">
       
-      {/* 1. HEADER */}
+      {/* 1. HEADER (Matching PDF Page 9) */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-4 text-center max-w-3xl">
         <span className="text-xs font-mono font-bold uppercase text-[#0057FF] tracking-widest block">
           GET IN TOUCH
         </span>
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-[#0F172A] tracking-tight">
-          LET'S DISCUSS YOUR PROJECT
+          Let's discuss your project
         </h1>
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal max-w-2xl mx-auto">
-          Tell us what you are developing, the support you need, and your preferred timeline.
+          Tell us what you are developing, the engineering support you need, and your preferred timeline.
         </p>
       </section>
 
-      {/* 2. MAIN 2-COLUMN SECTION MATCHING REFERENCE SCREENSHOT */}
+      {/* 2. MAIN 2-COLUMN SECTION (Matching PDF Page 9) */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Column: REQUEST A PROJECT REVIEW Form */}
+          {/* Left Column: Request a Project Review Form */}
           <div className="lg:col-span-7 glass-card bg-white p-8 lg:p-10 rounded-3xl border border-slate-200/90 shadow-xl space-y-6">
-            <h2 className="text-xl font-heading font-bold text-[#0F172A] uppercase tracking-wide">
-              REQUEST A PROJECT REVIEW
+            <h2 className="text-xl font-heading font-bold text-[#0F172A] tracking-tight">
+              Request a Project Review
             </h2>
 
             {submitted ? (
@@ -67,7 +71,7 @@ export const ContactView: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-[11px] font-mono font-bold text-slate-500 uppercase">
-                      NAME
+                      Name
                     </label>
                     <input
                       type="text"
@@ -81,14 +85,14 @@ export const ContactView: React.FC = () => {
 
                   <div className="space-y-1.5">
                     <label className="text-[11px] font-mono font-bold text-slate-500 uppercase">
-                      WORK EMAIL
+                      Work Email
                     </label>
                     <input
                       type="email"
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="alex@company.com"
+                      placeholder="e.g. alex@company.com"
                       className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500"
                     />
                   </div>
@@ -98,7 +102,7 @@ export const ContactView: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-[11px] font-mono font-bold text-slate-500 uppercase">
-                      PHONE NUMBER (OPTIONAL)
+                      Phone Number (Optional)
                     </label>
                     <input
                       type="tel"
@@ -111,7 +115,7 @@ export const ContactView: React.FC = () => {
 
                   <div className="space-y-1.5">
                     <label className="text-[11px] font-mono font-bold text-slate-500 uppercase">
-                      SERVICE REQUIRED
+                      Service Required
                     </label>
                     <select
                       required
@@ -125,9 +129,9 @@ export const ContactView: React.FC = () => {
                       <option value="Pressure Die-Casting Die Design">Pressure Die-Casting Die Design</option>
                       <option value="3D CAD Modelling">3D CAD Modelling</option>
                       <option value="Drawings, GD&T & BOMs">Drawings, GD&T & BOMs</option>
+                      <option value="Automotive Drawing Review">Automotive Drawing Review</option>
                       <option value="DFM / DFA Support">DFM / DFA Support</option>
-                      <option value="Automotive Drawing Validation">Automotive Drawing Validation</option>
-                      <option value="Supplier & Prototype Support">Supplier & Prototype Support</option>
+                      <option value="Supplier & Prototype Coordination">Supplier & Prototype Coordination</option>
                     </select>
                   </div>
                 </div>
@@ -135,7 +139,7 @@ export const ContactView: React.FC = () => {
                 {/* Project Overview */}
                 <div className="space-y-1.5">
                   <label className="text-[11px] font-mono font-bold text-slate-500 uppercase">
-                    PROJECT OVERVIEW
+                    Project Overview
                   </label>
                   <textarea
                     rows={4}
@@ -147,26 +151,57 @@ export const ContactView: React.FC = () => {
                   />
                 </div>
 
+                {/* Preferred Timeline */}
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-mono font-bold text-slate-500 uppercase">
+                    Preferred Timeline (Optional)
+                  </label>
+                  <select
+                    value={formData.timeline}
+                    onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-blue-500 cursor-pointer"
+                  >
+                    <option value="">Select a timeline</option>
+                    <option value="Immediate (Within 1-2 weeks)">Immediate (Within 1-2 weeks)</option>
+                    <option value="Standard (1-2 months)">Standard (1-2 months)</option>
+                    <option value="Planning / Future Quarter">Planning / Future Quarter</option>
+                  </select>
+                </div>
+
+                {/* Checkbox */}
+                <div className="flex items-center gap-2 pt-1">
+                  <input
+                    type="checkbox"
+                    id="consent"
+                    checked={formData.agreed}
+                    onChange={(e) => setFormData({ ...formData, agreed: e.target.checked })}
+                    className="rounded border-slate-300 text-[#0057FF] focus:ring-blue-500 cursor-pointer"
+                  />
+                  <label htmlFor="consent" className="text-[11px] text-slate-600 cursor-pointer">
+                    I agree that AG Vertex may contact me about this inquiry.
+                  </label>
+                </div>
+
                 {/* Submit Button */}
                 <button
                   type="submit"
                   className="w-full btn-primary py-4 text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-blue-500/25 mt-2"
                 >
-                  SEND PROJECT REQUEST <Send className="w-4 h-4" />
+                  Send Project Request <Send className="w-4 h-4" />
                 </button>
 
               </form>
             )}
           </div>
 
-          {/* Right Column: AG VERTEX Company & Engineering Support Card */}
+          {/* Right Column: AG Vertex Company Card */}
           <div className="lg:col-span-5 glass-card bg-white p-8 lg:p-10 rounded-3xl border border-slate-200/90 shadow-xl space-y-6">
             <h2 className="text-xl font-heading font-bold text-[#0F172A] tracking-tight">
-              AG VERTEX
+              AG Vertex
             </h2>
 
-            {/* Contact Details List */}
-            <div className="space-y-3.5 text-xs text-slate-700">
+            {/* Contact Details */}
+            <div className="space-y-3 text-xs text-slate-700">
               <div className="flex items-center gap-3">
                 <MapPin className="w-4 h-4 text-[#0057FF] shrink-0" />
                 <span className="font-medium">Windsor, Ontario, Canada</span>
@@ -174,7 +209,7 @@ export const ContactView: React.FC = () => {
 
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-[#0057FF] shrink-0" />
-                <span className="font-medium">Email: info@agvertex.com</span>
+                <span className="font-medium">info@agvertex.com</span>
               </div>
 
               <div className="flex items-center gap-3">
@@ -186,25 +221,41 @@ export const ContactView: React.FC = () => {
             {/* Engineering Support Tagline */}
             <div className="pt-2 border-t border-slate-100 space-y-1.5">
               <span className="text-[11px] font-mono font-bold text-[#0057FF] uppercase tracking-wider block">
-                ENGINEERING SUPPORT
+                Engineering Support
               </span>
               <p className="text-xs text-slate-600 leading-relaxed font-normal">
-                Product Design · Mold & Die Design · 3D CAD Modelling · Automotive Drawing Validation
+                Product Design · Mold & Die Design · 3D CAD Modelling · Drawings, GD&T & BOMs · Automotive Drawing Review
               </p>
             </div>
 
-            {/* Workstation Graphic with CAD monitor and physical part */}
-            <div className="rounded-2xl overflow-hidden h-56 relative border border-slate-200/80 shadow-md">
+            {/* What happens next */}
+            <div className="pt-2 border-t border-slate-100 space-y-2">
+              <span className="text-[11px] font-mono font-bold text-slate-700 uppercase tracking-wider block">
+                What happens next
+              </span>
+              <ul className="space-y-1.5 text-xs text-slate-600">
+                <li className="flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-blue-50 text-[#0057FF] font-bold text-[10px] flex items-center justify-center shrink-0">1</span>
+                  <span>We review your project brief</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-blue-50 text-[#0057FF] font-bold text-[10px] flex items-center justify-center shrink-0">2</span>
+                  <span>We clarify scope and timing</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-blue-50 text-[#0057FF] font-bold text-[10px] flex items-center justify-center shrink-0">3</span>
+                  <span>You receive the recommended next step</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Image (3 Engineers reviewing drawings from PDF Page 11) */}
+            <div className="rounded-2xl overflow-hidden h-52 relative border border-slate-200/80 shadow-md">
               <img
-                src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80"
-                alt="CAD Workstation and Precision Machined Component"
+                src="/images/cad_team_collaboration.jpeg"
+                alt="AG Vertex Engineering Collaboration"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent flex items-end p-4">
-                <p className="text-[11px] font-mono text-white font-medium">
-                  Turnkey mechanical design & manufacturing documentation.
-                </p>
-              </div>
             </div>
 
           </div>
