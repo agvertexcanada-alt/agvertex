@@ -109,15 +109,18 @@ export const HomeView: React.FC<HomeViewProps> = () => {
             </div>
           </div>
 
-          {/* Right Hero Image (Split Triple Engineering Photography from PDF Page 12) */}
+          {/* Right Hero Video (new final.mp4) */}
           <div className="lg:col-span-6 relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200/90 bg-slate-900 group">
-              <img
-                src="/images/hero_tri_split.jpeg"
-                alt="Engineering Design Built for Manufacturing - AG Vertex"
-                className="w-full h-[360px] sm:h-[440px] lg:h-[460px] object-cover transition-transform duration-700 group-hover:scale-103"
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200/90 bg-slate-950 group">
+              <video
+                src="/hero-video.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-[360px] sm:h-[440px] lg:h-[460px] object-cover transition-transform duration-700 group-hover:scale-102"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
             </div>
           </div>
 
