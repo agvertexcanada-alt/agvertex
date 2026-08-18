@@ -4,15 +4,11 @@ import {
   ArrowRight, 
   MapPin, 
   Clock, 
-  Search, 
-  Compass, 
-  PenTool, 
-  CheckCircle2, 
-  Headphones,
   Users,
   Box,
   Layers,
-  FileText
+  FileText,
+  ChevronRight
 } from 'lucide-react';
 
 interface HomeViewProps {
@@ -24,76 +20,68 @@ interface HomeViewProps {
 export const HomeView: React.FC<HomeViewProps> = () => {
   const navigate = useNavigate();
 
-  const PROCESS_STEPS = [
+  const CAPABILITY_CARDS = [
     {
-      step: 'STEP 01',
-      title: 'Understand',
-      desc: 'Clarify requirements and functional needs.',
-      icon: Search,
+      title: 'Product & Mechanical Design',
+      image: '/services/product_design.png',
+      icon: Box,
+      items: ['3D CAD Modelling', 'Drawings, GD&T & BOMs'],
+      link: '/services',
     },
     {
-      step: 'STEP 02',
-      title: 'Develop',
-      desc: 'Explore concepts and evaluate solutions.',
-      icon: Compass,
+      title: 'Mold & Die Tooling Design',
+      image: '/services/injection_mold.png',
+      icon: Layers,
+      items: ['3D CAD Modelling', 'Drawings, GD&T & BOMs'],
+      link: '/services',
     },
     {
-      step: 'STEP 03',
-      title: 'Detail',
-      desc: 'Create detailed models and engineering documentation.',
-      icon: PenTool,
-    },
-    {
-      step: 'STEP 04',
-      title: 'Review',
-      desc: 'Validate designs and manufacturability.',
-      icon: CheckCircle2,
-    },
-    {
-      step: 'STEP 05',
-      title: 'Support',
-      desc: 'Support production and answer supplier questions.',
-      icon: Headphones,
+      title: 'CAD Documentation & Manufacturing Support',
+      image: '/services/drawings_gdt.png',
+      icon: FileText,
+      items: ['DFM/DFA', 'Supplier Coordination'],
+      link: '/services',
     },
   ];
 
   return (
     <div className="space-y-16 lg:space-y-24 pt-24 lg:pt-28 pb-20 overflow-x-hidden">
       
-      {/* 1. HERO SECTION (Matching PDF Page 1) */}
+      {/* 1. HERO SECTION */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
           {/* Left Hero Content */}
-          <div className="lg:col-span-6 space-y-6">
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-heading font-extrabold text-[#0F172A] tracking-tight leading-[1.12]">
+          <div className="lg:col-span-6 space-y-7">
+            <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-heading font-extrabold text-[#0F172A] tracking-tight leading-[1.12]">
               ENGINEERING <br />
               DESIGN BUILT FOR <br />
               <span className="text-[#0057FF]">MANUFACTURING</span>
             </h1>
 
-            <p className="text-sm sm:text-base text-slate-600 font-normal leading-relaxed max-w-lg">
+            {/* Resized larger, clear and prominent subtitle (Item 1) */}
+            <p className="text-base sm:text-lg lg:text-xl text-slate-700 font-medium leading-relaxed max-w-xl">
               Practical mechanical design support for products, tooling, CAD documentation, and supplier coordination.
             </p>
 
-            {/* Badges Row */}
-            <div className="flex flex-wrap items-center gap-3 pt-1">
-              <div className="inline-flex items-center gap-2 text-xs font-mono font-medium text-slate-600 bg-white/90 border border-slate-200 px-3.5 py-1.5 rounded-full shadow-xs">
-                <MapPin className="w-3.5 h-3.5 text-[#0057FF]" />
+            {/* Badges Row with larger, readable sizing */}
+            <div className="flex flex-wrap items-center gap-3.5 pt-1">
+              <div className="inline-flex items-center gap-2.5 text-xs sm:text-sm font-mono font-semibold text-slate-700 bg-white/95 border border-slate-200/90 px-4 py-2 rounded-full shadow-xs">
+                <MapPin className="w-4 h-4 text-[#0057FF] shrink-0" />
                 Windsor, Ontario, Canada
               </div>
 
-              <div className="inline-flex items-center gap-2 text-xs font-mono font-medium text-slate-600 bg-white/90 border border-slate-200 px-3.5 py-1.5 rounded-full shadow-xs">
-                <Clock className="w-3.5 h-3.5 text-[#0057FF]" />
+              <div className="inline-flex items-center gap-2.5 text-xs sm:text-sm font-mono font-semibold text-slate-700 bg-white/95 border border-slate-200/90 px-4 py-2 rounded-full shadow-xs">
+                <Clock className="w-4 h-4 text-[#0057FF] shrink-0" />
                 15+ Years of Engineering Experience
               </div>
             </div>
 
-            {/* Action Buttons */}
+            {/* Action Buttons with prominent sizing */}
             <div className="flex flex-wrap items-center gap-4 pt-3">
               <button
                 onClick={() => navigate('/contact')}
-                className="btn-primary px-7 py-3.5 text-xs font-semibold flex items-center gap-2.5 cursor-pointer shadow-lg shadow-blue-500/25"
+                className="btn-primary px-8 py-4 text-sm sm:text-base font-bold flex items-center gap-2.5 cursor-pointer shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300"
               >
                 Request a Project Review
                 <ArrowRight className="w-4 h-4" />
@@ -101,10 +89,10 @@ export const HomeView: React.FC<HomeViewProps> = () => {
 
               <button
                 onClick={() => navigate('/services')}
-                className="btn-secondary px-6 py-3.5 text-xs font-semibold flex items-center gap-2 cursor-pointer"
+                className="btn-secondary px-7 py-4 text-sm sm:text-base font-bold flex items-center gap-2 cursor-pointer transition-all duration-300"
               >
                 Explore Services
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -118,140 +106,95 @@ export const HomeView: React.FC<HomeViewProps> = () => {
                 loop
                 muted
                 playsInline
-                className="w-full h-[360px] sm:h-[440px] lg:h-[460px] object-cover transition-transform duration-700 group-hover:scale-102"
+                className="w-full h-[380px] sm:h-[460px] lg:h-[480px] object-cover transition-transform duration-700 group-hover:scale-102"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/25 via-transparent to-transparent pointer-events-none" />
             </div>
           </div>
 
         </div>
       </section>
 
-      {/* 2. THREE HIGHLIGHT CAPABILITY CARDS (Matching PDF Page 1) */}
+      {/* 2. THREE HIGHLIGHT CAPABILITY CARDS WITH PROFESSIONAL IMAGES (Item 2) */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          {/* Card 1: Product & Mechanical Design */}
-          <div 
-            onClick={() => navigate('/services')}
-            className="glass-card bg-white p-7 rounded-3xl border border-slate-200/90 shadow-md hover:shadow-xl hover:border-blue-400 transition-all duration-300 cursor-pointer space-y-4"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0">
-                <Box className="w-6 h-6" />
-              </div>
-              <h3 className="text-base sm:text-lg font-heading font-bold text-[#0F172A] leading-snug">
-                Product & Mechanical Design
-              </h3>
-            </div>
-            
-            <div className="flex items-center gap-3 pt-2 text-xs text-slate-500 font-medium">
-              <span>3D CAD Modelling</span>
-              <span className="text-slate-300">|</span>
-              <span>Drawings, GD&T & BOMs</span>
-            </div>
-          </div>
-
-          {/* Card 2: Mold & Die Tooling Design */}
-          <div 
-            onClick={() => navigate('/services')}
-            className="glass-card bg-white p-7 rounded-3xl border border-slate-200/90 shadow-md hover:shadow-xl hover:border-blue-400 transition-all duration-300 cursor-pointer space-y-4"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0">
-                <Layers className="w-6 h-6" />
-              </div>
-              <h3 className="text-base sm:text-lg font-heading font-bold text-[#0F172A] leading-snug">
-                Mold & Die Tooling Design
-              </h3>
-            </div>
-            
-            <div className="flex items-center gap-3 pt-2 text-xs text-slate-500 font-medium">
-              <span>3D CAD Modelling</span>
-              <span className="text-slate-300">|</span>
-              <span>Drawings, GD&T & BOMs</span>
-            </div>
-          </div>
-
-          {/* Card 3: CAD Documentation & Manufacturing Support */}
-          <div 
-            onClick={() => navigate('/services')}
-            className="glass-card bg-white p-7 rounded-3xl border border-slate-200/90 shadow-md hover:shadow-xl hover:border-blue-400 transition-all duration-300 cursor-pointer space-y-4"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0">
-                <FileText className="w-6 h-6" />
-              </div>
-              <h3 className="text-base sm:text-lg font-heading font-bold text-[#0F172A] leading-snug">
-                CAD Documentation & Manufacturing Support
-              </h3>
-            </div>
-            
-            <div className="flex items-center gap-3 pt-2 text-xs text-slate-500 font-medium">
-              <span>DFM/DFA</span>
-              <span className="text-slate-300">|</span>
-              <span>Supplier Coordination</span>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* 3. FIVE-STEP PROCESS ROW (Matching PDF Page 1) */}
-      <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
-        <div className="glass-card bg-white/80 backdrop-blur-md p-8 lg:p-10 rounded-3xl border border-slate-200/90 shadow-md">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-4">
-            {PROCESS_STEPS.map((st, idx) => {
-              const StepIcon = st.icon;
-              return (
-                <div key={idx} className="space-y-3 relative">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0">
-                      <StepIcon className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
-                        {st.step}
-                      </span>
-                      <h4 className="text-sm font-heading font-bold text-[#0F172A]">
-                        {st.title}
-                      </h4>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          {CAPABILITY_CARDS.map((card, idx) => {
+            const Icon = card.icon;
+            return (
+              <div 
+                key={idx}
+                onClick={() => navigate(card.link)}
+                className="glass-card bg-white rounded-3xl border border-slate-200/90 shadow-md hover:shadow-2xl hover:border-blue-400 transition-all duration-300 cursor-pointer overflow-hidden group flex flex-col justify-between"
+              >
+                <div>
+                  {/* High-Resolution Professional Engineering Image */}
+                  <div className="h-52 overflow-hidden relative">
+                    <img 
+                      src={card.image} 
+                      alt={card.title}
+                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent" />
+                    
+                    <div className="absolute top-4 left-4">
+                      <div className="w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md text-[#0057FF] flex items-center justify-center shadow-md">
+                        <Icon className="w-5 h-5" />
+                      </div>
                     </div>
                   </div>
 
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    {st.desc}
-                  </p>
+                  {/* Card Content with larger, readable typography */}
+                  <div className="p-7 space-y-4">
+                    <h3 className="text-lg sm:text-xl font-heading font-bold text-[#0F172A] group-hover:text-[#0057FF] transition-colors leading-snug">
+                      {card.title}
+                    </h3>
+                    
+                    <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-600 font-medium pt-1">
+                      <span>{card.items[0]}</span>
+                      <span className="text-slate-300 font-bold">•</span>
+                      <span>{card.items[1]}</span>
+                    </div>
+                  </div>
                 </div>
-              );
-            })}
-          </div>
+
+                {/* Card Footer Action */}
+                <div className="px-7 pb-6 pt-0 flex items-center justify-between text-xs sm:text-sm font-bold text-[#0057FF]">
+                  <span>Explore Capabilities</span>
+                  <div className="w-8 h-8 rounded-full bg-blue-50 group-hover:bg-[#0057FF] group-hover:text-white flex items-center justify-center transition-colors">
+                    <ChevronRight className="w-4 h-4" />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
-      {/* 4. CALL-TO-ACTION BOTTOM BANNER (Matching PDF Page 1) */}
+      {/* (Item 3: 5-Step Process Section Removed as requested) */}
+
+      {/* 3. CALL-TO-ACTION BOTTOM BANNER */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
-        <div className="glass-card bg-white p-8 lg:p-10 rounded-3xl border border-slate-200/90 shadow-lg flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="glass-card bg-white p-8 lg:p-12 rounded-3xl border border-slate-200/90 shadow-xl flex flex-col lg:flex-row items-center justify-between gap-8">
           
           <div className="flex items-center gap-6 w-full lg:w-auto">
-            <div className="w-14 h-14 rounded-2xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0">
-              <Users className="w-7 h-7" />
+            <div className="w-16 h-16 rounded-2xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0 shadow-inner">
+              <Users className="w-8 h-8" />
             </div>
 
-            <div className="space-y-1">
-              <h3 className="text-xl sm:text-2xl font-heading font-bold text-[#0F172A] uppercase tracking-tight">
+            <div className="space-y-1.5">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-heading font-bold text-[#0F172A] uppercase tracking-tight">
                 LET'S REVIEW YOUR <span className="text-[#0057FF]">ENGINEERING PROJECT</span>
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600">
+              <p className="text-sm sm:text-base text-slate-600 font-medium">
                 Discuss your design requirements, documentation needs, or supplier coordination challenges.
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto justify-start lg:justify-end">
+          <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto justify-start lg:justify-end shrink-0">
             <button
               onClick={() => navigate('/contact')}
-              className="btn-primary px-7 py-3.5 text-xs font-semibold flex items-center gap-2 cursor-pointer shadow-lg shadow-blue-500/25"
+              className="btn-primary px-8 py-4 text-xs sm:text-sm font-bold flex items-center gap-2 cursor-pointer shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300"
             >
               Request a Project Review
               <ArrowRight className="w-4 h-4" />
@@ -259,7 +202,7 @@ export const HomeView: React.FC<HomeViewProps> = () => {
 
             <button
               onClick={() => navigate('/services')}
-              className="btn-secondary px-6 py-3.5 text-xs font-semibold flex items-center gap-2 cursor-pointer"
+              className="btn-secondary px-7 py-4 text-xs sm:text-sm font-bold flex items-center gap-2 cursor-pointer transition-all duration-300"
             >
               Explore Services
               <ArrowRight className="w-3.5 h-3.5" />
