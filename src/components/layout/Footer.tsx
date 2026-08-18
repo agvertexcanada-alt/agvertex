@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, MapPin, ArrowUp, Linkedin, Youtube, Instagram } from 'lucide-react';
+import { Mail, MapPin, ArrowUp, Linkedin, Youtube, Instagram, Globe2 } from 'lucide-react';
 
 interface FooterProps {
   onOpenQuoteModal?: () => void;
@@ -26,7 +26,6 @@ export const Footer: React.FC<FooterProps> = () => {
     { label: 'About', path: '/about' },
     { label: 'Capability Showcase', path: '/portfolio' },
     { label: 'Engineering Approach', path: '/services' },
-    { label: 'Resources & Insights', path: '/resources' },
     { label: 'Careers', path: '/careers' },
     { label: 'Contact', path: '/contact' },
   ];
@@ -36,7 +35,6 @@ export const Footer: React.FC<FooterProps> = () => {
     { label: 'About', path: '/about' },
     { label: 'Services', path: '/services' },
     { label: 'Showcase', path: '/portfolio' },
-    { label: 'Resources', path: '/resources' },
     { label: 'Careers', path: '/careers' },
     { label: 'Contact', path: '/contact' },
   ];
@@ -62,7 +60,7 @@ export const Footer: React.FC<FooterProps> = () => {
             </Link>
 
             <p className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-sm">
-              Mechanical design consultancy in Windsor, Ontario.
+              Mechanical design and tooling engineering consultancy. Globally positioned across Canada, India, and New Zealand.
             </p>
 
             {/* Social Icons */}
@@ -117,21 +115,26 @@ export const Footer: React.FC<FooterProps> = () => {
             </ul>
           </div>
 
-          {/* Col 4: Contact */}
+          {/* Col 4: Global Footprint & Contact */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="text-xs font-heading font-bold text-[#0F172A] uppercase tracking-wider">
-              CONTACT
+              GLOBAL PRESENCE
             </h4>
             
             <div className="space-y-3 text-xs text-slate-600">
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-[#0057FF] shrink-0 mt-0.5" />
-                <span>Windsor, Ontario, Canada</span>
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2 font-semibold text-slate-800">
+                  <MapPin className="w-3.5 h-3.5 text-[#0057FF] shrink-0" />
+                  <span>Canada · India · New Zealand</span>
+                </div>
+                <p className="text-[11px] text-slate-500 pl-5.5">
+                  Windsor & Toronto | Kochi | Auckland
+                </p>
               </div>
 
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 pt-1">
                 <Mail className="w-4 h-4 text-[#0057FF] shrink-0" />
-                <a href="mailto:info@agvertex.com" className="hover:text-[#0057FF] transition-colors">
+                <a href="mailto:info@agvertex.com" className="hover:text-[#0057FF] transition-colors font-medium">
                   info@agvertex.com
                 </a>
               </div>
@@ -149,7 +152,7 @@ export const Footer: React.FC<FooterProps> = () => {
 
         </div>
 
-        {/* Bottom Legal & Navigation Bar (Matching PDF Footer) */}
+        {/* Bottom Legal & Navigation Bar */}
         <div className="pt-2 flex flex-col md:flex-row items-center justify-between text-[11px] text-slate-400 gap-4">
           <p>© 2026 AG Vertex. All rights reserved.</p>
 

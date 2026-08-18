@@ -1,5 +1,17 @@
 import React, { useState } from 'react';
-import { Mail, MapPin, Calendar, Send, CheckCircle2 } from 'lucide-react';
+import { 
+  Mail, 
+  MapPin, 
+  Calendar, 
+  Send, 
+  CheckCircle2, 
+  Globe2, 
+  Clock, 
+  ShieldCheck, 
+  CheckCircle,
+  Building2,
+  Layers
+} from 'lucide-react';
 
 export const ContactView: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -30,10 +42,37 @@ export const ContactView: React.FC = () => {
     }, 3500);
   };
 
+  const GLOBAL_HUBS = [
+    {
+      country: 'CANADA',
+      flag: '🇨🇦',
+      city: 'Windsor & Toronto, Ontario',
+      role: 'Headquarters & Client Engineering Coordination',
+      details: 'North American engineering management, tooling review, OEM standards alignment, and client account delivery.',
+      timezone: 'EST (UTC-5)',
+    },
+    {
+      country: 'INDIA',
+      flag: '🇮🇳',
+      city: 'Kochi, Kerala',
+      role: 'Engineering Design & CAD Detailing Center',
+      details: 'Complex 3D CAD modeling, mold & die split engineering, ASME Y14.5 GD&T drafting, and parametric part validation.',
+      timezone: 'IST (UTC+5:30)',
+    },
+    {
+      country: 'NEW ZEALAND',
+      flag: '🇳🇿',
+      city: 'Auckland & Regional Support',
+      role: 'APAC Operations & Quality Verification',
+      details: 'Regional engineering coordination, timezone-optimized project handover, and continuous quality audits.',
+      timezone: 'NZST (UTC+12)',
+    },
+  ];
+
   return (
-    <div className="space-y-16 lg:space-y-20 pt-24 lg:pt-28 pb-20 overflow-x-hidden">
+    <div className="space-y-16 lg:space-y-24 pt-24 lg:pt-28 pb-20 overflow-x-hidden">
       
-      {/* 1. HEADER (Matching PDF Page 9) */}
+      {/* 1. HEADER */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-4 text-center max-w-3xl">
         <span className="text-xs font-mono font-bold uppercase text-[#0057FF] tracking-widest block">
           GET IN TOUCH
@@ -46,15 +85,20 @@ export const ContactView: React.FC = () => {
         </p>
       </section>
 
-      {/* 2. MAIN 2-COLUMN SECTION (Matching PDF Page 9) */}
+      {/* 2. MAIN 2-COLUMN SECTION */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column: Request a Project Review Form */}
           <div className="lg:col-span-7 glass-card bg-white p-8 lg:p-10 rounded-3xl border border-slate-200/90 shadow-xl space-y-6">
-            <h2 className="text-xl font-heading font-bold text-[#0F172A] tracking-tight">
-              Request a Project Review
-            </h2>
+            <div className="space-y-1">
+              <h2 className="text-xl font-heading font-bold text-[#0F172A] tracking-tight">
+                Request a Project Review
+              </h2>
+              <p className="text-xs text-slate-500 font-normal">
+                Fill in the details below and an engineer will respond within 1 business day.
+              </p>
+            </div>
 
             {submitted ? (
               <div className="p-8 rounded-2xl bg-emerald-50 text-emerald-800 text-center space-y-2 animate-in fade-in">
@@ -71,7 +115,7 @@ export const ContactView: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-[11px] font-mono font-bold text-slate-500 uppercase">
-                      Name
+                      Name *
                     </label>
                     <input
                       type="text"
@@ -85,7 +129,7 @@ export const ContactView: React.FC = () => {
 
                   <div className="space-y-1.5">
                     <label className="text-[11px] font-mono font-bold text-slate-500 uppercase">
-                      Work Email
+                      Work Email *
                     </label>
                     <input
                       type="email"
@@ -115,7 +159,7 @@ export const ContactView: React.FC = () => {
 
                   <div className="space-y-1.5">
                     <label className="text-[11px] font-mono font-bold text-slate-500 uppercase">
-                      Service Required
+                      Service Required *
                     </label>
                     <select
                       required
@@ -139,7 +183,7 @@ export const ContactView: React.FC = () => {
                 {/* Project Overview */}
                 <div className="space-y-1.5">
                   <label className="text-[11px] font-mono font-bold text-slate-500 uppercase">
-                    Project Overview
+                    Project Overview *
                   </label>
                   <textarea
                     rows={4}
@@ -195,72 +239,173 @@ export const ContactView: React.FC = () => {
           </div>
 
           {/* Right Column: AG Vertex Company Card */}
-          <div className="lg:col-span-5 glass-card bg-white p-8 lg:p-10 rounded-3xl border border-slate-200/90 shadow-xl space-y-6">
-            <h2 className="text-xl font-heading font-bold text-[#0F172A] tracking-tight">
-              AG Vertex
-            </h2>
+          <div className="lg:col-span-5 space-y-6">
+            
+            <div className="glass-card bg-white p-8 lg:p-10 rounded-3xl border border-slate-200/90 shadow-xl space-y-6">
+              <h2 className="text-xl font-heading font-bold text-[#0F172A] tracking-tight">
+                AG Vertex
+              </h2>
 
-            {/* Contact Details */}
-            <div className="space-y-3 text-xs text-slate-700">
-              <div className="flex items-center gap-3">
-                <MapPin className="w-4 h-4 text-[#0057FF] shrink-0" />
-                <span className="font-medium">Windsor, Ontario, Canada</span>
+              {/* Contact Details */}
+              <div className="space-y-3 text-xs text-slate-700">
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-4 h-4 text-[#0057FF] shrink-0" />
+                  <span className="font-medium">Windsor, Ontario, Canada</span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <Mail className="w-4 h-4 text-[#0057FF] shrink-0" />
+                  <span className="font-medium">info@agvertex.com</span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <Calendar className="w-4 h-4 text-[#0057FF] shrink-0" />
+                  <span className="font-medium">Project inquiries by appointment</span>
+                </div>
               </div>
 
-              <div className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-[#0057FF] shrink-0" />
-                <span className="font-medium">info@agvertex.com</span>
+              {/* Engineering Support Tagline */}
+              <div className="pt-2 border-t border-slate-100 space-y-1.5">
+                <span className="text-[11px] font-mono font-bold text-[#0057FF] uppercase tracking-wider block">
+                  Engineering Support
+                </span>
+                <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                  Product Design · Mold & Die Design · 3D CAD Modelling · Drawings, GD&T & BOMs · Automotive Drawing Review
+                </p>
               </div>
 
-              <div className="flex items-center gap-3">
-                <Calendar className="w-4 h-4 text-[#0057FF] shrink-0" />
-                <span className="font-medium">Project inquiries by appointment</span>
+              {/* What happens next */}
+              <div className="pt-2 border-t border-slate-100 space-y-2">
+                <span className="text-[11px] font-mono font-bold text-slate-700 uppercase tracking-wider block">
+                  What happens next
+                </span>
+                <ul className="space-y-1.5 text-xs text-slate-600">
+                  <li className="flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-full bg-blue-50 text-[#0057FF] font-bold text-[10px] flex items-center justify-center shrink-0">1</span>
+                    <span>We review your project brief</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-full bg-blue-50 text-[#0057FF] font-bold text-[10px] flex items-center justify-center shrink-0">2</span>
+                    <span>We clarify scope and timing</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-full bg-blue-50 text-[#0057FF] font-bold text-[10px] flex items-center justify-center shrink-0">3</span>
+                    <span>You receive the recommended next step</span>
+                  </li>
+                </ul>
               </div>
             </div>
 
-            {/* Engineering Support Tagline */}
-            <div className="pt-2 border-t border-slate-100 space-y-1.5">
-              <span className="text-[11px] font-mono font-bold text-[#0057FF] uppercase tracking-wider block">
-                Engineering Support
-              </span>
-              <p className="text-xs text-slate-600 leading-relaxed font-normal">
-                Product Design · Mold & Die Design · 3D CAD Modelling · Drawings, GD&T & BOMs · Automotive Drawing Review
-              </p>
-            </div>
-
-            {/* What happens next */}
-            <div className="pt-2 border-t border-slate-100 space-y-2">
-              <span className="text-[11px] font-mono font-bold text-slate-700 uppercase tracking-wider block">
-                What happens next
-              </span>
-              <ul className="space-y-1.5 text-xs text-slate-600">
-                <li className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-blue-50 text-[#0057FF] font-bold text-[10px] flex items-center justify-center shrink-0">1</span>
-                  <span>We review your project brief</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-blue-50 text-[#0057FF] font-bold text-[10px] flex items-center justify-center shrink-0">2</span>
-                  <span>We clarify scope and timing</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-5 h-5 rounded-full bg-blue-50 text-[#0057FF] font-bold text-[10px] flex items-center justify-center shrink-0">3</span>
-                  <span>You receive the recommended next step</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Image (3 Engineers reviewing drawings from PDF Page 11) */}
-            <div className="rounded-2xl overflow-hidden h-52 relative border border-slate-200/80 shadow-md">
-              <img
-                src="/images/cad_team_collaboration.jpeg"
-                alt="AG Vertex Engineering Collaboration"
-                className="w-full h-full object-cover"
-              />
+            {/* Quick Consultation Callout */}
+            <div className="glass-card bg-gradient-to-br from-blue-50 to-indigo-50/50 p-6 rounded-3xl border border-blue-200/80 shadow-md flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-[#0057FF] text-white flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
+                <Clock className="w-6 h-6" />
+              </div>
+              <div className="space-y-0.5">
+                <h4 className="text-xs font-heading font-bold text-[#0F172A] uppercase">
+                  Fast 24-Hour Turnaround
+                </h4>
+                <p className="text-xs text-slate-600">
+                  Our distributed engineering footprint across three global timezones ensures continuous workflow support.
+                </p>
+              </div>
             </div>
 
           </div>
 
         </div>
+      </section>
+
+      {/* 3. GLOBAL FOOTPRINT SECTION (Matching user request: India, Canada, New Zealand) */}
+      <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-10">
+        
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-[#0057FF] text-[11px] font-mono font-bold tracking-widest uppercase">
+            <Globe2 className="w-3.5 h-3.5" />
+            GLOBAL ENGINEERING FOOTPRINT
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl font-heading font-bold text-[#0F172A] tracking-tight">
+            Globally Positioned For Good Tech Practices
+          </h2>
+
+          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+            Strategic delivery hubs across North America, Asia, and Oceania provide our clients with local engineering coordination, round-the-clock CAD execution, and rigorous quality standards.
+          </p>
+        </div>
+
+        {/* 3 Global Hub Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {GLOBAL_HUBS.map((hub, idx) => (
+            <div
+              key={idx}
+              className="glass-card bg-white p-8 rounded-3xl border border-slate-200/90 shadow-lg hover:shadow-xl hover:border-blue-400 transition-all duration-300 space-y-5 flex flex-col justify-between group"
+            >
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-3xl filter drop-shadow-xs">{hub.flag}</span>
+                  <span className="text-[10px] font-mono font-bold text-[#0057FF] bg-blue-50 px-2.5 py-1 rounded-full">
+                    {hub.timezone}
+                  </span>
+                </div>
+
+                <div className="space-y-1">
+                  <h3 className="text-xl font-heading font-bold text-[#0F172A] group-hover:text-[#0057FF] transition-colors">
+                    {hub.country}
+                  </h3>
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
+                    <MapPin className="w-3.5 h-3.5 text-[#0057FF] shrink-0" />
+                    <span>{hub.city}</span>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-slate-100 space-y-2">
+                  <span className="text-[11px] font-mono font-bold text-[#0057FF] uppercase tracking-wider block">
+                    {hub.role}
+                  </span>
+                  <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                    {hub.details}
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-slate-100 flex items-center gap-2 text-[11px] font-semibold text-slate-500">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Active Engineering Node</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Global Map Visual Container */}
+        <div className="glass-card bg-slate-900 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-2xl relative overflow-hidden text-center space-y-6">
+          <div className="absolute inset-0 bg-[radial-gradient(#0057FF_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none" />
+          
+          <div className="relative z-10 max-w-2xl mx-auto space-y-4">
+            <h3 className="text-2xl sm:text-3xl font-heading font-bold tracking-tight">
+              24/7 Follow-the-Sun Engineering Delivery
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              When Canada hands over at end of day, our teams in India and New Zealand pick up the design iterations, ensuring zero downtime and rapid turnaround on critical tooling and CAD milestones.
+            </p>
+          </div>
+
+          <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 max-w-2xl mx-auto">
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <span className="text-lg font-heading font-bold text-white block">🇨🇦 Canada</span>
+              <span className="text-[11px] text-slate-400">Windsor & Toronto</span>
+            </div>
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <span className="text-lg font-heading font-bold text-white block">🇮🇳 India</span>
+              <span className="text-[11px] text-slate-400">Kochi Hub</span>
+            </div>
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <span className="text-lg font-heading font-bold text-white block">🇳🇿 New Zealand</span>
+              <span className="text-[11px] text-slate-400">Auckland Support</span>
+            </div>
+          </div>
+        </div>
+
       </section>
 
     </div>

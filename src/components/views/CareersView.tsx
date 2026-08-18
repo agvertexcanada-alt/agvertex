@@ -6,9 +6,9 @@ import {
   ShieldCheck, 
   GraduationCap, 
   Briefcase, 
-  Box, 
-  PenTool, 
-  FileText, 
+  Cpu,
+  Boxes,
+  PenTool,
   CheckCircle2, 
   X, 
   Send 
@@ -22,7 +22,7 @@ export const CareersView: React.FC = () => {
     email: '',
     phone: '',
     primaryDiscipline: 'Product Design & Development',
-    cadSoftware: 'SolidWorks',
+    cadSoftware: 'Creo Parametric',
     experienceYears: '5-10 Years',
     portfolioLink: '',
     notes: '',
@@ -39,7 +39,7 @@ export const CareersView: React.FC = () => {
         email: '',
         phone: '',
         primaryDiscipline: 'Product Design & Development',
-        cadSoftware: 'SolidWorks',
+        cadSoftware: 'Creo Parametric',
         experienceYears: '5-10 Years',
         portfolioLink: '',
         notes: '',
@@ -70,18 +70,41 @@ export const CareersView: React.FC = () => {
     },
   ];
 
-  const AREAS_OF_INTEREST = [
-    { label: 'Product Design & Development', icon: Box },
-    { label: 'Mold & Die Design', icon: Layers },
-    { label: '3D CAD Modelling', icon: PenTool },
-    { label: 'Drawings, GD&T & BOMs', icon: FileText },
-    { label: 'Automotive Drawing Review', icon: CheckCircle2 },
+  const SOFTWARE_TOOLS = [
+    {
+      name: 'PTC Creo Parametric',
+      category: 'Parametric 3D CAD & Surfacing',
+      desc: 'Advanced surface modeling, mechanism design, large assemblies, and associative 2D drawing generation.',
+      badge: 'CREO',
+      color: 'from-emerald-500 to-emerald-700',
+    },
+    {
+      name: 'Siemens NX',
+      category: 'PLM & High-End Tooling',
+      desc: 'Complex injection mold design, progressive dies, parting line splits, and multi-axis machining CAD data.',
+      badge: 'SIEMENS NX',
+      color: 'from-cyan-500 to-blue-700',
+    },
+    {
+      name: 'Autodesk AutoCAD',
+      category: '2D Drafting & Plant Layouts',
+      desc: 'Precision engineering prints, geometric tolerance layout, plant schematics, and legacy DWG translation.',
+      badge: 'AUTOCAD',
+      color: 'from-rose-500 to-red-700',
+    },
+    {
+      name: 'Dassault SolidWorks',
+      category: 'Mechanical Design & DFM',
+      desc: 'Machine design, sheet metal enclosures, weldments, ASME Y14.5 GD&T drafting, and integrated BOM control.',
+      badge: 'SOLIDWORKS',
+      color: 'from-blue-600 to-indigo-800',
+    },
   ];
 
   return (
     <div className="space-y-16 lg:space-y-24 pt-24 lg:pt-28 pb-20 overflow-x-hidden">
       
-      {/* 1. HERO SECTION (Matching PDF Page 8) */}
+      {/* 1. HERO SECTION */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
@@ -111,7 +134,7 @@ export const CareersView: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Image (3 Engineers at CAD station from PDF Page 11) */}
+          {/* Right Image */}
           <div className="lg:col-span-6 relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200/90 bg-slate-900 group">
               <img
@@ -126,7 +149,7 @@ export const CareersView: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. FOUR VALUES ROW (Matching PDF Page 8) */}
+      {/* 2. FOUR VALUES ROW */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {VALUES.map((v, idx) => {
@@ -153,7 +176,7 @@ export const CareersView: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. ACTIVE NOTICE BOX (Matching PDF Page 8) */}
+      {/* 3. ACTIVE NOTICE BOX */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="glass-card bg-white p-8 lg:p-10 rounded-3xl border border-slate-200/90 shadow-md flex flex-col sm:flex-row items-center gap-6 max-w-3xl mx-auto">
           <div className="w-14 h-14 rounded-2xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0">
@@ -171,35 +194,59 @@ export const CareersView: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. AREAS OF INTEREST (Matching PDF Page 8) */}
-      <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-6">
-        <div className="text-center">
-          <span className="text-xs font-mono font-bold uppercase text-[#0057FF] tracking-widest">
-            AREAS OF INTEREST
+      {/* 4. SOFTWARE & CAD PROFICIENCY (Replaced Areas of Interest as requested) */}
+      <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-8">
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs font-mono font-bold uppercase text-[#0057FF] tracking-widest block">
+            ENGINEERING CAD STACK
           </span>
+          <h2 className="text-2xl sm:text-3xl font-heading font-bold text-[#0F172A]">
+            Software & CAD Proficiency
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 font-normal">
+            We collaborate using industry-standard engineering suites and enterprise PLM workflows.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-          {AREAS_OF_INTEREST.map((area, idx) => {
-            const AreaIcon = area.icon;
-            return (
-              <div
-                key={idx}
-                className="glass-card bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs flex flex-col items-center text-center space-y-3"
-              >
-                <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0057FF] flex items-center justify-center">
-                  <AreaIcon className="w-5 h-5" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {SOFTWARE_TOOLS.map((tool, idx) => (
+            <div
+              key={idx}
+              className="glass-card bg-white p-7 rounded-3xl border border-slate-200/90 shadow-md hover:shadow-xl hover:border-blue-400 transition-all duration-300 flex flex-col justify-between space-y-4 group"
+            >
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="w-11 h-11 rounded-xl bg-blue-50 text-[#0057FF] flex items-center justify-center font-bold">
+                    <Boxes className="w-6 h-6" />
+                  </div>
+                  <span className="text-[10px] font-mono font-bold text-[#0057FF] bg-blue-50 px-2.5 py-1 rounded-full">
+                    {tool.badge}
+                  </span>
                 </div>
-                <span className="text-xs font-heading font-semibold text-[#0F172A]">
-                  {area.label}
+
+                <h3 className="text-base font-heading font-bold text-[#0F172A] group-hover:text-[#0057FF] transition-colors">
+                  {tool.name}
+                </h3>
+
+                <span className="text-[11px] font-mono font-semibold text-slate-400 block">
+                  {tool.category}
                 </span>
+
+                <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                  {tool.desc}
+                </p>
               </div>
-            );
-          })}
+
+              <div className="pt-2 border-t border-slate-100 flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Production Ready</span>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* 5. BOTTOM CALLOUT (Matching PDF Page 8) */}
+      {/* 5. BOTTOM CALLOUT */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="glass-card bg-slate-900 text-white p-8 lg:p-12 rounded-3xl shadow-xl flex flex-col lg:flex-row items-center justify-between gap-8">
           
@@ -303,11 +350,10 @@ export const CareersView: React.FC = () => {
                         onChange={(e) => setProfileForm({ ...profileForm, cadSoftware: e.target.value })}
                         className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-500 bg-white"
                       >
-                        <option value="SolidWorks">SolidWorks</option>
-                        <option value="Creo">Creo Parametric</option>
+                        <option value="Creo Parametric">PTC Creo Parametric</option>
                         <option value="Siemens NX">Siemens NX</option>
-                        <option value="AutoCAD">AutoCAD</option>
-                        <option value="Catia">Catia</option>
+                        <option value="AutoCAD">Autodesk AutoCAD</option>
+                        <option value="SolidWorks">Dassault SolidWorks</option>
                       </select>
                     </div>
                   </div>

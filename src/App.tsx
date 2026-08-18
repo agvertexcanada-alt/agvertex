@@ -12,7 +12,6 @@ import { PortfolioView } from './components/views/PortfolioView';
 import { CaseStudyView } from './components/views/CaseStudyView';
 import { TechnologiesView } from './components/views/TechnologiesView';
 import { ProcessView } from './components/views/ProcessView';
-import { ResourcesView } from './components/views/ResourcesView';
 import { CareersView } from './components/views/CareersView';
 import { ContactView } from './components/views/ContactView';
 import { FAQView } from './components/views/FAQView';
@@ -125,10 +124,6 @@ export default function App() {
           <Route
             path="/process"
             element={<ProcessView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
-          />
-          <Route
-            path="/resources"
-            element={<ResourcesView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
           />
           <Route path="/careers" element={<CareersView />} />
           <Route path="/contact" element={<ContactView />} />
