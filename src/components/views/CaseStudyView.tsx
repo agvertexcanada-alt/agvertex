@@ -44,7 +44,7 @@ export const CaseStudyView: React.FC<CaseStudyViewProps> = ({ setActiveTab, onOp
   ];
 
   return (
-    <div className="space-y-24 pt-28 pb-16">
+    <div className="space-y-24 pt-36 sm:pt-40 lg:pt-44 pb-16">
       {/* NAVIGATION BAR BACK */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
         <button

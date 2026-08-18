@@ -181,7 +181,7 @@ export const ServicesView: React.FC<ServicesViewProps> = () => {
   ];
 
   return (
-    <div className="space-y-16 lg:space-y-24 pt-24 lg:pt-28 pb-20 overflow-x-hidden">
+    <div className="space-y-16 lg:space-y-24 pt-36 sm:pt-40 lg:pt-44 pb-20 overflow-x-hidden">
       
       {/* 1. HEADER (Matching PDF Page 4) */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-4 text-center max-w-3xl">
