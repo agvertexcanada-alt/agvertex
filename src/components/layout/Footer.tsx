@@ -25,7 +25,6 @@ export const Footer: React.FC<FooterProps> = () => {
   const companyList = [
     { label: 'About', path: '/about' },
     { label: 'Capability Showcase', path: '/portfolio' },
-    { label: 'Industries', path: '/industries' },
     { label: 'Engineering Approach', path: '/services' },
     { label: 'Resources & Insights', path: '/resources' },
     { label: 'Careers', path: '/careers' },
@@ -36,7 +35,6 @@ export const Footer: React.FC<FooterProps> = () => {
     { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
     { label: 'Services', path: '/services' },
-    { label: 'Industries', path: '/industries' },
     { label: 'Showcase', path: '/portfolio' },
     { label: 'Resources', path: '/resources' },
     { label: 'Careers', path: '/careers' },

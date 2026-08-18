@@ -8,7 +8,6 @@ import { BackgroundParticlesCanvas } from './components/three/BackgroundParticle
 import { HomeView } from './components/views/HomeView';
 import { AboutView } from './components/views/AboutView';
 import { ServicesView } from './components/views/ServicesView';
-import { IndustriesView } from './components/views/IndustriesView';
 import { PortfolioView } from './components/views/PortfolioView';
 import { CaseStudyView } from './components/views/CaseStudyView';
 import { TechnologiesView } from './components/views/TechnologiesView';
@@ -100,10 +99,6 @@ export default function App() {
           <Route
             path="/services"
             element={<ServicesView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
-          />
-          <Route
-            path="/industries"
-            element={<IndustriesView onOpenQuoteModal={() => setIsQuoteModalOpen(true)} />}
           />
           <Route
             path="/portfolio"
