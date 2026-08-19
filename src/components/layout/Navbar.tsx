@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
+import { useShowcaseVisibility } from '../../hooks/useCmsData';
 
 interface NavbarProps {
   onOpenQuoteModal?: () => void;
@@ -11,6 +12,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { enabled: showcaseEnabled } = useShowcaseVisibility();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,14 +22,16 @@ export const Navbar: React.FC<NavbarProps> = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
+  const rawNavLinks = [
     { path: '/', label: 'Home' },
     { path: '/about', label: 'About' },
     { path: '/services', label: 'Services' },
-    { path: '/portfolio', label: 'Showcase' },
+    { path: '/portfolio', label: 'Showcase', key: 'showcase' },
     { path: '/careers', label: 'Careers' },
     { path: '/contact', label: 'Contact' },
   ];
+
+  const navLinks = rawNavLinks.filter(l => l.key !== 'showcase' || showcaseEnabled);
 
   const isLinkActive = (path: string) => {
     if (path === '/') {

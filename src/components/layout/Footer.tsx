@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, MapPin, ArrowUp, Linkedin, Youtube, Instagram, Globe2 } from 'lucide-react';
+import { Mail, MapPin, ArrowUp, Linkedin, Youtube, Instagram, Facebook, Globe2 } from 'lucide-react';
+import { useSettingsData, useShowcaseVisibility } from '../../hooks/useCmsData';
 
 interface FooterProps {
   onOpenQuoteModal?: () => void;
@@ -8,6 +9,8 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = () => {
   const navigate = useNavigate();
+  const { settings } = useSettingsData();
+  const { enabled: showcaseEnabled } = useShowcaseVisibility();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -22,22 +25,29 @@ export const Footer: React.FC<FooterProps> = () => {
     { label: 'Automotive Drawing Validation', path: '/services' },
   ];
 
-  const companyList = [
+  const rawCompanyList = [
     { label: 'About', path: '/about' },
-    { label: 'Capability Showcase', path: '/portfolio' },
+    { label: 'Capability Showcase', path: '/portfolio', key: 'showcase' },
     { label: 'Engineering Approach', path: '/services' },
     { label: 'Careers', path: '/careers' },
     { label: 'Contact', path: '/contact' },
   ];
 
-  const bottomNavLinks = [
+  const companyList = rawCompanyList.filter(c => c.key !== 'showcase' || showcaseEnabled);
+
+  const rawBottomNavLinks = [
     { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
     { label: 'Services', path: '/services' },
-    { label: 'Showcase', path: '/portfolio' },
+    { label: 'Showcase', path: '/portfolio', key: 'showcase' },
     { label: 'Careers', path: '/careers' },
     { label: 'Contact', path: '/contact' },
   ];
+
+  const bottomNavLinks = rawBottomNavLinks.filter(l => l.key !== 'showcase' || showcaseEnabled);
+
+  const socialLinks = settings?.social || { linkedin: '', instagram: '', facebook: '', youtube: '' };
+  const contactEmail = settings?.contact?.email || 'info@agvertex.com';
 
   return (
     <footer className="bg-white text-slate-700 pt-16 pb-8 border-t border-slate-200 relative">
@@ -60,20 +70,44 @@ export const Footer: React.FC<FooterProps> = () => {
             </Link>
 
             <p className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-sm">
-              Mechanical design and tooling engineering consultancy. Globally positioned across Canada, India, and New Zealand.
+              {settings?.business?.short_description || 'Mechanical design and tooling engineering consultancy. Globally positioned across Canada, India, and New Zealand.'}
             </p>
 
             {/* Social Icons */}
             <div className="flex items-center gap-3 pt-2">
-              <a href="#" className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 hover:bg-[#0057FF] hover:text-white flex items-center justify-center transition-colors">
-                <Linkedin className="w-4 h-4" />
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 hover:bg-[#0057FF] hover:text-white flex items-center justify-center transition-colors">
-                <Youtube className="w-4 h-4" />
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 hover:bg-[#0057FF] hover:text-white flex items-center justify-center transition-colors">
-                <Instagram className="w-4 h-4" />
-              </a>
+              {socialLinks.linkedin && (
+                <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 hover:bg-[#0057FF] hover:text-white flex items-center justify-center transition-colors">
+                  <Linkedin className="w-4 h-4" />
+                </a>
+              )}
+              {socialLinks.youtube && (
+                <a href={socialLinks.youtube} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 hover:bg-[#0057FF] hover:text-white flex items-center justify-center transition-colors">
+                  <Youtube className="w-4 h-4" />
+                </a>
+              )}
+              {socialLinks.instagram && (
+                <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 hover:bg-[#0057FF] hover:text-white flex items-center justify-center transition-colors">
+                  <Instagram className="w-4 h-4" />
+                </a>
+              )}
+              {socialLinks.facebook && (
+                <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 hover:bg-[#0057FF] hover:text-white flex items-center justify-center transition-colors">
+                  <Facebook className="w-4 h-4" />
+                </a>
+              )}
+              {!socialLinks.linkedin && !socialLinks.youtube && !socialLinks.instagram && !socialLinks.facebook && (
+                <div className="flex items-center gap-3">
+                  <span className="w-8 h-8 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center">
+                    <Linkedin className="w-4 h-4" />
+                  </span>
+                  <span className="w-8 h-8 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center">
+                    <Youtube className="w-4 h-4" />
+                  </span>
+                  <span className="w-8 h-8 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center">
+                    <Instagram className="w-4 h-4" />
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 

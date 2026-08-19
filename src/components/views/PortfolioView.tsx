@@ -8,8 +8,11 @@ import {
   PenTool, 
   FileText, 
   CheckCircle2, 
-  X 
+  X,
+  Lock,
+  Loader2
 } from 'lucide-react';
+import { useShowcaseVisibility, useShowcaseData } from '../../hooks/useCmsData';
 
 interface PortfolioViewProps {
   setActiveTab?: (tab: string) => void;
@@ -20,6 +23,8 @@ export const PortfolioView: React.FC<PortfolioViewProps> = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
+  const { enabled: showcaseEnabled, loading: visibilityLoading } = useShowcaseVisibility();
+  const { projects: dbProjects, loading: projectsLoading } = useShowcaseData();
 
   const CATEGORIES = [
     { id: 'All', label: 'All Capabilities' },
@@ -29,7 +34,7 @@ export const PortfolioView: React.FC<PortfolioViewProps> = () => {
     { id: 'Drawing Review', label: 'Drawing Review' },
   ];
 
-  const PROJECTS = [
+  const STATIC_PROJECTS = [
     {
       id: 'proj-1',
       tag: 'PRODUCT DESIGN',
@@ -86,9 +91,52 @@ export const PortfolioView: React.FC<PortfolioViewProps> = () => {
     },
   ];
 
-  const filteredProjects = PROJECTS.filter(
+  // If Supabase has published projects, use them; otherwise fallback to static
+  const activeProjectsList = (dbProjects && dbProjects.length > 0)
+    ? dbProjects.map(p => ({
+        id: p.id,
+        tag: p.category ? p.category.toUpperCase() : 'PROJECT',
+        title: p.title,
+        desc: p.description,
+        image: p.image_url || '/services/product_design.png',
+        category: p.category || 'Product Design',
+        tools: p.client ? `Client: ${p.client} · Year: ${p.project_year}` : `Year: ${p.project_year || 'Recent'}`,
+      }))
+    : STATIC_PROJECTS;
+
+  const filteredProjects = activeProjectsList.filter(
     (p) => activeCategory === 'All' || p.category === activeCategory
   );
+
+  if (!visibilityLoading && !showcaseEnabled) {
+    return (
+      <div className="min-h-[70vh] flex items-center justify-center pt-36 sm:pt-40 pb-20 px-6">
+        <div className="max-w-md w-full text-center space-y-5 bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-xl">
+          <div className="w-16 h-16 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto">
+            <Lock className="w-8 h-8" />
+          </div>
+          <h2 className="text-2xl font-bold text-slate-900 font-heading">Showcase Inactive</h2>
+          <p className="text-sm text-slate-600 leading-relaxed">
+            The capability showcase section is currently under scheduled engineering updates. Please explore our core services or get in touch directly.
+          </p>
+          <div className="pt-2 flex flex-col sm:flex-row gap-3">
+            <button
+              onClick={() => navigate('/services')}
+              className="flex-1 btn-primary py-3 text-xs font-semibold"
+            >
+              Explore Services
+            </button>
+            <button
+              onClick={() => navigate('/contact')}
+              className="flex-1 btn-secondary py-3 text-xs font-semibold"
+            >
+              Contact Us
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-16 lg:space-y-24 pt-36 sm:pt-40 lg:pt-44 pb-20 overflow-x-hidden">

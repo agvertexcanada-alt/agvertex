@@ -10,10 +10,13 @@ import {
   ShieldCheck, 
   CheckCircle,
   Building2,
-  Layers
+  Layers,
+  Phone
 } from 'lucide-react';
+import { useSettingsData } from '../../hooks/useCmsData';
 
 export const ContactView: React.FC = () => {
+  const { settings } = useSettingsData();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -243,7 +246,7 @@ export const ContactView: React.FC = () => {
             
             <div className="glass-card bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/90 shadow-xl space-y-6">
               <h2 className="text-2xl font-heading font-extrabold text-[#0F172A] tracking-tight">
-                AG Vertex
+                {settings?.business?.company_name || 'AG Vertex'}
               </h2>
 
               {/* Contact Details */}
@@ -252,23 +255,38 @@ export const ContactView: React.FC = () => {
                   <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0 font-bold">
                     <MapPin className="w-5 h-5" />
                   </div>
-                  <span className="font-semibold text-slate-900">Windsor, Ontario, Canada</span>
+                  <span className="font-semibold text-slate-900">
+                    {settings?.contact?.address || 'Windsor, Ontario, Canada'}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-3.5">
                   <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0 font-bold">
                     <Mail className="w-5 h-5" />
                   </div>
-                  <a href="mailto:info@agvertex.com" className="font-semibold text-[#0057FF] hover:underline">
-                    info@agvertex.com
+                  <a href={`mailto:${settings?.contact?.email || 'info@agvertex.com'}`} className="font-semibold text-[#0057FF] hover:underline">
+                    {settings?.contact?.email || 'info@agvertex.com'}
                   </a>
                 </div>
+
+                {settings?.contact?.phone && (
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0 font-bold">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <a href={`tel:${settings.contact.phone}`} className="font-semibold text-slate-900 hover:text-[#0057FF]">
+                      {settings.contact.phone}
+                    </a>
+                  </div>
+                )}
 
                 <div className="flex items-center gap-3.5">
                   <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0 font-bold">
                     <Calendar className="w-5 h-5" />
                   </div>
-                  <span className="font-semibold text-slate-900">Project inquiries by appointment</span>
+                  <span className="font-semibold text-slate-900">
+                    {settings?.business?.business_hours || 'Project inquiries by appointment'}
+                  </span>
                 </div>
               </div>
 
