@@ -195,86 +195,59 @@ create policy "Users can update own profile" on admin_profiles
 create policy "Users can insert own profile" on admin_profiles
   for insert with check (auth.uid() = id);
 
--- PAGE VISIBILITY: public read, auth write
-create policy "Anyone can read page_visibility" on page_visibility
-  for select using (true);
-create policy "Authenticated users can update page_visibility" on page_visibility
-  for update using (auth.role() = 'authenticated');
-create policy "Authenticated users can insert page_visibility" on page_visibility
-  for insert with check (auth.role() = 'authenticated');
+-- PAGE VISIBILITY: public read, allow CMS write
+create policy "Anyone can read page_visibility" on page_visibility for select using (true);
+create policy "Allow update page_visibility" on page_visibility for update using (true);
+create policy "Allow insert page_visibility" on page_visibility for insert with check (true);
 
--- WEBSITE SETTINGS: public read, auth write
-create policy "Anyone can read website_settings" on website_settings
-  for select using (true);
-create policy "Authenticated users can update website_settings" on website_settings
-  for update using (auth.role() = 'authenticated');
-create policy "Authenticated users can insert website_settings" on website_settings
-  for insert with check (auth.role() = 'authenticated');
+-- WEBSITE SETTINGS: public read, allow CMS write
+create policy "Anyone can read website_settings" on website_settings for select using (true);
+create policy "Allow update website_settings" on website_settings for update using (true);
+create policy "Allow insert website_settings" on website_settings for insert with check (true);
 
--- SERVICES: public reads published, auth reads all, auth writes
-create policy "Public can read published services" on services
-  for select using (status = 'published' or auth.role() = 'authenticated');
-create policy "Authenticated users can insert services" on services
-  for insert with check (auth.role() = 'authenticated');
-create policy "Authenticated users can update services" on services
-  for update using (auth.role() = 'authenticated');
-create policy "Authenticated users can delete services" on services
-  for delete using (auth.role() = 'authenticated');
+-- SERVICES: public read, allow CMS write
+create policy "Public can read services" on services for select using (true);
+create policy "Allow insert services" on services for insert with check (true);
+create policy "Allow update services" on services for update using (true);
+create policy "Allow delete services" on services for delete using (true);
 
--- SHOWCASE PROJECTS: public reads published, auth reads all, auth writes
-create policy "Public can read published showcase projects" on showcase_projects
-  for select using (status = 'published' or auth.role() = 'authenticated');
-create policy "Authenticated users can insert showcase_projects" on showcase_projects
-  for insert with check (auth.role() = 'authenticated');
-create policy "Authenticated users can update showcase_projects" on showcase_projects
-  for update using (auth.role() = 'authenticated');
-create policy "Authenticated users can delete showcase_projects" on showcase_projects
-  for delete using (auth.role() = 'authenticated');
+-- SHOWCASE PROJECTS: public read, allow CMS write
+create policy "Public can read showcase_projects" on showcase_projects for select using (true);
+create policy "Allow insert showcase_projects" on showcase_projects for insert with check (true);
+create policy "Allow update showcase_projects" on showcase_projects for update using (true);
+create policy "Allow delete showcase_projects" on showcase_projects for delete using (true);
 
--- RESOURCES: public reads published, auth reads all, auth writes
-create policy "Public can read published resources" on resources
-  for select using (status = 'published' or auth.role() = 'authenticated');
-create policy "Authenticated users can insert resources" on resources
-  for insert with check (auth.role() = 'authenticated');
-create policy "Authenticated users can update resources" on resources
-  for update using (auth.role() = 'authenticated');
-create policy "Authenticated users can delete resources" on resources
-  for delete using (auth.role() = 'authenticated');
+-- RESOURCES: public read, allow CMS write
+create policy "Public can read resources" on resources for select using (true);
+create policy "Allow insert resources" on resources for insert with check (true);
+create policy "Allow update resources" on resources for update using (true);
+create policy "Allow delete resources" on resources for delete using (true);
 
--- CAREERS: public reads published, auth reads all, auth writes
-create policy "Public can read published careers" on careers
-  for select using (status = 'published' or auth.role() = 'authenticated');
-create policy "Authenticated users can insert careers" on careers
-  for insert with check (auth.role() = 'authenticated');
-create policy "Authenticated users can update careers" on careers
-  for update using (auth.role() = 'authenticated');
-create policy "Authenticated users can delete careers" on careers
-  for delete using (auth.role() = 'authenticated');
+-- CAREERS: public read, allow CMS write
+create policy "Public can read careers" on careers for select using (true);
+create policy "Allow insert careers" on careers for insert with check (true);
+create policy "Allow update careers" on careers for update using (true);
+create policy "Allow delete careers" on careers for delete using (true);
 
--- MEDIA: public read, auth writes
-create policy "Anyone can read media" on media
-  for select using (true);
-create policy "Authenticated users can insert media" on media
-  for insert with check (auth.role() = 'authenticated');
-create policy "Authenticated users can delete media" on media
-  for delete using (auth.role() = 'authenticated');
+-- MEDIA: public read, allow CMS write
+create policy "Anyone can read media" on media for select using (true);
+create policy "Allow insert media" on media for insert with check (true);
+create policy "Allow delete media" on media for delete using (true);
 
 -- ============================================================
 -- STORAGE BUCKET FOR IMAGES
--- Run this to create the public images bucket
 -- ============================================================
 insert into storage.buckets (id, name, public)
 values ('cms-images', 'cms-images', true)
 on conflict (id) do nothing;
 
--- Storage policy: anyone can read
+-- Storage policies
 create policy "Public read access to cms-images" on storage.objects
   for select using (bucket_id = 'cms-images');
 
--- Storage policy: authenticated users can upload
-create policy "Authenticated users can upload to cms-images" on storage.objects
-  for insert with check (bucket_id = 'cms-images' and auth.role() = 'authenticated');
+create policy "Allow upload to cms-images" on storage.objects
+  for insert with check (bucket_id = 'cms-images');
 
--- Storage policy: authenticated users can delete
-create policy "Authenticated users can delete from cms-images" on storage.objects
-  for delete using (bucket_id = 'cms-images' and auth.role() = 'authenticated');
+create policy "Allow delete from cms-images" on storage.objects
+  for delete using (bucket_id = 'cms-images');
+
