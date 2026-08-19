@@ -57,6 +57,7 @@ create table if not exists website_settings (
   updated_at timestamptz default now()
 );
 
+drop trigger if exists update_website_settings_updated_at on website_settings;
 create trigger update_website_settings_updated_at
   before update on website_settings
   for each row execute function update_updated_at_column();
@@ -83,6 +84,7 @@ create table if not exists services (
   updated_at timestamptz default now()
 );
 
+drop trigger if exists update_services_updated_at on services;
 create trigger update_services_updated_at
   before update on services
   for each row execute function update_updated_at_column();
@@ -105,6 +107,7 @@ create table if not exists showcase_projects (
   updated_at timestamptz default now()
 );
 
+drop trigger if exists update_showcase_projects_updated_at on showcase_projects;
 create trigger update_showcase_projects_updated_at
   before update on showcase_projects
   for each row execute function update_updated_at_column();
@@ -130,6 +133,7 @@ create table if not exists resources (
   updated_at timestamptz default now()
 );
 
+drop trigger if exists update_resources_updated_at on resources;
 create trigger update_resources_updated_at
   before update on resources
   for each row execute function update_updated_at_column();
@@ -155,6 +159,7 @@ create table if not exists careers (
   updated_at timestamptz default now()
 );
 
+drop trigger if exists update_careers_updated_at on careers;
 create trigger update_careers_updated_at
   before update on careers
   for each row execute function update_updated_at_column();
