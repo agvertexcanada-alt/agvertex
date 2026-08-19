@@ -15,6 +15,10 @@ dist-isolation
 .DS_Store
 Downloads/
 
+# Environment variables (Supabase credentials — NEVER commit)
+.env
+.env.local
+
 # Editor directories and files
 .idea
 .vscode

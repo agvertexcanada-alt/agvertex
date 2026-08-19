@@ -1,0 +1,184 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { servicesApi, ServiceInsert } from '../../lib/api/services';
+import { ImageUploader } from '../components/ImageUploader';
+import { toast } from '../components/Toast';
+import { ArrowLeft, Loader2, Save, Globe } from 'lucide-react';
+
+const EMPTY_FORM: ServiceInsert = {
+  title: '',
+  short_desc: '',
+  full_desc: '',
+  image_url: '',
+  display_order: 0,
+  status: 'draft',
+};
+
+export function ServiceFormPage() {
+  const { id } = useParams<{ id: string }>();
+  const isEdit = Boolean(id && id !== 'new');
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState<ServiceInsert>(EMPTY_FORM);
+  const [loading, setLoading] = useState(isEdit);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (isEdit && id) {
+      servicesApi.getById(id).then(data => {
+        if (data) {
+          const { id: _id, created_at, updated_at, ...rest } = data as any;
+          setForm(rest);
+        }
+        setLoading(false);
+      });
+    }
+  }, [id, isEdit]);
+
+  const set = (key: keyof ServiceInsert, value: any) =>
+    setForm(f => ({ ...f, [key]: value }));
+
+  const handleSave = async (status: 'draft' | 'published') => {
+    if (!form.title.trim()) {
+      toast.error('Service title is required.');
+      return;
+    }
+    setSaving(true);
+    try {
+      const payload = { ...form, status };
+      if (isEdit && id) {
+        await servicesApi.update(id, payload);
+        toast.success(status === 'published' ? 'Service published successfully.' : 'Draft saved.');
+      } else {
+        await servicesApi.create(payload);
+        toast.success(status === 'published' ? 'Service published successfully.' : 'Draft saved.');
+      }
+      navigate('/admin/services');
+    } catch (e: any) {
+      toast.error('Save failed: ' + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <Loader2 className="w-6 h-6 animate-spin text-[#0057FF]" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6 max-w-3xl">
+      {/* Header */}
+      <div className="flex items-center gap-4">
+        <button
+          onClick={() => navigate('/admin/services')}
+          className="w-9 h-9 rounded-xl bg-white border border-slate-200 text-slate-600 flex items-center justify-center hover:bg-slate-50 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+        </button>
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900">{isEdit ? 'Edit Service' : 'Add Service'}</h1>
+          <p className="text-sm text-slate-500 mt-0.5">
+            {isEdit ? 'Update service details.' : 'Create a new engineering service.'}
+          </p>
+        </div>
+      </div>
+
+      {/* Form */}
+      <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6 shadow-sm">
+        {/* Title */}
+        <div className="space-y-1.5">
+          <label className="text-xs font-bold text-slate-700 uppercase tracking-wide block">
+            Service Title *
+          </label>
+          <input
+            type="text"
+            value={form.title}
+            onChange={e => set('title', e.target.value)}
+            placeholder="e.g. Injection Mold Design"
+            className="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-[#0057FF] focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+          />
+        </div>
+
+        {/* Short Description */}
+        <div className="space-y-1.5">
+          <label className="text-xs font-bold text-slate-700 uppercase tracking-wide block">
+            Short Description
+          </label>
+          <input
+            type="text"
+            value={form.short_desc}
+            onChange={e => set('short_desc', e.target.value)}
+            placeholder="Brief one-line description shown in cards"
+            className="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-[#0057FF] focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+          />
+        </div>
+
+        {/* Full Description */}
+        <div className="space-y-1.5">
+          <label className="text-xs font-bold text-slate-700 uppercase tracking-wide block">
+            Full Description
+          </label>
+          <textarea
+            rows={5}
+            value={form.full_desc}
+            onChange={e => set('full_desc', e.target.value)}
+            placeholder="Full service description for the service detail view"
+            className="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-[#0057FF] focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all resize-y"
+          />
+        </div>
+
+        {/* Image */}
+        <ImageUploader
+          currentUrl={form.image_url}
+          onUpload={url => set('image_url', url)}
+          label="Service Image"
+        />
+
+        {/* Display Order */}
+        <div className="space-y-1.5">
+          <label className="text-xs font-bold text-slate-700 uppercase tracking-wide block">
+            Display Order
+          </label>
+          <input
+            type="number"
+            min={0}
+            value={form.display_order}
+            onChange={e => set('display_order', Number(e.target.value))}
+            className="w-32 px-4 py-3 rounded-xl border border-slate-300 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-[#0057FF] focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all"
+          />
+          <p className="text-xs text-slate-400">Lower numbers appear first.</p>
+        </div>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex flex-col sm:flex-row items-center gap-3">
+        <button
+          onClick={() => handleSave('draft')}
+          disabled={saving}
+          className="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-300 text-sm font-bold text-slate-700 bg-white hover:bg-slate-50 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+        >
+          {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+          Save as Draft
+        </button>
+        <button
+          onClick={() => handleSave('published')}
+          disabled={saving}
+          className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#0057FF] text-white text-sm font-bold hover:bg-blue-600 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 shadow-md shadow-blue-500/20"
+        >
+          {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Globe className="w-4 h-4" />}
+          Publish Now
+        </button>
+        <button
+          onClick={() => navigate('/admin/services')}
+          className="w-full sm:w-auto px-6 py-3 rounded-xl text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
+}

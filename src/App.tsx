@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { AdminApp } from './admin/AdminApp';
+import { AdminProvider } from './admin/context/AdminContext';
 import { Preloader } from './components/common/Preloader';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { Navbar } from './components/layout/Navbar';
@@ -55,6 +57,20 @@ export default function App() {
       });
     }, 2500);
   };
+
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  // Admin CMS — completely separate layout, no public navbar/footer
+  if (isAdminRoute) {
+    return (
+      <AdminProvider>
+        <Routes>
+          <Route path="/admin/*" element={<AdminApp />} />
+        </Routes>
+      </AdminProvider>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] relative overflow-x-hidden selection:bg-[#0057FF] selection:text-white">
