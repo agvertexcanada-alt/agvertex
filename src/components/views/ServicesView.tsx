@@ -13,6 +13,7 @@ import {
   ExternalLink,
   ChevronRight
 } from 'lucide-react';
+import { useServicesData } from '../../hooks/useCmsData';
 
 interface ServicesViewProps {
   onOpenQuoteModal?: () => void;
@@ -21,6 +22,15 @@ interface ServicesViewProps {
 export const ServicesView: React.FC<ServicesViewProps> = () => {
   const navigate = useNavigate();
   const [selectedBlock, setSelectedBlock] = useState<any | null>(null);
+  const { services: cmsServices, loading: cmsLoading } = useServicesData();
+
+  // Published display_orders from CMS (1-based). If DB unreachable, show all.
+  const publishedOrders = cmsLoading
+    ? new Set([1, 2, 3, 4])
+    : cmsServices.length === 0
+      ? new Set([1, 2, 3, 4])  // fallback: DB empty, show all
+      : new Set(cmsServices.map(s => s.display_order));
+
 
   const BLOCKS = [
     {
@@ -157,6 +167,9 @@ export const ServicesView: React.FC<ServicesViewProps> = () => {
     },
   ];
 
+  // Filter blocks to only show CMS-published ones
+  const visibleBlocks = BLOCKS.filter(b => publishedOrders.has(parseInt(b.num)));
+
   const PROCESS_STEPS = [
     {
       num: '1',
@@ -199,7 +212,7 @@ export const ServicesView: React.FC<ServicesViewProps> = () => {
       {/* 2. FOUR MAIN CAPABILITY BLOCKS (Single "View Details" per card) */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {BLOCKS.map((block) => (
+          {visibleBlocks.map((block) => (
             <div
               key={block.num}
               className="glass-card bg-white p-7 sm:p-8 rounded-3xl border border-slate-200/90 shadow-md hover:shadow-xl hover:border-blue-400 transition-all duration-300 flex flex-col justify-between group"
