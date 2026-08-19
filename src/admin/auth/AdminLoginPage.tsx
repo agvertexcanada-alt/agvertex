@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useAdminAuth } from './useAdminAuth';
+import { useAdmin } from '../context/AdminContext';
 import { Shield, Eye, EyeOff, AlertCircle, Loader2 } from 'lucide-react';
 
 export function AdminLoginPage() {
-  const { signIn } = useAdminAuth();
+  const { signIn } = useAdmin();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
