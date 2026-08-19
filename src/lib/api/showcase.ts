@@ -94,8 +94,7 @@ export const showcaseApi = {
   async setVisibility(enabled: boolean): Promise<void> {
     const { error } = await supabase
       .from('page_visibility')
-      .update({ is_enabled: enabled })
-      .eq('page_key', 'showcase');
+      .upsert({ page_key: 'showcase', is_enabled: enabled }, { onConflict: 'page_key' });
     if (error) throw error;
   },
 };
