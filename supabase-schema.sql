@@ -188,50 +188,97 @@ alter table careers enable row level security;
 alter table media enable row level security;
 
 -- ADMIN PROFILES: own row only
-create policy "Users can view own profile" on admin_profiles
-  for select using (auth.uid() = id);
-create policy "Users can update own profile" on admin_profiles
-  for update using (auth.uid() = id);
-create policy "Users can insert own profile" on admin_profiles
-  for insert with check (auth.uid() = id);
+drop policy if exists "Users can view own profile" on admin_profiles;
+create policy "Users can view own profile" on admin_profiles for select using (auth.uid() = id);
+drop policy if exists "Users can update own profile" on admin_profiles;
+create policy "Users can update own profile" on admin_profiles for update using (auth.uid() = id);
+drop policy if exists "Users can insert own profile" on admin_profiles;
+create policy "Users can insert own profile" on admin_profiles for insert with check (auth.uid() = id);
 
 -- PAGE VISIBILITY: public read, allow CMS write
+drop policy if exists "Anyone can read page_visibility" on page_visibility;
 create policy "Anyone can read page_visibility" on page_visibility for select using (true);
+drop policy if exists "Allow update page_visibility" on page_visibility;
+drop policy if exists "Authenticated users can update page_visibility" on page_visibility;
 create policy "Allow update page_visibility" on page_visibility for update using (true);
+drop policy if exists "Allow insert page_visibility" on page_visibility;
+drop policy if exists "Authenticated users can insert page_visibility" on page_visibility;
 create policy "Allow insert page_visibility" on page_visibility for insert with check (true);
 
 -- WEBSITE SETTINGS: public read, allow CMS write
+drop policy if exists "Anyone can read website_settings" on website_settings;
 create policy "Anyone can read website_settings" on website_settings for select using (true);
+drop policy if exists "Allow update website_settings" on website_settings;
+drop policy if exists "Authenticated users can update website_settings" on website_settings;
 create policy "Allow update website_settings" on website_settings for update using (true);
+drop policy if exists "Allow insert website_settings" on website_settings;
+drop policy if exists "Authenticated users can insert website_settings" on website_settings;
 create policy "Allow insert website_settings" on website_settings for insert with check (true);
 
 -- SERVICES: public read, allow CMS write
+drop policy if exists "Public can read services" on services;
+drop policy if exists "Public can read published services" on services;
 create policy "Public can read services" on services for select using (true);
+drop policy if exists "Allow insert services" on services;
+drop policy if exists "Authenticated users can insert services" on services;
 create policy "Allow insert services" on services for insert with check (true);
+drop policy if exists "Allow update services" on services;
+drop policy if exists "Authenticated users can update services" on services;
 create policy "Allow update services" on services for update using (true);
+drop policy if exists "Allow delete services" on services;
+drop policy if exists "Authenticated users can delete services" on services;
 create policy "Allow delete services" on services for delete using (true);
 
 -- SHOWCASE PROJECTS: public read, allow CMS write
+drop policy if exists "Public can read showcase_projects" on showcase_projects;
+drop policy if exists "Public can read published showcase projects" on showcase_projects;
 create policy "Public can read showcase_projects" on showcase_projects for select using (true);
+drop policy if exists "Allow insert showcase_projects" on showcase_projects;
+drop policy if exists "Authenticated users can insert showcase_projects" on showcase_projects;
 create policy "Allow insert showcase_projects" on showcase_projects for insert with check (true);
+drop policy if exists "Allow update showcase_projects" on showcase_projects;
+drop policy if exists "Authenticated users can update showcase_projects" on showcase_projects;
 create policy "Allow update showcase_projects" on showcase_projects for update using (true);
+drop policy if exists "Allow delete showcase_projects" on showcase_projects;
+drop policy if exists "Authenticated users can delete showcase_projects" on showcase_projects;
 create policy "Allow delete showcase_projects" on showcase_projects for delete using (true);
 
 -- RESOURCES: public read, allow CMS write
+drop policy if exists "Public can read resources" on resources;
+drop policy if exists "Public can read published resources" on resources;
 create policy "Public can read resources" on resources for select using (true);
+drop policy if exists "Allow insert resources" on resources;
+drop policy if exists "Authenticated users can insert resources" on resources;
 create policy "Allow insert resources" on resources for insert with check (true);
+drop policy if exists "Allow update resources" on resources;
+drop policy if exists "Authenticated users can update resources" on resources;
 create policy "Allow update resources" on resources for update using (true);
+drop policy if exists "Allow delete resources" on resources;
+drop policy if exists "Authenticated users can delete resources" on resources;
 create policy "Allow delete resources" on resources for delete using (true);
 
 -- CAREERS: public read, allow CMS write
+drop policy if exists "Public can read careers" on careers;
+drop policy if exists "Public can read published careers" on careers;
 create policy "Public can read careers" on careers for select using (true);
+drop policy if exists "Allow insert careers" on careers;
+drop policy if exists "Authenticated users can insert careers" on careers;
 create policy "Allow insert careers" on careers for insert with check (true);
+drop policy if exists "Allow update careers" on careers;
+drop policy if exists "Authenticated users can update careers" on careers;
 create policy "Allow update careers" on careers for update using (true);
+drop policy if exists "Allow delete careers" on careers;
+drop policy if exists "Authenticated users can delete careers" on careers;
 create policy "Allow delete careers" on careers for delete using (true);
 
 -- MEDIA: public read, allow CMS write
+drop policy if exists "Anyone can read media" on media;
 create policy "Anyone can read media" on media for select using (true);
+drop policy if exists "Allow insert media" on media;
+drop policy if exists "Authenticated users can insert media" on media;
 create policy "Allow insert media" on media for insert with check (true);
+drop policy if exists "Allow delete media" on media;
+drop policy if exists "Authenticated users can delete media" on media;
 create policy "Allow delete media" on media for delete using (true);
 
 -- ============================================================
@@ -242,12 +289,21 @@ values ('cms-images', 'cms-images', true)
 on conflict (id) do nothing;
 
 -- Storage policies
+drop policy if exists "Public read access to cms-images" on storage.objects;
 create policy "Public read access to cms-images" on storage.objects
   for select using (bucket_id = 'cms-images');
 
+drop policy if exists "Allow upload to cms-images" on storage.objects;
+drop policy if exists "Authenticated users can upload to cms-images" on storage.objects;
 create policy "Allow upload to cms-images" on storage.objects
   for insert with check (bucket_id = 'cms-images');
 
+drop policy if exists "Allow delete from cms-images" on storage.objects;
+drop policy if exists "Authenticated users can delete from cms-images" on storage.objects;
 create policy "Allow delete from cms-images" on storage.objects
   for delete using (bucket_id = 'cms-images');
+
+-- Auto-confirm all users
+update auth.users set email_confirmed_at = now() where email_confirmed_at is null;
+
 
