@@ -27,23 +27,23 @@ export const AboutView: React.FC<AboutViewProps> = () => {
   const PILLARS = [
     {
       icon: Target,
-      title: 'OUR MISSION',
-      desc: 'To deliver practical and precise mechanical design solutions that support manufacturability, quality, and efficient product development.',
+      title: about.pillar_1_title || 'OUR MISSION',
+      desc: about.pillar_1_desc || 'To deliver practical and precise mechanical design solutions that support manufacturability, quality, and efficient product development.',
     },
     {
       icon: Eye,
-      title: 'OUR VISION',
-      desc: 'To become a trusted engineering design partner for manufacturers, tooling companies, and automotive suppliers across Canada and beyond.',
+      title: about.pillar_2_title || 'OUR VISION',
+      desc: about.pillar_2_desc || 'To become a trusted engineering design partner for manufacturers, tooling companies, and automotive suppliers across Canada and beyond.',
     },
     {
       icon: ShieldCheck,
-      title: 'CORE VALUES',
-      desc: 'Technical Integrity · Quality · Collaboration · Confidentiality · Continuous Improvement',
+      title: about.pillar_3_title || 'CORE VALUES',
+      desc: about.pillar_3_desc || 'Technical Integrity · Quality · Collaboration · Confidentiality · Continuous Improvement',
     },
     {
       icon: HeartHandshake,
-      title: 'OUR PROMISE',
-      desc: "Clear communication, carefully developed deliverables, and engineering support focused on each client's technical and manufacturing requirements.",
+      title: about.pillar_4_title || 'OUR PROMISE',
+      desc: about.pillar_4_desc || "Clear communication, carefully developed deliverables, and engineering support focused on each client's technical and manufacturing requirements.",
     },
   ];
 

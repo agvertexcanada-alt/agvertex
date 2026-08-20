@@ -59,6 +59,16 @@ export interface AboutPageContent {
   hero_title: string;
   hero_desc: string;
   hero_img: string;
+
+  pillar_1_title: string;
+  pillar_1_desc: string;
+  pillar_2_title: string;
+  pillar_2_desc: string;
+  pillar_3_title: string;
+  pillar_3_desc: string;
+  pillar_4_title: string;
+  pillar_4_desc: string;
+
   exp_1_title: string;
   exp_1_desc: string;
   exp_1_img: string;
@@ -118,6 +128,16 @@ export const DEFAULT_PAGE_CONTENT: WebsitePageContent = {
     hero_title: 'PRECISION MECHANICAL DESIGN & ENGINEERING PARTNER',
     hero_desc: 'AG Vertex is a Windsor, Ontario-based mechanical design consultancy specializing in product design, mold and die design, 3D CAD modelling, and automotive drawing validation. We help transform engineering concepts into practical, manufacturable designs supported by accurate documentation and supplier coordination.',
     hero_img: '/images/cad_workstation_single.jpeg',
+
+    pillar_1_title: 'OUR MISSION',
+    pillar_1_desc: 'To deliver practical and precise mechanical design solutions that support manufacturability, quality, and efficient product development.',
+    pillar_2_title: 'OUR VISION',
+    pillar_2_desc: 'To become a trusted engineering design partner for manufacturers, tooling companies, and automotive suppliers across Canada and beyond.',
+    pillar_3_title: 'CORE VALUES',
+    pillar_3_desc: 'Technical Integrity · Quality · Collaboration · Confidentiality · Continuous Improvement',
+    pillar_4_title: 'OUR PROMISE',
+    pillar_4_desc: "Clear communication, carefully developed deliverables, and engineering support focused on each client's technical and manufacturing requirements.",
+
     exp_1_title: 'PRODUCT DEVELOPMENT',
     exp_1_desc: 'Mechanical components and assemblies developed with performance, manufacturability, and production requirements in mind.',
     exp_1_img: '/services/product_design.png',

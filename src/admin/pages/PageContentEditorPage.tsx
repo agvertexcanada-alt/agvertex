@@ -314,6 +314,45 @@ export function PageContentEditorPage() {
             </div>
           </section>
 
+          {/* 4 Pillars / Core Values Cards */}
+          <section className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+            <h2 className="text-base font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#0057FF]" />
+              About Page — 4 Core Pillars Cards (Mission, Vision, Values, Promise)
+            </h2>
+
+            {[
+              { num: 1, titleKey: 'pillar_1_title', descKey: 'pillar_1_desc' },
+              { num: 2, titleKey: 'pillar_2_title', descKey: 'pillar_2_desc' },
+              { num: 3, titleKey: 'pillar_3_title', descKey: 'pillar_3_desc' },
+              { num: 4, titleKey: 'pillar_4_title', descKey: 'pillar_4_desc' },
+            ].map(card => (
+              <div key={card.num} className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-4">
+                <p className="text-xs font-mono font-bold text-[#0057FF] uppercase">Pillar Card #{card.num}</p>
+                <div className="space-y-3">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-700 uppercase block">Card Title</label>
+                    <input
+                      type="text"
+                      value={(content.about as any)[card.titleKey]}
+                      onChange={e => updateField('about', card.titleKey, e.target.value)}
+                      className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-700 uppercase block">Card Description Paragraph</label>
+                    <textarea
+                      rows={2}
+                      value={(content.about as any)[card.descKey]}
+                      onChange={e => updateField('about', card.descKey, e.target.value)}
+                      className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </section>
+
           {/* 4 Experience Cards */}
           <section className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
             <h2 className="text-base font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
