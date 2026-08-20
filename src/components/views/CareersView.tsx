@@ -16,12 +16,13 @@ import {
   Clock,
   ChevronDown
 } from 'lucide-react';
-import { useCareersData } from '../../hooks/useCmsData';
+import { useCareersData, useSettingsData } from '../../hooks/useCmsData';
 
 export const CareersView: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [profileSubmitted, setProfileSubmitted] = useState(false);
   const { careers: dbCareers } = useCareersData();
+  const { settings } = useSettingsData();
   const [expandedJob, setExpandedJob] = useState<string | null>(null);
   const [profileForm, setProfileForm] = useState({
     name: '',
@@ -144,7 +145,7 @@ export const CareersView: React.FC = () => {
           <div className="lg:col-span-6 relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200/90 bg-slate-900 group">
               <img
-                src="/images/cad_team_collaboration.jpeg"
+                src={settings?.images?.careers_team_image || "/images/cad_team_collaboration.jpeg"}
                 alt="Engineering Team Collaboration - AG Vertex"
                 className="w-full h-[360px] sm:h-[420px] object-cover transition-transform duration-700 group-hover:scale-103"
               />

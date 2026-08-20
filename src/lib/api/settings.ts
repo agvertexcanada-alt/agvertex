@@ -22,10 +22,18 @@ export interface BusinessSettings {
   business_hours: string;
 }
 
+export interface SectionImagesSettings {
+  about_hero_image: string;
+  about_facility_image: string;
+  careers_team_image: string;
+  home_hero_image: string;
+}
+
 export interface AllSettings {
   contact: ContactSettings;
   social: SocialSettings;
   business: BusinessSettings;
+  images: SectionImagesSettings;
 }
 
 const defaultSettings: AllSettings = {
@@ -42,6 +50,12 @@ const defaultSettings: AllSettings = {
     tagline: 'Precision Mechanical Design & Engineering Partner',
     short_description: 'Mechanical design consultancy in Windsor, Ontario.',
     business_hours: 'Monday – Friday, 9 AM – 5 PM EST',
+  },
+  images: {
+    about_hero_image: '/images/cad_workstation_single.jpeg',
+    about_facility_image: '/services/drawing_validation.png',
+    careers_team_image: '/images/cad_team_collaboration.jpeg',
+    home_hero_image: '',
   },
 };
 
@@ -68,7 +82,7 @@ export const settingsApi = {
     return all.contact;
   },
 
-  async updateSetting(key: 'contact' | 'social' | 'business', value: object): Promise<void> {
+  async updateSetting(key: 'contact' | 'social' | 'business' | 'images', value: object): Promise<void> {
     const { error } = await supabase
       .from('website_settings')
       .upsert({ setting_key: key, setting_value: value }, { onConflict: 'setting_key' });

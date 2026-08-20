@@ -11,6 +11,7 @@ import {
   Users, 
   ArrowRight 
 } from 'lucide-react';
+import { useSettingsData } from '../../hooks/useCmsData';
 
 interface AboutViewProps {
   setActiveTab?: (tab: string) => void;
@@ -19,6 +20,8 @@ interface AboutViewProps {
 
 export const AboutView: React.FC<AboutViewProps> = () => {
   const navigate = useNavigate();
+  const { settings } = useSettingsData();
+
 
   const PILLARS = [
     {
@@ -129,7 +132,7 @@ export const AboutView: React.FC<AboutViewProps> = () => {
           <div className="lg:col-span-6 relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200/90 bg-slate-900 group">
               <img
-                src="/images/cad_workstation_single.jpeg"
+                src={settings?.images?.about_hero_image || "/images/cad_workstation_single.jpeg"}
                 alt="CAD Workstation - AG Vertex"
                 className="w-full h-[380px] sm:h-[450px] object-cover transition-transform duration-700 group-hover:scale-103"
               />
@@ -278,7 +281,7 @@ export const AboutView: React.FC<AboutViewProps> = () => {
 
           <div className="lg:col-span-4 rounded-2xl overflow-hidden h-52 border border-slate-200 shadow-md">
             <img
-              src="/services/drawing_validation.png"
+              src={settings?.images?.about_facility_image || "/services/drawing_validation.png"}
               alt="Discuss Your Engineering Project"
               className="w-full h-full object-cover"
             />
