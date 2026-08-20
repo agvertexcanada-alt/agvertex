@@ -403,35 +403,6 @@ export const ContactView: React.FC = () => {
           ))}
         </div>
 
-        {/* Global Map Visual Container */}
-        <div className="glass-card bg-slate-900 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-2xl relative overflow-hidden text-center space-y-6">
-          <div className="absolute inset-0 bg-[radial-gradient(#0057FF_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none" />
-          
-          <div className="relative z-10 max-w-2xl mx-auto space-y-4">
-            <h3 className="text-2xl sm:text-3xl font-heading font-bold tracking-tight">
-              24/7 Follow-the-Sun Engineering Delivery
-            </h3>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-              When Canada hands over at end of day, our teams in India and New Zealand pick up the design iterations, ensuring zero downtime and rapid turnaround on critical tooling and CAD milestones.
-            </p>
-          </div>
-
-          <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 max-w-2xl mx-auto">
-            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-1">
-              <span className="text-lg font-heading font-bold text-white block">🇨🇦 Canada</span>
-              <span className="text-xs text-slate-300 font-medium">Windsor & Toronto</span>
-            </div>
-            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-1">
-              <span className="text-lg font-heading font-bold text-white block">🇮🇳 India</span>
-              <span className="text-xs text-slate-300 font-medium">Kochi Hub</span>
-            </div>
-            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-1">
-              <span className="text-lg font-heading font-bold text-white block">🇳🇿 New Zealand</span>
-              <span className="text-xs text-slate-300 font-medium">Auckland Support</span>
-            </div>
-          </div>
-        </div>
-
       </section>
 
     </div>
