@@ -34,75 +34,16 @@ export const PortfolioView: React.FC<PortfolioViewProps> = () => {
     { id: 'Drawing Review', label: 'Drawing Review' },
   ];
 
-  const STATIC_PROJECTS = [
-    {
-      id: 'proj-1',
-      tag: 'PRODUCT DESIGN',
-      title: 'Automotive Component Development',
-      desc: 'Concept development and detailed design of automotive components.',
-      image: '/services/product_design.png',
-      category: 'Product Design',
-      tools: 'SolidWorks, Creo, ASME Y14.5',
-    },
-    {
-      id: 'proj-2',
-      tag: 'MOLD & DIE DESIGN',
-      title: 'Injection Mold Tooling',
-      desc: 'Mold design, component detailing, and tooling support for injection molding.',
-      image: '/services/injection_mold.png',
-      category: 'Mold & Die Design',
-      tools: 'Siemens NX Mold Wizard, Moldflow',
-    },
-    {
-      id: 'proj-3',
-      tag: 'DRAWING REVIEW',
-      title: 'Automotive Drawing Review',
-      desc: 'Drawing verification, discrepancy resolution, and supplier coordination.',
-      image: '/services/drawing_validation.png',
-      category: 'Drawing Review',
-      tools: 'AutoCAD, Windchill, GD&T',
-    },
-    {
-      id: 'proj-4',
-      tag: '3D CAD',
-      title: 'Parametric CAD & Assembly Design',
-      desc: 'Parametric modeling, assembly design, and CAD data preparation.',
-      image: '/services/cad_modelling.png',
-      category: '3D CAD',
-      tools: 'Creo, SolidWorks, Siemens NX',
-    },
-    {
-      id: 'proj-5',
-      tag: 'MOLD & DIE DESIGN',
-      title: 'High-Pressure Die-Casting Tool Design',
-      desc: 'High-pressure die-casting tool concepts, parting lines, and slide mechanisms.',
-      image: '/services/die_casting.png',
-      category: 'Mold & Die Design',
-      tools: 'Creo, AutoCAD, SolidWorks',
-    },
-    {
-      id: 'proj-6',
-      tag: 'DRAWING REVIEW',
-      title: 'ASME Y14.5 GD&T & BOM Drafting',
-      desc: 'Production-ready drawings with GD&T per ASME Y14.5 and structured bills of materials.',
-      image: '/services/drawings_gdt.png',
-      category: 'Drawing Review',
-      tools: 'AutoCAD, SolidWorks, Windchill',
-    },
-  ];
-
-  // If Supabase has published projects, use them; otherwise fallback to static
-  const activeProjectsList = (dbProjects && dbProjects.length > 0)
-    ? dbProjects.map(p => ({
-        id: p.id,
-        tag: p.category ? p.category.toUpperCase() : 'PROJECT',
-        title: p.title,
-        desc: p.description,
-        image: p.image_url || '/services/product_design.png',
-        category: p.category || 'Product Design',
-        tools: p.client ? `Client: ${p.client} · Year: ${p.project_year}` : `Year: ${p.project_year || 'Recent'}`,
-      }))
-    : STATIC_PROJECTS;
+  // Map DB projects from Supabase (CMS) — only show what is published in CMS
+  const activeProjectsList = (dbProjects || []).map(p => ({
+    id: p.id,
+    tag: p.category ? p.category.toUpperCase() : 'PROJECT',
+    title: p.title,
+    desc: p.description,
+    image: p.image_url || '/services/product_design.png',
+    category: p.category || 'Product Design',
+    tools: p.client ? `Client: ${p.client} · Year: ${p.project_year}` : `Year: ${p.project_year || 'Recent'}`,
+  }));
 
   const filteredProjects = activeProjectsList.filter(
     (p) => activeCategory === 'All' || p.category === activeCategory
@@ -181,9 +122,20 @@ export const PortfolioView: React.FC<PortfolioViewProps> = () => {
             </div>
           </div>
 
-          {/* Right Grid: 6 Cards + Need Support Card */}
+          {/* Right Grid: Showcase Cards OR Empty State */}
           <div className="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-            {filteredProjects.map((item) => (
+            {filteredProjects.length === 0 ? (
+              <div className="sm:col-span-2 xl:col-span-3 glass-card bg-white rounded-3xl p-12 sm:p-16 border border-slate-200 text-center space-y-4 shadow-sm">
+                <div className="w-16 h-16 rounded-2xl bg-blue-50 text-[#0057FF] flex items-center justify-center mx-auto">
+                  <Box className="w-8 h-8" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-800 font-heading">No Showcase Projects Published Yet</h3>
+                <p className="text-sm text-slate-500 max-w-md mx-auto leading-relaxed font-normal">
+                  Showcase projects will appear here as soon as they are added and set to Published in the CMS.
+                </p>
+              </div>
+            ) : (
+              filteredProjects.map((item) => (
               <div
                 key={item.id}
                 onClick={() => setSelectedProject(item)}
@@ -222,7 +174,8 @@ export const PortfolioView: React.FC<PortfolioViewProps> = () => {
                   </div>
                 </div>
               </div>
-            ))}
+            ))
+          )}
 
             {/* Need Support Card (Blue Card matching PDF Page 6) */}
             <div className="glass-card bg-[#0057FF] text-white p-8 rounded-3xl shadow-xl flex flex-col justify-between space-y-6 relative overflow-hidden">
