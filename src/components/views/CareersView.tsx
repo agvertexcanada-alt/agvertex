@@ -16,13 +16,15 @@ import {
   Clock,
   ChevronDown
 } from 'lucide-react';
-import { useCareersData, useSettingsData } from '../../hooks/useCmsData';
+import { useCareersData, usePageContent, useSettingsData } from '../../hooks/useCmsData';
 
 export const CareersView: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [profileSubmitted, setProfileSubmitted] = useState(false);
   const { careers: dbCareers } = useCareersData();
   const { settings } = useSettingsData();
+  const { pageContent } = usePageContent();
+  const careers = pageContent.careers;
   const [expandedJob, setExpandedJob] = useState<string | null>(null);
   const [profileForm, setProfileForm] = useState({
     name: '',
@@ -57,23 +59,23 @@ export const CareersView: React.FC = () => {
   const VALUES = [
     {
       icon: Layers,
-      title: 'PRACTICAL ENGINEERING',
-      desc: 'We solve real design problems with practical, manufacturable solutions.',
+      title: careers.val_1_title || 'PRACTICAL ENGINEERING',
+      desc: careers.val_1_desc || 'We solve real design problems with practical, manufacturable solutions.',
     },
     {
       icon: HeartHandshake,
-      title: 'FLEXIBLE COLLABORATION',
-      desc: 'Work with us on a project basis or as an independent specialist.',
+      title: careers.val_2_title || 'FLEXIBLE COLLABORATION',
+      desc: careers.val_2_desc || 'Work with us on a project basis or as an independent specialist.',
     },
     {
       icon: ShieldCheck,
-      title: 'TECHNICAL INTEGRITY',
-      desc: 'We stand for accuracy, reliability, and clear communication in every deliverable.',
+      title: careers.val_3_title || 'TECHNICAL INTEGRITY',
+      desc: careers.val_3_desc || 'We stand for accuracy, reliability, and clear communication in every deliverable.',
     },
     {
       icon: GraduationCap,
-      title: 'CONTINUOUS LEARNING',
-      desc: 'We encourage knowledge sharing and ongoing growth in engineering.',
+      title: careers.val_4_title || 'CONTINUOUS LEARNING',
+      desc: careers.val_4_desc || 'We encourage knowledge sharing and ongoing growth in engineering.',
     },
   ];
 
@@ -117,17 +119,15 @@ export const CareersView: React.FC = () => {
           
           <div className="lg:col-span-6 space-y-6">
             <span className="text-xs font-mono font-bold uppercase text-[#0057FF] tracking-widest block">
-              CAREERS & COLLABORATION
+              {careers.hero_tag || 'CAREERS & COLLABORATION'}
             </span>
 
             <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-heading font-extrabold text-[#0F172A] tracking-tight leading-[1.12]">
-              BRING PRACTICAL <br />
-              <span className="text-[#0057FF]">ENGINEERING</span> <br />
-              IDEAS TO LIFE
+              {careers.hero_title || 'BRING PRACTICAL ENGINEERING IDEAS TO LIFE'}
             </h1>
 
             <p className="text-sm sm:text-base text-slate-600 font-normal leading-relaxed max-w-lg">
-              AG Vertex welcomes experienced mechanical designers, tooling specialists, and CAD professionals interested in future project-based collaboration.
+              {careers.hero_desc || 'AG Vertex welcomes experienced mechanical designers, tooling specialists, and CAD professionals interested in future project-based collaboration.'}
             </p>
 
             <div className="pt-2">
@@ -145,7 +145,7 @@ export const CareersView: React.FC = () => {
           <div className="lg:col-span-6 relative">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200/90 bg-slate-900 group">
               <img
-                src={settings?.images?.careers_team_image || "/images/cad_team_collaboration.jpeg"}
+                src={careers.hero_img || settings?.images?.careers_team_image || "/images/cad_team_collaboration.jpeg"}
                 alt="Engineering Team Collaboration - AG Vertex"
                 className="w-full h-[360px] sm:h-[420px] object-cover transition-transform duration-700 group-hover:scale-103"
               />

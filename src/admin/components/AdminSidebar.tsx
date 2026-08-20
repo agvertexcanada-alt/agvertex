@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Eye,
   Globe,
+  LayoutText,
 } from 'lucide-react';
 
 interface NavItem {
@@ -23,6 +24,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', path: '/admin', icon: LayoutDashboard },
+  { label: 'Page Content & Images', path: '/admin/pages', icon: LayoutText },
   { label: 'Services', path: '/admin/services', icon: Wrench },
   { label: 'Capability Showcase', path: '/admin/showcase', icon: Eye },
   { label: 'Careers', path: '/admin/careers', icon: Briefcase },

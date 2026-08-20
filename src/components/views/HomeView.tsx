@@ -11,6 +11,8 @@ import {
   ChevronRight
 } from 'lucide-react';
 
+import { usePageContent } from '../../hooks/useCmsData';
+
 interface HomeViewProps {
   setActiveTab?: (tab: string) => void;
   onOpenQuoteModal?: () => void;
@@ -19,27 +21,29 @@ interface HomeViewProps {
 
 export const HomeView: React.FC<HomeViewProps> = () => {
   const navigate = useNavigate();
+  const { pageContent } = usePageContent();
+  const home = pageContent.home;
 
   const CAPABILITY_CARDS = [
     {
-      title: 'Product & Mechanical Design',
-      image: '/services/product_design.png',
+      title: home.cap_1_title || 'Product & Mechanical Design',
+      image: home.cap_1_img || '/services/product_design.png',
       icon: Box,
-      items: ['3D CAD Modelling', 'Drawings, GD&T & BOMs'],
+      items: (home.cap_1_desc || '3D CAD Modelling • Drawings, GD&T & BOMs').split('•').map(s => s.trim()),
       link: '/services',
     },
     {
-      title: 'Mold & Die Tooling Design',
-      image: '/services/injection_mold.png',
+      title: home.cap_2_title || 'Mold & Die Tooling Design',
+      image: home.cap_2_img || '/services/injection_mold.png',
       icon: Layers,
-      items: ['3D CAD Modelling', 'Drawings, GD&T & BOMs'],
+      items: (home.cap_2_desc || '3D CAD Modelling • Drawings, GD&T & BOMs').split('•').map(s => s.trim()),
       link: '/services',
     },
     {
-      title: 'CAD Documentation & Manufacturing Support',
-      image: '/services/drawings_gdt.png',
+      title: home.cap_3_title || 'CAD Documentation & Manufacturing Support',
+      image: home.cap_3_img || '/services/drawings_gdt.png',
       icon: FileText,
-      items: ['DFM/DFA', 'Supplier Coordination'],
+      items: (home.cap_3_desc || 'DFM/DFA • Supplier Coordination').split('•').map(s => s.trim()),
       link: '/services',
     },
   ];
@@ -54,26 +58,24 @@ export const HomeView: React.FC<HomeViewProps> = () => {
           {/* Left Hero Content */}
           <div className="lg:col-span-6 space-y-7">
             <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-heading font-extrabold text-[#0F172A] tracking-tight leading-[1.12]">
-              ENGINEERING <br />
-              DESIGN BUILT FOR <br />
-              <span className="text-[#0057FF]">MANUFACTURING</span>
+              {home.hero_title || 'ENGINEERING DESIGN BUILT FOR MANUFACTURING'}
             </h1>
 
-            {/* Resized larger, clear and prominent subtitle (Item 1) */}
+            {/* Resized larger, clear and prominent subtitle */}
             <p className="text-base sm:text-lg lg:text-xl text-slate-700 font-medium leading-relaxed max-w-xl">
-              Practical mechanical design support for products, tooling, CAD documentation, and supplier coordination.
+              {home.hero_subtitle || 'Practical mechanical design support for products, tooling, CAD documentation, and supplier coordination.'}
             </p>
 
             {/* Badges Row with larger, readable sizing */}
             <div className="flex flex-wrap items-center gap-3.5 pt-1">
               <div className="inline-flex items-center gap-2.5 text-xs sm:text-sm font-mono font-semibold text-slate-700 bg-white/95 border border-slate-200/90 px-4 py-2 rounded-full shadow-xs">
                 <MapPin className="w-4 h-4 text-[#0057FF] shrink-0" />
-                Windsor, Ontario, Canada
+                {home.badge_1 || 'Windsor, Ontario, Canada'}
               </div>
 
               <div className="inline-flex items-center gap-2.5 text-xs sm:text-sm font-mono font-semibold text-slate-700 bg-white/95 border border-slate-200/90 px-4 py-2 rounded-full shadow-xs">
                 <Clock className="w-4 h-4 text-[#0057FF] shrink-0" />
-                15+ Years of Engineering Experience
+                {home.badge_2 || '15+ Years of Engineering Experience'}
               </div>
             </div>
 
@@ -83,7 +85,7 @@ export const HomeView: React.FC<HomeViewProps> = () => {
                 onClick={() => navigate('/contact')}
                 className="btn-primary px-8 py-4 text-sm sm:text-base font-bold flex items-center gap-2.5 cursor-pointer shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300"
               >
-                Request a Project Review
+                {home.hero_cta_primary || 'Request a Project Review'}
                 <ArrowRight className="w-4 h-4" />
               </button>
 
@@ -91,7 +93,7 @@ export const HomeView: React.FC<HomeViewProps> = () => {
                 onClick={() => navigate('/services')}
                 className="btn-secondary px-7 py-4 text-sm sm:text-base font-bold flex items-center gap-2 cursor-pointer transition-all duration-300"
               >
-                Explore Services
+                {home.hero_cta_secondary || 'Explore Services'}
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

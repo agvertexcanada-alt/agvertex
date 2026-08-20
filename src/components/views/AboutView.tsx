@@ -11,7 +11,7 @@ import {
   Users, 
   ArrowRight 
 } from 'lucide-react';
-import { useSettingsData } from '../../hooks/useCmsData';
+import { usePageContent, useSettingsData } from '../../hooks/useCmsData';
 
 interface AboutViewProps {
   setActiveTab?: (tab: string) => void;
@@ -21,7 +21,8 @@ interface AboutViewProps {
 export const AboutView: React.FC<AboutViewProps> = () => {
   const navigate = useNavigate();
   const { settings } = useSettingsData();
-
+  const { pageContent } = usePageContent();
+  const about = pageContent.about;
 
   const PILLARS = [
     {
@@ -48,24 +49,24 @@ export const AboutView: React.FC<AboutViewProps> = () => {
 
   const DOMAIN_CARDS = [
     {
-      title: 'PRODUCT DEVELOPMENT',
-      desc: 'Mechanical components and assemblies developed with performance, manufacturability, and production requirements in mind.',
-      image: '/services/product_design.png',
+      title: about.exp_1_title || 'PRODUCT DEVELOPMENT',
+      desc: about.exp_1_desc || 'Mechanical components and assemblies developed with performance, manufacturability, and production requirements in mind.',
+      image: about.exp_1_img || '/services/product_design.png',
     },
     {
-      title: 'TOOLING EXPERIENCE',
-      desc: 'Practical experience supporting injection molds, hot-runner systems, mold components, and pressure die-casting applications.',
-      image: '/services/injection_mold.png',
+      title: about.exp_2_title || 'TOOLING EXPERIENCE',
+      desc: about.exp_2_desc || 'Practical experience supporting injection molds, hot-runner systems, mold components, and pressure die-casting applications.',
+      image: about.exp_2_img || '/services/injection_mold.png',
     },
     {
-      title: 'AUTOMOTIVE ENGINEERING',
-      desc: 'Experience with suspension, steering, wheel-end components, engineering drawings, GD&T, and supplier coordination.',
-      image: '/services/drawing_validation.png',
+      title: about.exp_3_title || 'AUTOMOTIVE ENGINEERING',
+      desc: about.exp_3_desc || 'Experience with suspension, steering, wheel-end components, engineering drawings, GD&T, and supplier coordination.',
+      image: about.exp_3_img || '/services/drawing_validation.png',
     },
     {
-      title: 'CAD & DOCUMENTATION',
-      desc: '3D models, drawings, BOMs, and controlled documentation using established CAD and PLM workflows.',
-      image: '/services/cad_modelling.png',
+      title: about.exp_4_title || 'CAD & DOCUMENTATION',
+      desc: about.exp_4_desc || '3D models, drawings, BOMs, and controlled documentation using established CAD and PLM workflows.',
+      image: about.exp_4_img || '/images/cad_workstation_single.jpeg',
     },
   ];
 
@@ -102,19 +103,17 @@ export const AboutView: React.FC<AboutViewProps> = () => {
           {/* Left Text */}
           <div className="lg:col-span-6 space-y-7">
             <span className="text-xs sm:text-sm font-mono font-bold uppercase text-[#0057FF] tracking-widest block">
-              ABOUT AG VERTEX
+              {about.hero_tag || 'ABOUT AG VERTEX'}
             </span>
 
             {/* Distinct headline tailored for About Page */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-heading font-extrabold text-[#0F172A] tracking-tight leading-[1.12]">
-              PRECISION MECHANICAL <br />
-              DESIGN & <br />
-              <span className="text-[#0057FF]">ENGINEERING PARTNER</span>
+              {about.hero_title || 'PRECISION MECHANICAL DESIGN & ENGINEERING PARTNER'}
             </h1>
 
             {/* Resized larger and highly readable paragraph */}
             <p className="text-base sm:text-lg lg:text-xl text-slate-700 font-medium leading-relaxed max-w-xl">
-              AG Vertex is a Windsor, Ontario-based mechanical design consultancy specializing in product design, mold and die design, 3D CAD modelling, and automotive drawing validation. We help transform engineering concepts into practical, manufacturable designs supported by accurate documentation and supplier coordination.
+              {about.hero_desc || 'AG Vertex is a Windsor, Ontario-based mechanical design consultancy specializing in product design, mold and die design, 3D CAD modelling, and automotive drawing validation. We help transform engineering concepts into practical, manufacturable designs supported by accurate documentation and supplier coordination.'}
             </p>
 
             <div className="pt-2">

@@ -13,6 +13,7 @@ import { CareersListPage } from './careers/CareersListPage';
 import { CareerFormPage } from './careers/CareerFormPage';
 import { MediaPage } from './media/MediaPage';
 import { SettingsPage } from './settings/SettingsPage';
+import { PageContentEditorPage } from './pages/PageContentEditorPage';
 import { Loader2 } from 'lucide-react';
 
 function ProtectedLayout({ children }: { children: React.ReactNode }) {
@@ -49,6 +50,7 @@ export function AdminApp() {
     <ProtectedLayout>
       <Routes>
         <Route path="/" element={<DashboardPage />} />
+        <Route path="/pages" element={<PageContentEditorPage />} />
         <Route path="/services" element={<ServicesListPage />} />
         <Route path="/services/new" element={<ServiceFormPage />} />
         <Route path="/services/:id" element={<ServiceFormPage />} />

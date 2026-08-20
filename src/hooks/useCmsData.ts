@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { showcaseApi, ShowcaseProject } from '../lib/api/showcase';
 import { servicesApi, Service } from '../lib/api/services';
 import { careersApi, Career } from '../lib/api/careers';
-import { settingsApi, AllSettings } from '../lib/api/settings';
+import { settingsApi, AllSettings, WebsitePageContent, DEFAULT_PAGE_CONTENT } from '../lib/api/settings';
 
 export function useShowcaseVisibility() {
   const [enabled, setEnabled] = useState<boolean>(true);
@@ -103,3 +103,24 @@ export function useSettingsData() {
 
   return { settings, loading };
 }
+
+export function usePageContent() {
+  const [pageContent, setPageContent] = useState<WebsitePageContent>(DEFAULT_PAGE_CONTENT);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    let mounted = true;
+    settingsApi.getPageContent().then(data => {
+      if (mounted) {
+        setPageContent(data);
+        setLoading(false);
+      }
+    }).catch(() => {
+      if (mounted) setLoading(false);
+    });
+    return () => { mounted = false; };
+  }, []);
+
+  return { pageContent, loading };
+}
+
