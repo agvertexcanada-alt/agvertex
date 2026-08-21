@@ -324,16 +324,16 @@ export const CareersView: React.FC = () => {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   {tool.logo_url ? (
-                    <div className="w-14 h-14 rounded-2xl bg-slate-50/80 border border-slate-200 p-2 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+                    <div className="h-20 max-w-[170px] px-4 py-3 rounded-2xl bg-white border border-slate-200/90 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 group-hover:border-blue-300 transition-all overflow-hidden">
                       <img
                         src={tool.logo_url}
                         alt={tool.name}
-                        className="w-full h-full object-contain max-h-10"
+                        className="w-full h-full object-contain max-h-14"
                         onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
                       />
                     </div>
                   ) : (
-                    <div className="w-14 h-14 rounded-2xl bg-blue-50 text-[#0057FF] flex items-center justify-center font-bold text-xs">
+                    <div className="h-20 px-5 rounded-2xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0 font-bold text-xs border border-blue-100">
                       {tool.badge}
                     </div>
                   )}
