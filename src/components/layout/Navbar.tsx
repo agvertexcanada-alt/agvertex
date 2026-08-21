@@ -42,21 +42,21 @@ export const Navbar: React.FC<NavbarProps> = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-2 sm:py-2.5 transition-all duration-300 pointer-events-none">
-      <div className={`max-w-[1360px] mx-auto pointer-events-auto transition-all duration-300 rounded-full px-4 sm:px-6 py-1.5 sm:py-2 flex items-center justify-between border ${
+      <div className={`max-w-[1360px] mx-auto pointer-events-auto transition-all duration-300 rounded-full px-4 sm:px-6 py-2 flex items-center justify-between border ${
         scrolled 
-          ? 'bg-gradient-to-r from-white via-white via-30% via-blue-50/90 via-65% via-blue-100/80 to-blue-600/20 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,87,255,0.12)] border-blue-200/90' 
-          : 'bg-gradient-to-r from-white via-white via-30% via-blue-50/85 via-65% via-blue-100/60 to-blue-500/15 backdrop-blur-md border-blue-100/80 shadow-md'
+          ? 'bg-gradient-to-r from-white via-white via-12% via-blue-50/90 via-50% via-blue-100/80 to-blue-600/25 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,87,255,0.12)] border-blue-200/90' 
+          : 'bg-gradient-to-r from-white via-white via-12% via-blue-50/85 via-50% via-blue-100/70 to-blue-500/20 backdrop-blur-md border-blue-100/80 shadow-md'
       }`}>
         
         {/* AG VERTEX Logo */}
         <Link 
           to="/"
-          className="flex items-center group cursor-pointer focus:outline-none shrink-0 relative py-0"
+          className="flex items-center group cursor-pointer focus:outline-none shrink-0 py-0.5"
         >
           <img
             src="/ag_vertex_logo.png"
             alt="AG VERTEX Logo"
-            className="h-14 sm:h-16 md:h-18 lg:h-20 w-auto object-contain -my-3 sm:-my-4 md:-my-5 transition-transform duration-300 group-hover:scale-105 filter drop-shadow-xs"
+            className="h-8 sm:h-9 md:h-10 lg:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-xs"
           />
         </Link>
 
