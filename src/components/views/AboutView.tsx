@@ -278,16 +278,16 @@ export const AboutView: React.FC<AboutViewProps> = () => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
                   {tool.logo_url ? (
-                    <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200 p-2 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+                    <div className="w-14 h-14 rounded-2xl bg-slate-50/80 border border-slate-200 p-2 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
                       <img
                         src={tool.logo_url}
                         alt={tool.name}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-contain max-h-10"
                         onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
                       />
                     </div>
                   ) : (
-                    <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0 font-bold text-sm">
+                    <div className="w-14 h-14 rounded-2xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0 font-bold text-sm">
                       {tool.badge}
                     </div>
                   )}

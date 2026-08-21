@@ -70,7 +70,7 @@ export const DEFAULT_CAD_STACK: CadStackItem[] = [
     category: 'Parametric 3D CAD & Surfacing',
     desc: 'Advanced surface modeling, mechanism design, large assemblies, and associative 2D drawing generation.',
     badge: 'CREO',
-    logo_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/PTC_Creo_logo.svg/512px-PTC_Creo_logo.svg.png',
+    logo_url: '/images/logos/creo.png',
   },
   {
     id: 'cad-2',
@@ -78,7 +78,7 @@ export const DEFAULT_CAD_STACK: CadStackItem[] = [
     category: 'PLM & High-End Tooling',
     desc: 'Complex injection mold design, progressive dies, parting line splits, and multi-axis machining CAD data.',
     badge: 'SIEMENS NX',
-    logo_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Siemens-logo.svg/512px-Siemens-logo.svg.png',
+    logo_url: '/images/logos/siemens_nx.png',
   },
   {
     id: 'cad-3',
@@ -86,7 +86,7 @@ export const DEFAULT_CAD_STACK: CadStackItem[] = [
     category: '2D Drafting & Plant Layouts',
     desc: 'Precision engineering prints, geometric tolerance layout, plant schematics, and legacy DWG translation.',
     badge: 'AUTOCAD',
-    logo_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/AutoCAD_logo.svg/512px-AutoCAD_logo.svg.png',
+    logo_url: '/images/logos/autocad.png',
   },
   {
     id: 'cad-4',
@@ -94,7 +94,7 @@ export const DEFAULT_CAD_STACK: CadStackItem[] = [
     category: 'Mechanical Design & DFM',
     desc: 'Machine design, sheet metal enclosures, weldments, ASME Y14.5 GD&T drafting, and integrated BOM control.',
     badge: 'SOLIDWORKS',
-    logo_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/SolidWorks_Logo.svg/512px-SolidWorks_Logo.svg.png',
+    logo_url: '/images/logos/solidworks.png',
   },
 ];
 
