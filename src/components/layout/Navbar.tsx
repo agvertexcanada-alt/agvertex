@@ -42,10 +42,10 @@ export const Navbar: React.FC<NavbarProps> = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-2 sm:py-2.5 transition-all duration-300 pointer-events-none">
-      <div className={`max-w-[1360px] mx-auto pointer-events-auto transition-all duration-300 rounded-full px-4 sm:px-6 py-2 flex items-center justify-between border ${
+      <div className={`max-w-[1360px] mx-auto pointer-events-auto transition-all duration-300 rounded-full px-4 sm:px-6 py-1.5 sm:py-2 flex items-center justify-between border ${
         scrolled 
-          ? 'bg-gradient-to-r from-white via-white via-12% via-blue-50/90 via-50% via-blue-100/80 to-blue-600/25 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,87,255,0.12)] border-blue-200/90' 
-          : 'bg-gradient-to-r from-white via-white via-12% via-blue-50/85 via-50% via-blue-100/70 to-blue-500/20 backdrop-blur-md border-blue-100/80 shadow-md'
+          ? 'bg-gradient-to-r from-blue-50/80 via-blue-50/95 via-15% via-blue-100/90 via-55% to-blue-600/30 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,87,255,0.14)] border-blue-200/90' 
+          : 'bg-gradient-to-r from-white/95 via-blue-50/80 via-15% via-blue-100/75 via-55% to-blue-500/25 backdrop-blur-md border-blue-100/90 shadow-md'
       }`}>
         
         {/* AG VERTEX Logo */}
@@ -56,7 +56,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
           <img
             src="/ag_vertex_logo.png"
             alt="AG VERTEX Logo"
-            className="h-8 sm:h-9 md:h-10 lg:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-xs"
+            className="h-11 sm:h-12 md:h-13 lg:h-15 w-auto object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-xs"
           />
         </Link>
 
