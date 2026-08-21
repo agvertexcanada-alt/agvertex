@@ -42,10 +42,10 @@ export const Navbar: React.FC<NavbarProps> = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-2 sm:py-2.5 transition-all duration-300 pointer-events-none">
-      <div className={`max-w-[1360px] mx-auto pointer-events-auto transition-all duration-300 rounded-full px-4 sm:px-6 py-1.5 sm:py-2 flex items-center justify-between ${
+      <div className={`max-w-[1360px] mx-auto pointer-events-auto transition-all duration-300 rounded-full px-4 sm:px-6 py-1.5 sm:py-2 flex items-center justify-between border ${
         scrolled 
-          ? 'bg-white/95 backdrop-blur-xl shadow-[0_8px_30px_rgba(15,23,42,0.08)] border border-slate-200/90' 
-          : 'bg-white/90 backdrop-blur-md border border-slate-200/70 shadow-xs'
+          ? 'bg-gradient-to-r from-white via-white via-30% via-blue-50/90 via-65% via-blue-100/80 to-blue-600/20 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,87,255,0.12)] border-blue-200/90' 
+          : 'bg-gradient-to-r from-white via-white via-30% via-blue-50/85 via-65% via-blue-100/60 to-blue-500/15 backdrop-blur-md border-blue-100/80 shadow-md'
       }`}>
         
         {/* AG VERTEX Logo */}
@@ -70,8 +70,8 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 to={link.path}
                 className={`px-3.5 py-1.5 text-[13.5px] xl:text-sm font-semibold rounded-full transition-all duration-200 cursor-pointer ${
                   active
-                    ? 'bg-slate-100 text-[#0057FF] font-bold shadow-xs'
-                    : 'text-slate-700 hover:text-[#0057FF] hover:bg-slate-50'
+                    ? 'bg-white text-[#0057FF] font-extrabold shadow-sm border border-blue-200/90'
+                    : 'text-slate-800 hover:text-[#0057FF] hover:bg-white/80'
                 }`}
               >
                 {link.label}
