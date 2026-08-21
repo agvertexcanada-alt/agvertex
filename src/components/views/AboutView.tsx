@@ -9,9 +9,11 @@ import {
   Box, 
   Crosshair, 
   Users, 
-  ArrowRight 
+  ArrowRight,
+  CheckCircle2
 } from 'lucide-react';
 import { usePageContent, useSettingsData } from '../../hooks/useCmsData';
+import { DEFAULT_CAD_STACK } from '../../lib/api/settings';
 
 interface AboutViewProps {
   setActiveTab?: (tab: string) => void;
@@ -253,7 +255,72 @@ export const AboutView: React.FC<AboutViewProps> = () => {
 
       </section>
 
-      {/* 4. CALL TO ACTION BANNER */}
+      {/* 4. SOFTWARE & CAD STACK SECTION */}
+      <section className="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-10">
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <span className="text-xs sm:text-sm font-mono font-bold uppercase text-[#0057FF] tracking-widest block">
+            ENGINEERING CAD STACK
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold text-[#0F172A] tracking-tight">
+            {about.cad_stack_title || 'SOFTWARE & CAD PROFICIENCY'}
+          </h2>
+          <p className="text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
+            {about.cad_stack_desc || 'We collaborate using industry-standard engineering suites and enterprise PLM workflows.'}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {(about.cad_items || DEFAULT_CAD_STACK).map((tool) => (
+            <div
+              key={tool.id || tool.name}
+              className="glass-card bg-white p-7 rounded-3xl border border-slate-200/90 shadow-md space-y-5 flex flex-col justify-between hover:border-blue-400 hover:shadow-xl transition-all duration-300 group"
+            >
+              <div className="space-y-4">
+                <div className="flex items-center justify-between gap-3">
+                  {tool.logo_url ? (
+                    <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200 p-2 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+                      <img
+                        src={tool.logo_url}
+                        alt={tool.name}
+                        className="w-full h-full object-contain"
+                        onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#0057FF] flex items-center justify-center shrink-0 font-bold text-sm">
+                      {tool.badge}
+                    </div>
+                  )}
+
+                  <span className="px-3 py-1 rounded-full bg-blue-50 text-[#0057FF] text-[10px] font-mono font-bold tracking-wider uppercase border border-blue-100">
+                    {tool.badge}
+                  </span>
+                </div>
+
+                <div className="space-y-1">
+                  <h3 className="text-base font-heading font-extrabold text-[#0F172A] uppercase tracking-wide group-hover:text-[#0057FF] transition-colors">
+                    {tool.name}
+                  </h3>
+                  <p className="text-xs font-mono font-semibold text-slate-500">
+                    {tool.category}
+                  </p>
+                </div>
+
+                <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                  {tool.desc}
+                </p>
+              </div>
+
+              <div className="pt-4 border-t border-slate-100 flex items-center gap-2 text-[11px] font-semibold text-emerald-600">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                <span>Production Ready</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 5. CALL TO ACTION BANNER */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="glass-card bg-white p-8 lg:p-12 rounded-3xl border border-slate-200/90 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           

@@ -54,6 +54,50 @@ export interface HomePageContent {
   cap_3_img: string;
 }
 
+export interface CadStackItem {
+  id: string;
+  name: string;
+  category: string;
+  desc: string;
+  badge: string;
+  logo_url: string;
+}
+
+export const DEFAULT_CAD_STACK: CadStackItem[] = [
+  {
+    id: 'cad-1',
+    name: 'PTC Creo Parametric',
+    category: 'Parametric 3D CAD & Surfacing',
+    desc: 'Advanced surface modeling, mechanism design, large assemblies, and associative 2D drawing generation.',
+    badge: 'CREO',
+    logo_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/PTC_Creo_logo.svg/512px-PTC_Creo_logo.svg.png',
+  },
+  {
+    id: 'cad-2',
+    name: 'Siemens NX',
+    category: 'PLM & High-End Tooling',
+    desc: 'Complex injection mold design, progressive dies, parting line splits, and multi-axis machining CAD data.',
+    badge: 'SIEMENS NX',
+    logo_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Siemens-logo.svg/512px-Siemens-logo.svg.png',
+  },
+  {
+    id: 'cad-3',
+    name: 'Autodesk AutoCAD',
+    category: '2D Drafting & Plant Layouts',
+    desc: 'Precision engineering prints, geometric tolerance layout, plant schematics, and legacy DWG translation.',
+    badge: 'AUTOCAD',
+    logo_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/AutoCAD_logo.svg/512px-AutoCAD_logo.svg.png',
+  },
+  {
+    id: 'cad-4',
+    name: 'Dassault SolidWorks',
+    category: 'Mechanical Design & DFM',
+    desc: 'Machine design, sheet metal enclosures, weldments, ASME Y14.5 GD&T drafting, and integrated BOM control.',
+    badge: 'SOLIDWORKS',
+    logo_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/SolidWorks_Logo.svg/512px-SolidWorks_Logo.svg.png',
+  },
+];
+
 export interface AboutPageContent {
   hero_tag: string;
   hero_title: string;
@@ -82,6 +126,10 @@ export interface AboutPageContent {
   exp_4_desc: string;
   exp_4_img: string;
   facility_img: string;
+
+  cad_stack_title: string;
+  cad_stack_desc: string;
+  cad_items: CadStackItem[];
 }
 
 export interface CareersPageContent {
@@ -151,6 +199,10 @@ export const DEFAULT_PAGE_CONTENT: WebsitePageContent = {
     exp_4_desc: '3D models, drawings, BOMs, and controlled documentation using established CAD and PLM workflows.',
     exp_4_img: '/images/cad_workstation_single.jpeg',
     facility_img: '/services/drawing_validation.png',
+
+    cad_stack_title: 'SOFTWARE & CAD PROFICIENCY',
+    cad_stack_desc: 'We collaborate using industry-standard engineering suites and enterprise PLM workflows.',
+    cad_items: DEFAULT_CAD_STACK,
   },
   careers: {
     hero_tag: 'CAREERS & COLLABORATION',

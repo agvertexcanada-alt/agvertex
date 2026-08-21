@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { settingsApi, WebsitePageContent, DEFAULT_PAGE_CONTENT } from '../../lib/api/settings';
+import { settingsApi, WebsitePageContent, DEFAULT_PAGE_CONTENT, DEFAULT_CAD_STACK } from '../../lib/api/settings';
 import { mediaApi } from '../../lib/api/media';
 import { toast } from '../components/Toast';
-import { Save, Loader2, Home, Info, Briefcase, Upload, RotateCcw, Image as ImageIcon, Type, Sparkles } from 'lucide-react';
+import { Save, Loader2, Home, Info, Briefcase, Upload, RotateCcw, Image as ImageIcon, Type, Sparkles, Cpu } from 'lucide-react';
 
 export function PageContentEditorPage() {
   const [content, setContent] = useState<WebsitePageContent>(DEFAULT_PAGE_CONTENT);
@@ -63,6 +63,39 @@ export function PageContentEditorPage() {
   const resetField = (page: 'home' | 'about' | 'careers', fieldKey: string) => {
     const defaultVal = (DEFAULT_PAGE_CONTENT[page] as any)[fieldKey];
     updateField(page, fieldKey, defaultVal);
+  };
+
+  const updateCadItem = (index: number, field: string, value: string) => {
+    const currentItems = content.about.cad_items && content.about.cad_items.length > 0
+      ? [...content.about.cad_items]
+      : [...DEFAULT_CAD_STACK];
+    
+    currentItems[index] = {
+      ...currentItems[index],
+      [field]: value,
+    };
+
+    setContent(prev => ({
+      ...prev,
+      about: {
+        ...prev.about,
+        cad_items: currentItems,
+      },
+    }));
+  };
+
+  const handleCadLogoUpload = async (index: number, file: File) => {
+    const fieldId = `cad_logo_${index}`;
+    setUploadingField(fieldId);
+    try {
+      const media = await mediaApi.upload(file, `CAD Software Logo ${index}`);
+      updateCadItem(index, 'logo_url', media.public_url);
+      toast.success('Software logo uploaded! Click Save Page Content to publish live.');
+    } catch (e: any) {
+      toast.error('Upload failed: ' + e.message);
+    } finally {
+      setUploadingField(null);
+    }
   };
 
   if (loading) {
@@ -393,6 +426,119 @@ export function PageContentEditorPage() {
             ))}
 
             {renderImageUploader('about', 'facility_img', 'About Us — Bottom Facility / Review Image', '/services/drawing_validation.png')}
+          </section>
+
+          {/* Engineering CAD Stack Software Section */}
+          <section className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+            <h2 className="text-base font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+              <Cpu className="w-4 h-4 text-[#0057FF]" />
+              About Page — Software & CAD Proficiency Stack (Logos & Software Details)
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-700 uppercase tracking-wide block">Section Title</label>
+                <input
+                  type="text"
+                  value={content.about.cad_stack_title || 'SOFTWARE & CAD PROFICIENCY'}
+                  onChange={e => updateField('about', 'cad_stack_title', e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm bg-slate-50 focus:bg-white focus:border-[#0057FF]"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-700 uppercase tracking-wide block">Section Subtitle</label>
+                <input
+                  type="text"
+                  value={content.about.cad_stack_desc || 'We collaborate using industry-standard engineering suites and enterprise PLM workflows.'}
+                  onChange={e => updateField('about', 'cad_stack_desc', e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm bg-slate-50 focus:bg-white focus:border-[#0057FF]"
+                />
+              </div>
+            </div>
+
+            {((content.about.cad_items && content.about.cad_items.length > 0) ? content.about.cad_items : DEFAULT_CAD_STACK).map((tool, idx) => {
+              const fieldId = `cad_logo_${idx}`;
+              const isUploading = uploadingField === fieldId;
+
+              return (
+                <div key={tool.id || idx} className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-mono font-bold text-[#0057FF] uppercase">CAD Software Tool #{idx + 1}</p>
+                    <label className="cursor-pointer px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#0057FF] text-xs font-bold transition-colors inline-flex items-center gap-1.5 border border-blue-200">
+                      {isUploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                      {isUploading ? 'Uploading Logo...' : 'Upload Brand Logo'}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={e => {
+                          const file = e.target.files?.[0];
+                          if (file) handleCadLogoUpload(idx, file);
+                        }}
+                      />
+                    </label>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-slate-700 uppercase block">Software Name</label>
+                      <input
+                        type="text"
+                        value={tool.name}
+                        onChange={e => updateCadItem(idx, 'name', e.target.value)}
+                        className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-slate-700 uppercase block">Category / Discipline</label>
+                      <input
+                        type="text"
+                        value={tool.category}
+                        onChange={e => updateCadItem(idx, 'category', e.target.value)}
+                        className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-slate-700 uppercase block">Badge Tag (e.g. CREO)</label>
+                      <input
+                        type="text"
+                        value={tool.badge}
+                        onChange={e => updateCadItem(idx, 'badge', e.target.value)}
+                        className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-700 uppercase block">Description / Capabilities</label>
+                    <textarea
+                      rows={2}
+                      value={tool.desc}
+                      onChange={e => updateCadItem(idx, 'desc', e.target.value)}
+                      className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-700 uppercase block">Brand Logo Image URL</label>
+                    <div className="flex items-center gap-3">
+                      {tool.logo_url && (
+                        <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 p-1.5 flex items-center justify-center shrink-0">
+                          <img src={tool.logo_url} alt={tool.name} className="w-full h-full object-contain" />
+                        </div>
+                      )}
+                      <input
+                        type="text"
+                        value={tool.logo_url || ''}
+                        onChange={e => updateCadItem(idx, 'logo_url', e.target.value)}
+                        placeholder="https://... logo URL"
+                        className="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-mono bg-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </section>
         </div>
       )}

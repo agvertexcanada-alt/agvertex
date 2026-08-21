@@ -17,6 +17,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { useCareersData, usePageContent, useSettingsData } from '../../hooks/useCmsData';
+import { DEFAULT_CAD_STACK } from '../../lib/api/settings';
 
 export const CareersView: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -315,17 +316,29 @@ export const CareersView: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {SOFTWARE_TOOLS.map((tool, idx) => (
+          {((pageContent.about?.cad_items && pageContent.about.cad_items.length > 0) ? pageContent.about.cad_items : DEFAULT_CAD_STACK).map((tool) => (
             <div
-              key={idx}
+              key={tool.id || tool.name}
               className="glass-card bg-white p-7 rounded-3xl border border-slate-200/90 shadow-md hover:shadow-xl hover:border-blue-400 transition-all duration-300 flex flex-col justify-between space-y-4 group"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="w-11 h-11 rounded-xl bg-blue-50 text-[#0057FF] flex items-center justify-center font-bold">
-                    <Boxes className="w-6 h-6" />
-                  </div>
-                  <span className="text-[10px] font-mono font-bold text-[#0057FF] bg-blue-50 px-2.5 py-1 rounded-full">
+                  {tool.logo_url ? (
+                    <div className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200 p-2 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+                      <img
+                        src={tool.logo_url}
+                        alt={tool.name}
+                        className="w-full h-full object-contain"
+                        onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-11 h-11 rounded-xl bg-blue-50 text-[#0057FF] flex items-center justify-center font-bold text-xs">
+                      {tool.badge}
+                    </div>
+                  )}
+
+                  <span className="text-[10px] font-mono font-bold text-[#0057FF] bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">
                     {tool.badge}
                   </span>
                 </div>
@@ -344,7 +357,7 @@ export const CareersView: React.FC = () => {
               </div>
 
               <div className="pt-2 border-t border-slate-100 flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600">
-                <CheckCircle2 className="w-3.5 h-3.5" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
                 <span>Production Ready</span>
               </div>
             </div>
